@@ -8,7 +8,7 @@ public class TimeTravel : MonoBehaviour
 
     [Header("Scene Settings")]
     public string targetSceneName = "NewScene";
-    public float delayBeforeTeleport = 2f; // Effects play duration
+    public float delayBeforeTeleport = 2f;
 
     [Header("Assign particle system instances")]
     public ParticleSystem effect1;
@@ -19,15 +19,12 @@ public class TimeTravel : MonoBehaviour
 
     void Awake()
     {
-        // Singleton pattern to prevent duplicates
         if (Instance != null && Instance != this)
         {
-            Destroy(gameObject); // Destroy duplicate
+            Destroy(gameObject);
             return;
         }
         Instance = this;
-
-        // No DontDestroyOnLoad here, so effects and this object do NOT persist between scenes
     }
 
     void Update()
@@ -49,12 +46,10 @@ public class TimeTravel : MonoBehaviour
         StopEffects();
         DeactivateEffects();
 
-        // Destroy particle effects gameobjects to make sure nothing lingers
         if (effect1 != null) Destroy(effect1.gameObject);
         if (effect2 != null) Destroy(effect2.gameObject);
         if (effect3 != null) Destroy(effect3.gameObject);
 
-        // Now load new scene
         SceneManager.LoadScene(targetSceneName);
 
         isTeleporting = false;
