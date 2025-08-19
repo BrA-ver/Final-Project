@@ -1,12 +1,13 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
-using static CaseBoardController;
+
+
 
 public class CaseBoardController : MonoBehaviour
 {
     [System.Serializable]
-    public class CaseItem
+    public class CaseItemData
     {
         public Button itemButton;
         public Image itemImage;
@@ -14,58 +15,60 @@ public class CaseBoardController : MonoBehaviour
         public GameObject detailPanel;
         public Image detailImage;
         public Text detailDescriptionText;
-        public string itemTitle;
-        [TextArea] public string itemDescription;
-        public Sprite itemSprite;
-
         [HideInInspector] public bool isDetailShown = false;
+
+        [Header("UI References")]
+        public Transform caseItemsContainer;  
+        public GameObject caseItemPrefab;     
     }
 
-    public CaseItem[] caseItems;
-    private CaseItem currentlyShownItem = null;
+    [Header("UI References")]
+    public Transform caseItemsContainer;
+    public GameObject caseItemPrefab;
+
+    private List<CaseItemData> caseItems = new List<CaseItemData>();
+    private CaseItemData currentlyShownItem = null;
 
     void Start()
     {
-       
-        foreach (var item in caseItems)
-        {
-            
-            item.itemButton.onClick.AddListener(() => ToggleDetails(item));
-
-            
-            if (item.itemImage != null && item.itemSprite != null)
-            {
-                item.itemImage.sprite = item.itemSprite;
-                item.itemImage.preserveAspect = true;
-            }
-
-            if (item.itemTitleText != null)
-            {
-                item.itemTitleText.text = item.itemTitle;
-            }
-
-            if (item.detailPanel != null)
-            {
-                item.detailPanel.SetActive(false);
-
-               
-                if (item.detailImage != null)
-                {
-                    item.detailImage.sprite = item.itemSprite;
-                    item.detailImage.preserveAspect = true;
-                }
-
-                if (item.detailDescriptionText != null)
-                {
-                    item.detailDescriptionText.text = item.itemDescription;
-                }
-            }
-        }
+        
+        ClearAllCaseItems();
     }
 
-    public void ToggleDetails(CaseItem selectedItem)
+    public void AddCaseItem(Sprite photoSprite, string itemTitle, string itemDescription)
     {
         
+        GameObject newCaseItemObj = Instantiate(caseItemPrefab, caseItemsContainer);
+        CaseItemData newCaseItem = new CaseItemData();
+
+        
+        newCaseItem.itemButton = newCaseItemObj.GetComponent<Button>();
+        newCaseItem.itemImage = newCaseItemObj.transform.Find("Photo").GetComponent<Image>();
+        newCaseItem.itemTitleText = newCaseItemObj.transform.Find("Title").GetComponent<Text>();
+        newCaseItem.detailPanel = newCaseItemObj.transform.Find("DetailPanel").gameObject;
+        newCaseItem.detailImage = newCaseItem.detailPanel.transform.Find("DetailImage").GetComponent<Image>();
+        newCaseItem.detailDescriptionText = newCaseItem.detailPanel.transform.Find("Description").GetComponent<Text>();
+
+       
+        newCaseItem.itemImage.sprite = photoSprite;
+        newCaseItem.itemImage.preserveAspect = true;
+        newCaseItem.itemTitleText.text = itemTitle;
+        newCaseItem.detailImage.sprite = photoSprite;
+        newCaseItem.detailImage.preserveAspect = true;
+        newCaseItem.detailDescriptionText.text = itemDescription;
+
+        
+        newCaseItem.itemButton.onClick.AddListener(() => ToggleDetails(newCaseItem));
+
+        
+        newCaseItem.detailPanel.SetActive(false);
+
+        
+        caseItems.Add(newCaseItem);
+    }
+
+    public void ToggleDetails(CaseItemData selectedItem)
+    {
         if (currentlyShownItem == selectedItem)
         {
             selectedItem.detailPanel.SetActive(!selectedItem.isDetailShown);
@@ -73,16 +76,26 @@ public class CaseBoardController : MonoBehaviour
             return;
         }
 
-        
         if (currentlyShownItem != null)
         {
             currentlyShownItem.detailPanel.SetActive(false);
             currentlyShownItem.isDetailShown = false;
         }
 
-        
         selectedItem.detailPanel.SetActive(true);
         selectedItem.isDetailShown = true;
         currentlyShownItem = selectedItem;
+    }
+
+    public void ClearAllCaseItems()
+    {
+        
+        foreach (Transform child in caseItemsContainer)
+        {
+            Destroy(child.gameObject);
+        }
+
+        caseItems.Clear();
+        currentlyShownItem = null;
     }
 }
