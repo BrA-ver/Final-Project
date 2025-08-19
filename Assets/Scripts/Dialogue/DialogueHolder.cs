@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class DialogueHolder : Interactable
 {
-    [SerializeField] Dialogue[] dialogues;
+    [SerializeField] protected Dialogue[] dialogues;
 
     public override void Interact()
     {
         base.Interact();
-        DialogueManager.Instance.EnterDialogue();
+        DialogueManager.Instance.EnterDialogue(dialogues[0]);
 
     }
 }
