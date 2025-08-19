@@ -64,7 +64,7 @@ public class SlidingGameManager : MonoBehaviour
     {
         pieces = new List<Transform>();
         width = 3;   // 3 columns
-        height = 4;  // 4 rows
+        height = 3;  // 3 rows (changed from 4)
         CreateGamePieces(0.01f);
     }
 
