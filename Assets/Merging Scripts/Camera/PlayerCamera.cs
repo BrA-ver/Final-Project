@@ -7,8 +7,17 @@ public class PlayerCamera : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (!player) return;
+        if (!player)
+        {
+            FindPlayer();
+            return;
+        }
 
         transform.position = player.position;
+    }
+
+    void FindPlayer()
+    {
+        player = FindObjectOfType<Player>().transform;
     }
 }
