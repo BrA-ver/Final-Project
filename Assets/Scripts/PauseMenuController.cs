@@ -12,6 +12,9 @@ public class PauseMenuController : MonoBehaviour
     public Button caseBoardButton;
     public Button backButton;
 
+    [Header("References")]
+    public CaseBoardController caseboardController;
+
     private bool isPaused = false;
 
     void Start()
@@ -25,7 +28,7 @@ public class PauseMenuController : MonoBehaviour
         caseBoardButton.onClick.AddListener(OpenCaseBoard);
         backButton.onClick.AddListener(ReturnToPauseMenu);
 
-        
+       
         resumeButton.interactable = true;
         caseBoardButton.interactable = true;
         backButton.interactable = true;
@@ -55,7 +58,7 @@ public class PauseMenuController : MonoBehaviour
         Time.timeScale = 0f;
         isPaused = true;
         pauseMenuPanel.SetActive(true);
-        caseBoardPanel.SetActive(false); 
+        caseBoardPanel.SetActive(false);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
@@ -74,12 +77,24 @@ public class PauseMenuController : MonoBehaviour
     {
         pauseMenuPanel.SetActive(false);
         caseBoardPanel.SetActive(true);
+
+        
+        if (caseboardController != null)
+        {
+            
+        }
     }
 
     public void ReturnToPauseMenu()
     {
         caseBoardPanel.SetActive(false);
         pauseMenuPanel.SetActive(true);
+
+        
+        if (caseboardController != null)
+        {
+            caseboardController.CloseDetailPanel();
+        }
     }
 
     public bool IsPaused()

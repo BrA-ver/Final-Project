@@ -14,15 +14,31 @@ public class CaseData : ScriptableObject
     }
 
     public NPCData[] allNPCs;
-    public Dictionary<string, NPCData> npcDictionary = new Dictionary<string, NPCData>();
 
-    private void OnEnable()
+    private Dictionary<string, NPCData> _npcDictionary;
+
+    public void InitializeDictionary()
     {
-        
-        npcDictionary.Clear();
+        _npcDictionary = new Dictionary<string, NPCData>();
         foreach (var npc in allNPCs)
         {
-            npcDictionary[npc.npcID] = npc;
+            _npcDictionary[npc.npcID] = npc;
         }
+    }
+
+    public NPCData GetNPCData(string npcID)
+    {
+        if (_npcDictionary == null)
+        {
+            InitializeDictionary();
+        }
+
+        if (_npcDictionary.ContainsKey(npcID))
+        {
+            return _npcDictionary[npcID];
+        }
+
+        Debug.LogWarning($"NPC with ID {npcID} not found in CaseData!");
+        return null;
     }
 }

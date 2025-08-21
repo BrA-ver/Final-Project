@@ -27,6 +27,12 @@ public class InteractionSimulator : MonoBehaviour
         {
             Debug.LogError("CaseboardController not found in the scene!");
         }
+
+        
+        if (caseData != null)
+        {
+            caseData.InitializeDictionary();
+        }
     }
 
     void Update()
@@ -44,10 +50,16 @@ public class InteractionSimulator : MonoBehaviour
 
     public void SimulateInteraction(string npcID)
     {
-        if (caseData.npcDictionary.ContainsKey(npcID) && !discoveredNPCs.Contains(npcID))
+        if (caseData == null)
         {
-            CaseData.NPCData npc = caseData.npcDictionary[npcID];
+            Debug.LogError("CaseData reference is not set!");
+            return;
+        }
 
+        CaseData.NPCData npc = caseData.GetNPCData(npcID);
+
+        if (npc != null && !discoveredNPCs.Contains(npcID))
+        {
             // Add to discovered NPCs
             discoveredNPCs.Add(npcID);
 
@@ -59,7 +71,7 @@ public class InteractionSimulator : MonoBehaviour
 
             Debug.Log($"Added case item for NPC: {npc.npcName}");
         }
-        else if (discoveredNPCs.Contains(npcID))
+        else if (npc != null && discoveredNPCs.Contains(npcID))
         {
             Debug.Log($"Already discovered NPC with ID: {npcID}");
         }
@@ -76,5 +88,10 @@ public class InteractionSimulator : MonoBehaviour
         {
             caseboardController.ClearAllCaseItems();
         }
+    }
+
+    public List<string> GetDiscoveredNPCs()
+    {
+        return new List<string>(discoveredNPCs);
     }
 }
