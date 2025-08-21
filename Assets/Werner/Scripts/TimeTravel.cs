@@ -1,14 +1,13 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class TimeTravel : MonoBehaviour
 {
     public static TimeTravel Instance;
 
-    [Header("Scene Settings")]
-    public string targetSceneName = "NewScene";
+    [Header("Teleport Settings")]
     public float delayBeforeTeleport = 2f;
+    public float teleportDistance = 100f;
 
     [Header("Assign particle system instances")]
     public ParticleSystem effect1;
@@ -16,6 +15,9 @@ public class TimeTravel : MonoBehaviour
     public ParticleSystem effect3;
 
     private bool isTeleporting = false;
+
+    // Track whether we are currently in the Present or Past
+    private bool inPresent = true;
 
     void Awake()
     {
@@ -39,18 +41,38 @@ public class TimeTravel : MonoBehaviour
     {
         isTeleporting = true;
 
+        // Try to find a movement script and disable it
+        var movement = GetComponent<PlayerMovement>(); // Replace with your actual movement script name if different
+        if (movement != null) movement.enabled = false;
+
+        // Play effects
         PlayEffects();
 
+        // Wait before teleport
         yield return new WaitForSeconds(delayBeforeTeleport);
 
+        // Teleport based on whether we're in Present or Past
+        if (inPresent)
+        {
+            // Go to Past (+Z)
+            transform.position += new Vector3(0, 0, teleportDistance);
+            inPresent = false;
+        }
+        else
+        {
+            // Go back to Present (-Z)
+            transform.position -= new Vector3(0, 0, teleportDistance);
+            inPresent = true;
+        }
+
+        // Stop and deactivate effects
         StopEffects();
         DeactivateEffects();
 
-        if (effect1 != null) Destroy(effect1.gameObject);
-        if (effect2 != null) Destroy(effect2.gameObject);
-        if (effect3 != null) Destroy(effect3.gameObject);
+        // Small delay to prevent movement script snapping us back
+        yield return new WaitForSeconds(0.1f);
 
-        SceneManager.LoadScene(targetSceneName);
+        if (movement != null) movement.enabled = true;
 
         isTeleporting = false;
     }
@@ -76,4 +98,3 @@ public class TimeTravel : MonoBehaviour
         if (effect3) effect3.gameObject.SetActive(false);
     }
 }
-
