@@ -34,6 +34,13 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        if (DialogueManager.Instance.dialogueStarted)
+        {
+            movement.Stop();
+            animator.SetBool(moving, false);
+            return;
+        }
+
         HandleMovement();
     }
 

@@ -10,7 +10,7 @@ public class DialogueManager : MonoBehaviour
 
     Dialogue dialogue;
 
-    bool dialogueStarted;
+    public bool dialogueStarted;
     bool makingChoice;
     int index = 0;
 

@@ -6,6 +6,7 @@ using System;
 public class InputHandler : MonoBehaviour
 {
     public Vector2 moveInput;
+    public Vector2 lookInput;
     public InputActionReference jump;
     public bool jumpPressed => jump.action.triggered;
 
@@ -16,6 +17,11 @@ public class InputHandler : MonoBehaviour
     public void OnMove(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
+    }
+
+    public void OnLook(InputAction.CallbackContext context)
+    {
+        lookInput = context.ReadValue<Vector2>();
     }
 
     public void OnJump(InputAction.CallbackContext context)

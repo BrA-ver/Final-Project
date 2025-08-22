@@ -39,6 +39,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+
         groundedPlayer = false;
         if (controller.isGrounded || groundCheck.OnGround())
             groundedPlayer = true;
@@ -88,5 +89,11 @@ public class PlayerMovement : MonoBehaviour
         moveDirection += Camera.main.transform.right * direction.x;
         moveDirection.y = 0f;
         moveDirection.Normalize();
+    }
+
+    public void Stop()
+    {
+        velocity = Vector3.zero;
+        moveDirection = Vector3.zero;
     }
 }
