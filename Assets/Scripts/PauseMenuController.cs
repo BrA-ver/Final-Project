@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PauseMenuController : MonoBehaviour
 {
@@ -11,6 +12,10 @@ public class PauseMenuController : MonoBehaviour
     public Button resumeButton;
     public Button caseBoardButton;
     public Button backButton;
+    public Button quitToMenuButton;
+
+    [Header("Scene Management")]
+    public string mainMenuScene = "MainMenuScene";
 
     [Header("References")]
     public CaseBoardController caseboardController;
@@ -32,6 +37,12 @@ public class PauseMenuController : MonoBehaviour
         resumeButton.interactable = true;
         caseBoardButton.interactable = true;
         backButton.interactable = true;
+
+        if (quitToMenuButton != null)
+        {
+            quitToMenuButton.onClick.AddListener(QuitToMainMenu);
+        }
+
     }
 
     void Update()
@@ -100,5 +111,14 @@ public class PauseMenuController : MonoBehaviour
     public bool IsPaused()
     {
         return isPaused;
+    }
+
+    public void QuitToMainMenu()
+    {
+        
+        Time.timeScale = 1f;
+
+        
+        SceneManager.LoadScene(mainMenuScene);
     }
 }
