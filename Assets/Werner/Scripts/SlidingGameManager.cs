@@ -6,6 +6,7 @@ public class SlidingGameManager : MonoBehaviour
 {
     [SerializeField] private Transform gameTransform;  // Parent for puzzle pieces
     [SerializeField] private Transform piecePrefab;    // Prefab (Quad with MeshRenderer + BoxCollider)
+    [SerializeField] private LayerMask puzzleLayer;    // LayerMask for puzzle pieces
 
     private List<Transform> pieces;
     private int emptyLocation;
@@ -83,8 +84,11 @@ public class SlidingGameManager : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit))
+            // Only hit objects on the puzzleLayer
+            if (Physics.Raycast(ray, out hit, 100f, puzzleLayer))
             {
+                Debug.Log("Clicked on: " + hit.transform.name); // Debug line to confirm ray hit
+
                 for (int i = 0; i < pieces.Count; i++)
                 {
                     if (pieces[i] == hit.transform)
