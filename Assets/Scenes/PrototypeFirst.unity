@@ -4086,6 +4086,14 @@ PrefabInstance:
       propertyPath: moveSpeed
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 1706216207056102716, guid: 75fee1a5e000489468df32c8a8de6f9f, type: 3}
+      propertyPath: groundCheck
+      value: 
+      objectReference: {fileID: 1453149988}
+    - target: {fileID: 2526714068220570398, guid: 75fee1a5e000489468df32c8a8de6f9f, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 3374199978590848940, guid: 75fee1a5e000489468df32c8a8de6f9f, type: 3}
       propertyPath: m_ActionEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -5183,6 +5191,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mouseSens: {x: 0.09, y: 0.09}
   limitAngle: {x: -30, y: 70}
+--- !u!114 &1453149988 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5967999647459973445, guid: 75fee1a5e000489468df32c8a8de6f9f, type: 3}
+  m_PrefabInstance: {fileID: 929873140}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 937ac10b46c7984459d116f7d9c5e171, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1455236016 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4621251517401241892, guid: 408ae2944a4fd6d4bb5f044161626b49, type: 3}
@@ -5620,9 +5639,9 @@ MonoBehaviour:
     Enabled: 1
     DistanceLimit: 0
     MinimumOcclusionTime: 0
-    CameraRadius: 0.1
+    CameraRadius: 0.2
     UseFollowTarget:
-      Enabled: 0
+      Enabled: 1
       YOffset: 0
     Strategy: 0
     MaximumEffort: 4
@@ -6469,16 +6488,24 @@ PrefabInstance:
       value: 0.0348183
       objectReference: {fileID: 0}
     - target: {fileID: 5120425959772654871, guid: 408ae2944a4fd6d4bb5f044161626b49, type: 3}
+      propertyPath: m_Size.z
+      value: 0.070888974
+      objectReference: {fileID: 0}
+    - target: {fileID: 5120425959772654871, guid: 408ae2944a4fd6d4bb5f044161626b49, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5120425959772654871, guid: 408ae2944a4fd6d4bb5f044161626b49, type: 3}
       propertyPath: m_Center.x
-      value: 0.008816108
+      value: 0.008816107
       objectReference: {fileID: 0}
     - target: {fileID: 5120425959772654871, guid: 408ae2944a4fd6d4bb5f044161626b49, type: 3}
       propertyPath: m_Center.y
-      value: -0.00033161876
+      value: -0.00033161865
       objectReference: {fileID: 0}
     - target: {fileID: 5120425959772654871, guid: 408ae2944a4fd6d4bb5f044161626b49, type: 3}
       propertyPath: m_Center.z
-      value: 0.013717823
+      value: -0.030967535
       objectReference: {fileID: 0}
     - target: {fileID: 5279857126198733249, guid: 408ae2944a4fd6d4bb5f044161626b49, type: 3}
       propertyPath: m_Layer
