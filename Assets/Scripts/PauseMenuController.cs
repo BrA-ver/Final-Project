@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PauseMenuController : MonoBehaviour
 {
@@ -11,13 +12,22 @@ public class PauseMenuController : MonoBehaviour
     public Button resumeButton;
     public Button caseBoardButton;
     public Button backButton;
+    public Button quitToMenuButton;
+    public Button playButton;
 
-    private bool isPaused = false;
+    [Header("Scene Management")]
+    public string mainMenuScene = "MainMenuScene";
+    public string gamePlayScene = "GameplayScene";
+
+    [Header("References")]
+    public CaseBoardController caseboardController;
+
+    private bool isPaused = true;
 
     void Start()
     {
         
-        pauseMenuPanel.SetActive(false);
+        pauseMenuPanel.SetActive(true);
         caseBoardPanel.SetActive(false);
 
         
@@ -25,11 +35,19 @@ public class PauseMenuController : MonoBehaviour
         caseBoardButton.onClick.AddListener(OpenCaseBoard);
         backButton.onClick.AddListener(ReturnToPauseMenu);
 
-        
+       
         resumeButton.interactable = true;
         caseBoardButton.interactable = true;
         backButton.interactable = true;
+
+        if (quitToMenuButton != null)
+        {
+            quitToMenuButton.onClick.AddListener(QuitToMainMenu);
+        }
+
     }
+
+
 
     void Update()
     {
@@ -55,7 +73,7 @@ public class PauseMenuController : MonoBehaviour
         Time.timeScale = 0f;
         isPaused = true;
         pauseMenuPanel.SetActive(true);
-        caseBoardPanel.SetActive(false); 
+        caseBoardPanel.SetActive(false);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
@@ -74,16 +92,37 @@ public class PauseMenuController : MonoBehaviour
     {
         pauseMenuPanel.SetActive(false);
         caseBoardPanel.SetActive(true);
+
+        
+        if (caseboardController != null)
+        {
+            
+        }
     }
 
     public void ReturnToPauseMenu()
     {
         caseBoardPanel.SetActive(false);
         pauseMenuPanel.SetActive(true);
+
+        
+        if (caseboardController != null)
+        {
+            caseboardController.CloseDetailPanel();
+        }
     }
 
     public bool IsPaused()
     {
         return isPaused;
+    }
+
+    public void QuitToMainMenu()
+    {
+        
+        Time.timeScale = 1f;
+
+        
+        SceneManager.LoadScene(mainMenuScene);
     }
 }

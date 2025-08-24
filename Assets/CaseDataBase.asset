@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41c793191f0d944418dcb10c29a32978, type: 3}
+  m_Name: CaseDataBase
+  m_EditorClassIdentifier: 
+  allNPCs:
+  - npcID: Janitor
+    npcName: John
+    npcPhoto: {fileID: 21300000, guid: a9704e4c37ea3614aae004cbe45e088d, type: 3}
+    npcDescription: 'Generating random paragraphs can be an excellent way for writers
+      to get their creative flow going at the beginning of the day. The writer has
+      no idea what topic the random paragraph will be about when it appears. This
+      forces the writer to use creativity to complete one of three common writing
+      challenges. The writer can use the paragraph as the first one of a short story
+      and build upon it. A second option is to use the random paragraph somewhere
+      in a short story they create. The third option is to have the random paragraph
+      be the ending paragraph in a short story. No matter which of these challenges
+      is undertaken, the writer is forced to use creativity to incorporate the paragraph
+      into their writing. '
+  - npcID: Bartender
+    npcName: Jerry
+    npcPhoto: {fileID: 21300000, guid: 6f528004d04e5164a92c2865e6d6c6b9, type: 3}
+    npcDescription: 'A random paragraph can also be an excellent way for a writer
+      to tackle writers'' block. Writing block can often happen due to being stuck
+      with a current project that the writer is trying to complete. By inserting
+      a completely random paragraph from which to begin, it can take down some of
+      the issues that may have been causing the writers'' block in the first place. '
+  - npcID: Stage-hand
+    npcName: Mary
+    npcPhoto: {fileID: 21300000, guid: ab40ddf4466ae2048a39608fe4705cc7, type: 3}
+    npcDescription: 'Another productive way to use this tool to begin a daily writing
+      routine. One way is to generate a random paragraph with the intention to try
+      to rewrite it while still keeping the original meaning. The purpose here is
+      to just get the writing started so that when the writer goes onto their day''s
+      writing projects, words are already flowing from their fingers. '
