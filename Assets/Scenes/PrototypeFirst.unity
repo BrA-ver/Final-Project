@@ -4735,13 +4735,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3217634489355938779, guid: 6b011ac06ea097e48b5bcf1f01a227ec, type: 3}
+      propertyPath: m_TagString
+      value: Clue
+      objectReference: {fileID: 0}
     - target: {fileID: 8549219271874128032, guid: 6b011ac06ea097e48b5bcf1f01a227ec, type: 3}
       propertyPath: m_Name
       value: bar_glasses_scene
       objectReference: {fileID: 0}
     - target: {fileID: 8549219271874128032, guid: 6b011ac06ea097e48b5bcf1f01a227ec, type: 3}
       propertyPath: m_TagString
-      value: Clue
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 9074538901632938522, guid: 6b011ac06ea097e48b5bcf1f01a227ec, type: 3}
       propertyPath: m_LocalScale.x
@@ -7317,6 +7321,67 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1001 &6742309224509906860
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3116719750829145263, guid: 719c04a9a928e2548a8fa1370395dbcd, type: 3}
+      propertyPath: m_Name
+      value: Medical Form
+      objectReference: {fileID: 0}
+    - target: {fileID: 7494105733291206426, guid: 719c04a9a928e2548a8fa1370395dbcd, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5856ed62a3f922b4b9f329b4e9a70bbf, type: 2}
+    - target: {fileID: 8840094268700987360, guid: 719c04a9a928e2548a8fa1370395dbcd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3.514
+      objectReference: {fileID: 0}
+    - target: {fileID: 8840094268700987360, guid: 719c04a9a928e2548a8fa1370395dbcd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 15.4014
+      objectReference: {fileID: 0}
+    - target: {fileID: 8840094268700987360, guid: 719c04a9a928e2548a8fa1370395dbcd, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 26.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 8840094268700987360, guid: 719c04a9a928e2548a8fa1370395dbcd, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.970079
+      objectReference: {fileID: 0}
+    - target: {fileID: 8840094268700987360, guid: 719c04a9a928e2548a8fa1370395dbcd, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8840094268700987360, guid: 719c04a9a928e2548a8fa1370395dbcd, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.24278952
+      objectReference: {fileID: 0}
+    - target: {fileID: 8840094268700987360, guid: 719c04a9a928e2548a8fa1370395dbcd, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8840094268700987360, guid: 719c04a9a928e2548a8fa1370395dbcd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8840094268700987360, guid: 719c04a9a928e2548a8fa1370395dbcd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 28.102
+      objectReference: {fileID: 0}
+    - target: {fileID: 8840094268700987360, guid: 719c04a9a928e2548a8fa1370395dbcd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 719c04a9a928e2548a8fa1370395dbcd, type: 3}
 --- !u!4 &6888069892754041267
 Transform:
   m_ObjectHideFlags: 0
@@ -7521,3 +7586,4 @@ SceneRoots:
   - {fileID: 1638139319}
   - {fileID: 255404206458703331}
   - {fileID: 1316784648}
+  - {fileID: 6742309224509906860}

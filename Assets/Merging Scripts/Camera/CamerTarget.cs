@@ -15,8 +15,8 @@ public class CamerTarget : MonoBehaviour
     // In start, hide the mouse cursor and get the player's transform from the transform's parent
     private void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
 
         player = transform.parent;
         offset = transform.position - player.position;
