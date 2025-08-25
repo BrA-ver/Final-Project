@@ -136,7 +136,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &311818297
 RectTransform:
   m_ObjectHideFlags: 0
@@ -390,7 +390,6 @@ RectTransform:
   - {fileID: 311818297}
   - {fileID: 1819772191}
   - {fileID: 1285534606}
-  - {fileID: 1254096424}
   m_Father: {fileID: 1377517308}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1579,7 +1578,7 @@ RectTransform:
   - {fileID: 1888538691}
   - {fileID: 435609011}
   - {fileID: 713690813}
-  m_Father: {fileID: 552136734}
+  m_Father: {fileID: 1377517308}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1894,6 +1893,7 @@ RectTransform:
   m_Children:
   - {fileID: 552136734}
   - {fileID: 1773258675}
+  - {fileID: 1254096424}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2587,7 +2587,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2080755130}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2080755130
 MonoBehaviour:
   m_ObjectHideFlags: 0
