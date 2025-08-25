@@ -1775,20 +1775,24 @@ PrefabInstance:
       value: 0.0348183
       objectReference: {fileID: 0}
     - target: {fileID: 5120425959772654871, guid: 408ae2944a4fd6d4bb5f044161626b49, type: 3}
+      propertyPath: m_Size.z
+      value: 0.06303661
+      objectReference: {fileID: 0}
+    - target: {fileID: 5120425959772654871, guid: 408ae2944a4fd6d4bb5f044161626b49, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5120425959772654871, guid: 408ae2944a4fd6d4bb5f044161626b49, type: 3}
       propertyPath: m_Center.x
-      value: 0.008816108
+      value: 0.008816107
       objectReference: {fileID: 0}
     - target: {fileID: 5120425959772654871, guid: 408ae2944a4fd6d4bb5f044161626b49, type: 3}
       propertyPath: m_Center.y
-      value: -0.00033161876
+      value: -0.00033161865
       objectReference: {fileID: 0}
     - target: {fileID: 5120425959772654871, guid: 408ae2944a4fd6d4bb5f044161626b49, type: 3}
       propertyPath: m_Center.z
-      value: 0.013717823
+      value: -0.034893673
       objectReference: {fileID: 0}
     - target: {fileID: 5279857126198733249, guid: 408ae2944a4fd6d4bb5f044161626b49, type: 3}
       propertyPath: m_Layer
@@ -3106,8 +3110,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.046589587, y: 0.0348183, z: 0.16025962}
-  m_Center: {x: 0.008816108, y: -0.00033162063, z: 0.013717584}
+  m_Size: {x: 0.019648125, y: 0.019639775, z: 0.11317907}
+  m_Center: {x: 0.0022400345, y: 0.0027240394, z: -0.00982272}
 --- !u!1 &689252344
 GameObject:
   m_ObjectHideFlags: 0
@@ -3348,8 +3352,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.046589587, y: 0.0348183, z: 0.16025962}
-  m_Center: {x: 0.008816108, y: -0.00033161876, z: 0.013717823}
+  m_Size: {x: 0.019951878, y: 0.019456279, z: 0.16025962}
+  m_Center: {x: 0.0019613402, y: 0.0027969556, z: 0.0137178255}
 --- !u!1 &748346402
 GameObject:
   m_ObjectHideFlags: 0
@@ -6555,7 +6559,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5120425959772654871, guid: 408ae2944a4fd6d4bb5f044161626b49, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5120425959772654871, guid: 408ae2944a4fd6d4bb5f044161626b49, type: 3}
       propertyPath: m_Center.x
