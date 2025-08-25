@@ -16,7 +16,6 @@ public class TimeTravel : MonoBehaviour
 
     private bool isTeleporting = false;
 
-    // Track whether we are currently in the Present or Past
     private bool inPresent = true;
 
     void Awake()
@@ -41,35 +40,27 @@ public class TimeTravel : MonoBehaviour
     {
         isTeleporting = true;
 
-        // Try to find a movement script and disable it
-        var movement = GetComponent<PlayerMovement>(); // Replace with your actual movement script name if different
+        var movement = GetComponent<PlayerMovement>();
         if (movement != null) movement.enabled = false;
 
-        // Play effects
         PlayEffects();
 
-        // Wait before teleport
         yield return new WaitForSeconds(delayBeforeTeleport);
 
-        // Teleport based on whether we're in Present or Past
         if (inPresent)
         {
-            // Go to Past (+Z)
             transform.position += new Vector3(0, 0, teleportDistance);
             inPresent = false;
         }
         else
         {
-            // Go back to Present (-Z)
             transform.position -= new Vector3(0, 0, teleportDistance);
             inPresent = true;
         }
 
-        // Stop and deactivate effects
         StopEffects();
         DeactivateEffects();
 
-        // Small delay to prevent movement script snapping us back
         yield return new WaitForSeconds(0.1f);
 
         if (movement != null) movement.enabled = true;

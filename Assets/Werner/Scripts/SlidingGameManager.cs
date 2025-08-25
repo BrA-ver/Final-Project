@@ -4,17 +4,16 @@ using UnityEngine;
 
 public class SlidingGameManager : MonoBehaviour
 {
-    [SerializeField] private Transform gameTransform;  // Parent for puzzle pieces
-    [SerializeField] private Transform piecePrefab;    // Prefab (Quad with MeshRenderer + BoxCollider)
-    [SerializeField] private LayerMask puzzleLayer;    // LayerMask for puzzle pieces
+    [SerializeField] private Transform gameTransform; 
+    [SerializeField] private Transform piecePrefab;   
+    [SerializeField] private LayerMask puzzleLayer; 
 
     private List<Transform> pieces;
     private int emptyLocation;
-    private int width;   // horizontal (columns)
-    private int height;  // vertical (rows)
+    private int width;
+    private int height;
     private bool shuffling = false;
 
-    // Create the game setup with width x height pieces.
     private void CreateGamePieces(float gapThickness)
     {
         float tileWidth = 1f / (float)width;
@@ -27,7 +26,6 @@ public class SlidingGameManager : MonoBehaviour
                 Transform piece = Instantiate(piecePrefab, gameTransform);
                 pieces.Add(piece);
 
-                // Position each piece in a grid from -1 to +1
                 piece.localPosition = new Vector3(
                     -1 + (2 * tileWidth * col) + tileWidth,
                     +1 - (2 * tileHeight * row) - tileHeight,
@@ -37,7 +35,6 @@ public class SlidingGameManager : MonoBehaviour
                 piece.localScale = new Vector3((2 * tileWidth) - gapThickness, (2 * tileHeight) - gapThickness, 1f);
                 piece.name = $"{(row * width) + col}";
 
-                // Leave bottom-right slot empty
                 if ((row == height - 1) && (col == width - 1))
                 {
                     emptyLocation = (width * height) - 1;
@@ -45,7 +42,6 @@ public class SlidingGameManager : MonoBehaviour
                 }
                 else
                 {
-                    // Map UV coordinates appropriately (for texture slicing)
                     float gap = gapThickness / 2;
                     Mesh mesh = piece.GetComponent<MeshFilter>().mesh;
                     Vector2[] uv = new Vector2[4];
@@ -64,36 +60,30 @@ public class SlidingGameManager : MonoBehaviour
     void Start()
     {
         pieces = new List<Transform>();
-        width = 3;   // 3 columns
-        height = 3;  // 3 rows (changed from 4)
+        width = 3;
+        height = 3;
         CreateGamePieces(0.01f);
     }
 
     void Update()
     {
-        // Check for completion
         if (!shuffling && CheckCompletion())
         {
             shuffling = true;
             StartCoroutine(WaitShuffle(0.5f));
         }
 
-        // Handle mouse click
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-            // Only hit objects on the puzzleLayer
             if (Physics.Raycast(ray, out hit, 100f, puzzleLayer))
             {
-                Debug.Log("Clicked on: " + hit.transform.name); // Debug line to confirm ray hit
-
                 for (int i = 0; i < pieces.Count; i++)
                 {
                     if (pieces[i] == hit.transform)
                     {
-                        // Check each direction to see if valid move
                         if (SwapIfValid(i, -width, width)) { break; }
                         if (SwapIfValid(i, +width, width)) { break; }
                         if (SwapIfValid(i, -1, 0)) { break; }
