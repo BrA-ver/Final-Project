@@ -14,6 +14,12 @@ public class InputHandler : MonoBehaviour
     public event Action onSumbit;
     public event Action onPresentEvidence;
 
+    private void Start()
+    {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
     public void OnMove(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();

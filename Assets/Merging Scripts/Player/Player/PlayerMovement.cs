@@ -46,7 +46,6 @@ public class PlayerMovement : MonoBehaviour
 
         GroundMovement();
         VerticalMovement();
-        HandleRotation();
     }
 
     void GroundMovement()
@@ -71,16 +70,6 @@ public class PlayerMovement : MonoBehaviour
         {
             yVelocity.y = Mathf.Sqrt(-2f * jumpHeight * gravityValue);
         }
-    }
-
-    void HandleRotation()
-    {
-        if (moveDirection.magnitude < 0.1f)
-            return;
-
-        Quaternion lookRotation = Quaternion.LookRotation(moveDirection);
-        Quaternion rotation = Quaternion.Slerp(transform.rotation, lookRotation, rotationSpeed * Time.deltaTime);
-        transform.rotation = rotation;
     }
 
     public void Move(Vector2 direction)

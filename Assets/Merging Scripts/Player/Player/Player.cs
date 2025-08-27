@@ -46,10 +46,10 @@ public class Player : MonoBehaviour
 
     void AnimateMovement()
     {
-        bool isMoving = movement.Velocity.magnitude > 0.1f;
-        animator.SetBool(moving, isMoving);
+        //bool isMoving = movement.Velocity.magnitude > 0.1f;
+        //animator.SetBool(moving, isMoving);
 
-        animator.SetBool(grounded, movement.OnGround);
+        //animator.SetBool(grounded, movement.OnGround);
     }
 
     private void HandleMovement()
