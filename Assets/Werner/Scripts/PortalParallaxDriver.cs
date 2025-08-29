@@ -1,9 +1,7 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Renderer))]
 public class PortalParallaxDriver : MonoBehaviour
 {
-    [Tooltip("Assign your Player or the Main Camera (if it follows the player).")]
     public Transform player;
 
     private static readonly int PlayerPosID = Shader.PropertyToID("_PlayerPos");
