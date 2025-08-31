@@ -9,14 +9,18 @@ public class TimeTravel : MonoBehaviour
     public float delayBeforeTeleport = 2f;
     public float teleportDistance = 100f;
 
-    [Header("Assign particle system instances")]
+    [Header("Assign particle system instances (on the player)")]
     public ParticleSystem effect1;
     public ParticleSystem effect2;
     public ParticleSystem effect3;
 
-    private bool isTeleporting = false;
+    [Header("(Optional) Trigger-on-tag if crystal has tag 'TimeCrystal'")]
+    public bool triggerOnCrystalTag = false;
+    public string crystalTag = "TimeCrystal";
 
+    private bool isTeleporting = false;
     private bool inPresent = true;
+    private PlayerMovement cachedMovement;
 
     void Awake()
     {
@@ -26,44 +30,44 @@ public class TimeTravel : MonoBehaviour
             return;
         }
         Instance = this;
+        cachedMovement = GetComponent<PlayerMovement>();
     }
 
-    void Update()
+    // If you want the PLAYER to react directly when touching a crystal (with IsTrigger = true):
+    void OnTriggerEnter(Collider other)
     {
-        if (Input.GetKeyDown(KeyCode.Q) && !isTeleporting)
-        {
+        if (!triggerOnCrystalTag || isTeleporting) return;
+        if (other.CompareTag(crystalTag))
+            TryStartTimeTravel();
+    }
+
+    /// <summary>Call this from the crystal to begin the sequence.</summary>
+    public void TryStartTimeTravel()
+    {
+        if (!isTeleporting)
             StartCoroutine(TimeTravelSequence());
-        }
     }
 
     IEnumerator TimeTravelSequence()
     {
         isTeleporting = true;
 
-        var movement = GetComponent<PlayerMovement>();
-        if (movement != null) movement.enabled = false;
+        if (cachedMovement != null) cachedMovement.enabled = false;
 
         PlayEffects();
 
         yield return new WaitForSeconds(delayBeforeTeleport);
 
-        if (inPresent)
-        {
-            transform.position += new Vector3(0, 0, teleportDistance);
-            inPresent = false;
-        }
-        else
-        {
-            transform.position -= new Vector3(0, 0, teleportDistance);
-            inPresent = true;
-        }
+        Vector3 offset = new Vector3(0f, 0f, teleportDistance);
+        transform.position += inPresent ? offset : -offset;
+        inPresent = !inPresent;
 
         StopEffects();
         DeactivateEffects();
 
         yield return new WaitForSeconds(0.1f);
 
-        if (movement != null) movement.enabled = true;
+        if (cachedMovement != null) cachedMovement.enabled = true;
 
         isTeleporting = false;
     }
