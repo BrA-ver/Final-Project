@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -5,6 +6,8 @@ public class Player : MonoBehaviour
     InputHandler input;
     PlayerMovement movement;
     Animator animator;
+    Interactor interactor;
+
     int moving = Animator.StringToHash("moving");
     int grounded = Animator.StringToHash("onGround");
 
@@ -17,6 +20,7 @@ public class Player : MonoBehaviour
         input = GetComponent<InputHandler>();
         movement = GetComponent<PlayerMovement>();
         animator = GetComponent<Animator>();
+        interactor = GetComponentInChildren<Interactor>();
     }
 
     private void Start()
@@ -30,7 +34,16 @@ public class Player : MonoBehaviour
     private void OnEnable()
     {
         input.onJump += OnJump;
+        input.onInteract += OnInteract;
     }
+
+    private void OnDisable()
+    {
+        input.onJump -= OnJump;
+        input.onInteract -= OnInteract;
+    }
+
+    
 
     private void Update()
     {
@@ -76,5 +89,10 @@ public class Player : MonoBehaviour
     public void SetPosition(Vector3 newPos)
     {
         startPos = newPos;
+    }
+
+    private void OnInteract()
+    {
+        interactor.Interact();
     }
 }

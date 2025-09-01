@@ -9,6 +9,8 @@ public class Interactor : MonoBehaviour
     [SerializeField] LayerMask interactbleLayer;
     Interactable interactable;
 
+    
+
     private void Update()
     {
         // Do a raycast to find interactables
@@ -63,20 +65,20 @@ public class Interactor : MonoBehaviour
     ////        interactable = null;
     ////}
 
-    ////public void OnInteract(InputAction.CallbackContext context)
-    ////{
-    ////    if (context.started)
-    ////    {
-    ////        Interact();
-    ////    }
-    ////}
+    public void OnInteract(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            Interact();
+        }
+    }
 
-    ////private void Interact()
-    ////{
-    ////    if (!interactable) return;
+    public void Interact()
+    {
+        if (!interactable) return;
 
-    ////    interactable.Interact();
-    ////}
+        interactable.Interact();
+    }
 
     ////private void OnTriggerEnter(Collider other)
     ////{

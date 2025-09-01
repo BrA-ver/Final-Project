@@ -13,6 +13,7 @@ public class InputHandler : MonoBehaviour
     public event Action onJump;
     public event Action onSumbit;
     public event Action onPresentEvidence;
+    public event Action onInteract;
 
     private void Start()
     {
@@ -51,5 +52,11 @@ public class InputHandler : MonoBehaviour
         {
             onPresentEvidence?.Invoke();
         }
+    }
+
+    public void OnInteract(InputAction.CallbackContext context)
+    {
+        if (context.started)
+            onInteract?.Invoke();
     }
 }
