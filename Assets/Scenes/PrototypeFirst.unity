@@ -891,6 +891,7 @@ GameObject:
   - component: {fileID: 401535293}
   - component: {fileID: 401535292}
   - component: {fileID: 401535291}
+  - component: {fileID: 401535296}
   m_Layer: 0
   m_Name: Rift Crystal
   m_TagString: TimeCrystal
@@ -1021,6 +1022,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1707344314}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &401535296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 401535289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 218d5e2e914164d4ba3befa33a302162, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDistance: 10
+  delayBeforeReturn: 1.5
+  mapOffsetZ: 200
+  effect1: {fileID: 1537329977}
+  effect2: {fileID: 2026088772}
+  effect3: {fileID: 707738533}
+  player: {fileID: 1538082197}
 --- !u!1 &419126153
 GameObject:
   m_ObjectHideFlags: 0
