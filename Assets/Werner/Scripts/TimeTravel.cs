@@ -1,77 +1,202 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 public class TimeTravel : MonoBehaviour
 {
-    public static TimeTravel Instance;
-
     [Header("Teleport Settings")]
-    public float delayBeforeTeleport = 2f;
-    public float teleportDistance = 100f;
+    [SerializeField] private float mapOffsetZ = 200f; 
+    [SerializeField] private float delayBeforeTeleport = 2f;
 
-    [Header("Assign particle system instances (on the player)")]
+    [Header("Input Settings")]
+    [SerializeField] private KeyCode teleportKey = KeyCode.Q;
+
+    [Header("Particle Effects (on the player)")]
     public ParticleSystem effect1;
     public ParticleSystem effect2;
     public ParticleSystem effect3;
 
-    [Header("(Optional) Trigger-on-tag if crystal has tag 'TimeCrystal'")]
-    public bool triggerOnCrystalTag = false;
-    public string crystalTag = "TimeCrystal";
+    [Header("Crystals")]
+    [SerializeField] private List<MeshRenderer> map1Crystals;
+    [SerializeField] private List<MeshRenderer> map2Crystals;
+    [SerializeField] private Material outlineMaterial;
+    [SerializeField] private float triggerDistance = 5f;
 
-    private bool isTeleporting = false;
-    private bool inPresent = true;
+    [Header("UI Popup")]
+    [SerializeField] private GameObject teleportPopup;
+    [SerializeField] private Button yesButton;
+    [SerializeField] private Button noButton;
+
     private PlayerMovement cachedMovement;
+    private CharacterController controller;
+    private CamerTarget cameraLook; // your camera look script
+
+    private Dictionary<MeshRenderer, Material[]> originalMats = new Dictionary<MeshRenderer, Material[]>();
+    private MeshRenderer activeCrystal = null;
+    private bool isTeleporting = false;
+    private bool popupActive = false;
+    private bool pendingFromMap1;
 
     void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
         cachedMovement = GetComponent<PlayerMovement>();
+        controller = GetComponent<CharacterController>();
+        cameraLook = GetComponentInChildren<CamerTarget>(); // finds camera look script in children
+
+        foreach (var c in map1Crystals)
+            if (c != null) originalMats[c] = c.materials;
+        foreach (var c in map2Crystals)
+            if (c != null) originalMats[c] = c.materials;
+
+        if (teleportPopup != null) teleportPopup.SetActive(false);
+        if (yesButton != null) yesButton.onClick.AddListener(OnYesClicked);
+        if (noButton != null) noButton.onClick.AddListener(OnNoClicked);
     }
 
-    // If you want the PLAYER to react directly when touching a crystal (with IsTrigger = true):
-    void OnTriggerEnter(Collider other)
+    void Update()
     {
-        if (!triggerOnCrystalTag || isTeleporting) return;
-        if (other.CompareTag(crystalTag))
-            TryStartTimeTravel();
+        if (popupActive) return;
+
+        MeshRenderer nearest = GetNearestCrystal();
+        bool inRange = nearest != null;
+
+        if (inRange && activeCrystal != nearest)
+        {
+            ClearHighlight();
+            HighlightCrystal(nearest);
+        }
+        else if (!inRange && activeCrystal != null)
+        {
+            ClearHighlight();
+        }
+
+        if (inRange && !isTeleporting && Input.GetKeyDown(teleportKey))
+        {
+            pendingFromMap1 = map1Crystals.Contains(nearest);
+            ShowPopup();
+        }
     }
 
-    /// <summary>Call this from the crystal to begin the sequence.</summary>
-    public void TryStartTimeTravel()
+    MeshRenderer GetNearestCrystal()
     {
-        if (!isTeleporting)
-            StartCoroutine(TimeTravelSequence());
+        MeshRenderer nearest = null;
+        float minDist = Mathf.Infinity;
+
+        foreach (var c in map1Crystals)
+        {
+            if (c == null) continue;
+            float dist = Vector3.Distance(transform.position, c.transform.position);
+            if (dist < triggerDistance && dist < minDist)
+            {
+                nearest = c;
+                minDist = dist;
+            }
+        }
+
+        foreach (var c in map2Crystals)
+        {
+            if (c == null) continue;
+            float dist = Vector3.Distance(transform.position, c.transform.position);
+            if (dist < triggerDistance && dist < minDist)
+            {
+                nearest = c;
+                minDist = dist;
+            }
+        }
+
+        return nearest;
     }
 
-    IEnumerator TimeTravelSequence()
+    // --- UI logic ---
+    void ShowPopup()
+    {
+        popupActive = true;
+        if (teleportPopup != null) teleportPopup.SetActive(true);
+
+        if (cachedMovement != null) cachedMovement.enabled = false;
+        if (cameraLook != null) cameraLook.enabled = false;
+
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+    void HidePopup()
+    {
+        popupActive = false;
+        if (teleportPopup != null) teleportPopup.SetActive(false);
+
+        if (cachedMovement != null) cachedMovement.enabled = true;
+        if (cameraLook != null) cameraLook.enabled = true;
+
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    void OnYesClicked()
+    {
+        HidePopup();
+        StartCoroutine(TeleportSequence(pendingFromMap1));
+    }
+
+    void OnNoClicked()
+    {
+        HidePopup();
+    }
+
+    IEnumerator TeleportSequence(bool fromMap1)
     {
         isTeleporting = true;
-
         if (cachedMovement != null) cachedMovement.enabled = false;
 
         PlayEffects();
-
         yield return new WaitForSeconds(delayBeforeTeleport);
 
-        Vector3 offset = new Vector3(0f, 0f, teleportDistance);
-        transform.position += inPresent ? offset : -offset;
-        inPresent = !inPresent;
+        Vector3 pos = transform.position;
+        pos = fromMap1 ? new Vector3(pos.x, pos.y, pos.z + mapOffsetZ)
+                       : new Vector3(pos.x, pos.y, pos.z - mapOffsetZ);
+
+        if (controller != null)
+        {
+            controller.enabled = false;
+            transform.position = pos;
+            controller.enabled = true;
+        }
+        else
+        {
+            transform.position = pos;
+        }
 
         StopEffects();
         DeactivateEffects();
 
-        yield return new WaitForSeconds(0.1f);
-
         if (cachedMovement != null) cachedMovement.enabled = true;
+        if (cameraLook != null) cameraLook.enabled = true;
 
         isTeleporting = false;
     }
 
+    // --- Highlight helpers ---
+    void HighlightCrystal(MeshRenderer crystal)
+    {
+        if (crystal == null) return;
+
+        Material[] newMats = new Material[originalMats[crystal].Length + 1];
+        for (int i = 0; i < originalMats[crystal].Length; i++)
+            newMats[i] = originalMats[crystal][i];
+        newMats[newMats.Length - 1] = outlineMaterial;
+        crystal.materials = newMats;
+        activeCrystal = crystal;
+    }
+
+    void ClearHighlight()
+    {
+        if (activeCrystal == null) return;
+        activeCrystal.materials = originalMats[activeCrystal];
+        activeCrystal = null;
+    }
+
+    // --- Particle helpers ---
     void PlayEffects()
     {
         if (effect1) { effect1.gameObject.SetActive(true); effect1.Play(true); }
