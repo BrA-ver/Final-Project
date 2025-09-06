@@ -5,4 +5,5 @@ public class Evidence : ScriptableObject
 {
     public string Name;
     [TextArea(2, 3)] public string Description;
+    public Sprite sprite;
 }

@@ -12,6 +12,8 @@ public class EvidenceManager : MonoBehaviour
 
     public event Action<Evidence> onPresentEvidence;
 
+    public List<Evidence> AllEvidence => allEvidence;
+
     private void Awake()
     {
         Instance = this;
@@ -31,7 +33,8 @@ public class EvidenceManager : MonoBehaviour
 
     private void OnPresentEvidence()
     {
-        onPresentEvidence?.Invoke(evidence);
+        //onPresentEvidence?.Invoke(evidence);
+        EvidenceDisplay.instance.OpenEvidenceBoard();
     }
 
     public void AddEvidence(Evidence evidence)
