@@ -131,6 +131,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test NPC (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1588051864384180794, guid: 491a9308e9ec55e44952469279634b2c, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 1916477721351541378, guid: 491a9308e9ec55e44952469279634b2c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 34.76
@@ -180,9 +184,13 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
     - target: {fileID: 7661768461508523007, guid: 491a9308e9ec55e44952469279634b2c, type: 3}
+      propertyPath: highlight
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7661768461508523007, guid: 491a9308e9ec55e44952469279634b2c, type: 3}
       propertyPath: outlineMaterial
       value: 
-      objectReference: {fileID: 2100000, guid: c0d564ae2fc9a424fa158e811197514b, type: 2}
+      objectReference: {fileID: 2100000, guid: 762d24d8399d120478f123655d8d5a02, type: 2}
     - target: {fileID: 8228297017542609804, guid: 491a9308e9ec55e44952469279634b2c, type: 3}
       propertyPath: m_Materials.Array.size
       value: 1
@@ -190,7 +198,7 @@ PrefabInstance:
     - target: {fileID: 8228297017542609804, guid: 491a9308e9ec55e44952469279634b2c, type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
-      objectReference: {fileID: 2100000, guid: c0d564ae2fc9a424fa158e811197514b, type: 2}
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     m_RemovedComponents:
     - {fileID: 2150863396937203226, guid: 491a9308e9ec55e44952469279634b2c, type: 3}
     m_RemovedGameObjects: []
@@ -216,6 +224,10 @@ PrefabInstance:
     - target: {fileID: 1588051864384180794, guid: 491a9308e9ec55e44952469279634b2c, type: 3}
       propertyPath: m_Name
       value: Test NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 1588051864384180794, guid: 491a9308e9ec55e44952469279634b2c, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1916477721351541378, guid: 491a9308e9ec55e44952469279634b2c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -265,6 +277,14 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+    - target: {fileID: 8228297017542609804, guid: 491a9308e9ec55e44952469279634b2c, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8228297017542609804, guid: 491a9308e9ec55e44952469279634b2c, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     m_RemovedComponents:
     - {fileID: 2150863396937203226, guid: 491a9308e9ec55e44952469279634b2c, type: 3}
     m_RemovedGameObjects: []
@@ -1640,7 +1660,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mesh: {fileID: 666723666}
-  outlineMaterial: {fileID: 2100000, guid: c0d564ae2fc9a424fa158e811197514b, type: 2}
+  outlineMaterial: {fileID: 2100000, guid: 762d24d8399d120478f123655d8d5a02, type: 2}
   highlight: 0
 --- !u!114 &666723669
 MonoBehaviour:
@@ -2095,9 +2115,21 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -4571605982943762130, guid: dabbeedf30da6a0448ea0cca7690e278, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4571605982943762130, guid: dabbeedf30da6a0448ea0cca7690e278, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 250d460cf99a3c04892d1f1581276960, type: 2}
+    - target: {fileID: -4571605982943762130, guid: dabbeedf30da6a0448ea0cca7690e278, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 250d460cf99a3c04892d1f1581276960, type: 2}
+    - target: {fileID: -4571605982943762130, guid: dabbeedf30da6a0448ea0cca7690e278, type: 3}
+      propertyPath: 'm_Materials.Array.data[2]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 762d24d8399d120478f123655d8d5a02, type: 2}
     - target: {fileID: 919132149155446097, guid: dabbeedf30da6a0448ea0cca7690e278, type: 3}
       propertyPath: m_Name
       value: Ch36_nonPBR
@@ -2122,7 +2154,7 @@ GameObject:
   - component: {fileID: 1003302471}
   - component: {fileID: 1003302470}
   - component: {fileID: 1003302469}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2174,7 +2206,6 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
-  - {fileID: 2100000, guid: c0d564ae2fc9a424fa158e811197514b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2356,7 +2387,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mesh: {fileID: 1065157124}
-  outlineMaterial: {fileID: 2100000, guid: c0d564ae2fc9a424fa158e811197514b, type: 2}
+  outlineMaterial: {fileID: 2100000, guid: 762d24d8399d120478f123655d8d5a02, type: 2}
   highlight: 0
 --- !u!1 &1162892788
 GameObject:
@@ -2612,6 +2643,14 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Clue
       objectReference: {fileID: 0}
+    - target: {fileID: 7581855212635693440, guid: 6b011ac06ea097e48b5bcf1f01a227ec, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7581855212635693440, guid: 6b011ac06ea097e48b5bcf1f01a227ec, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 762d24d8399d120478f123655d8d5a02, type: 2}
     - target: {fileID: 8549219271874128032, guid: 6b011ac06ea097e48b5bcf1f01a227ec, type: 3}
       propertyPath: m_Name
       value: bar_glasses_scene
