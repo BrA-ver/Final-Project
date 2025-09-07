@@ -38,12 +38,14 @@ public class Interactor : MonoBehaviour
             }
             
             interactable.Highlight();
+            HUD.instance.ShowInteractIcon();
             Debug.DrawLine(ray.origin, hit.point, Color.blue);
         }
         else
         {
             if (interactable)
                 interactable.StopHighlight();
+            HUD.instance.HideInteractIcon();
             interactable = null;
         }
     }
