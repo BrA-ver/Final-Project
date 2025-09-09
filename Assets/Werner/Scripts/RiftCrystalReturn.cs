@@ -1,4 +1,4 @@
-using UnityEngine; 
+using UnityEngine;
 using System.Collections;
 
 public class RiftCrystalReturn : MonoBehaviour
@@ -15,10 +15,10 @@ public class RiftCrystalReturn : MonoBehaviour
 
     [Header("Player Reference")]
     [SerializeField] private Transform player;
-    [SerializeField] private Transform cameraHolder; // << drag the camera or its parent here
+    [SerializeField] private Transform cameraHolder;
 
     [Header("Shake Settings")]
-    [SerializeField] private float shakeStartDistance = 5f; // no shake until this far
+    [SerializeField] private float shakeStartDistance = 5f;
     [SerializeField] private float maxShakeStrength = 0.3f;
     [SerializeField] private float shakeSpeed = 20f;
 
@@ -26,6 +26,7 @@ public class RiftCrystalReturn : MonoBehaviour
     private PlayerMovement movement;
     private bool isReturning = false;
     private bool playerInRift = false;
+    private bool isTeleportingBack = false; // ✅ NEW
 
     private Vector3 camOriginalLocalPos;
 
@@ -62,17 +63,24 @@ public class RiftCrystalReturn : MonoBehaviour
         {
             float dist = Vector3.Distance(player.position, transform.position);
 
-            // --- CAMERA SHAKE ---
             float intensity = 0f;
             if (dist > shakeStartDistance)
             {
                 float t = (dist - shakeStartDistance) / (maxDistance - shakeStartDistance);
                 intensity = Mathf.Clamp01(t);
             }
-            ApplyCameraShake(intensity);
 
-            // --- TELEPORT ---
-            if (dist > maxDistance)
+            // ✅ Keep shaking while teleport countdown is active
+            if (isTeleportingBack)
+            {
+                ApplyCameraShake(1f); // full intensity during teleport delay
+            }
+            else
+            {
+                ApplyCameraShake(intensity);
+            }
+
+            if (dist > maxDistance && !isTeleportingBack)
             {
                 Debug.Log($"Player left rift bubble! Distance = {dist}");
                 StartCoroutine(ReturnToMap1());
@@ -83,11 +91,19 @@ public class RiftCrystalReturn : MonoBehaviour
     IEnumerator ReturnToMap1()
     {
         isReturning = true;
+        isTeleportingBack = true; // ✅ start shake loop
         if (movement != null) movement.enabled = false;
 
         PlayEffects();
 
-        yield return new WaitForSeconds(delayBeforeReturn);
+        // ✅ custom wait loop that keeps shaking
+        float elapsed = 0f;
+        while (elapsed < delayBeforeReturn)
+        {
+            ApplyCameraShake(1f); // shake hard while waiting
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
 
         Vector3 pos = player.position;
         pos = new Vector3(pos.x, pos.y, pos.z - mapOffsetZ);
@@ -108,7 +124,6 @@ public class RiftCrystalReturn : MonoBehaviour
 
         if (movement != null) movement.enabled = true;
 
-        // Reset shake after teleport
         if (cameraHolder != null)
             cameraHolder.localPosition = camOriginalLocalPos;
 
@@ -116,6 +131,28 @@ public class RiftCrystalReturn : MonoBehaviour
 
         playerInRift = false;
         isReturning = false;
+        isTeleportingBack = false; // ✅ stop shake after teleport
+    }
+
+    // --- NEW: suppress auto-return after manual teleport ---
+    public void SuppressReturn(float duration = 2f)
+    {
+        StartCoroutine(SuppressReturnRoutine(duration));
+    }
+
+    private IEnumerator SuppressReturnRoutine(float duration)
+    {
+        isReturning = true;
+        yield return new WaitForSeconds(duration);
+        isReturning = false;
+    }
+
+    // --- NEW: reset state when teleporting back to Map 1 ---
+    public void ForceExitRift()
+    {
+        playerInRift = false;
+        isReturning = false;
+        isTeleportingBack = false;
     }
 
     // --- Particle helpers ---
@@ -140,7 +177,6 @@ public class RiftCrystalReturn : MonoBehaviour
         if (effect3) effect3.gameObject.SetActive(false);
     }
 
-    // --- Camera Shake ---
     void ApplyCameraShake(float intensity)
     {
         if (cameraHolder == null) return;

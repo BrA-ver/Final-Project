@@ -27,6 +27,7 @@ public class TimeTravel : MonoBehaviour
     [SerializeField] private GameObject teleportPopup;
     [SerializeField] private Button yesButton;
     [SerializeField] private Button noButton;
+    [SerializeField] private Text popupLabel; // ✅ NEW: reference to the popup text
 
     private PlayerMovement cachedMovement;
     private CharacterController controller;
@@ -42,7 +43,7 @@ public class TimeTravel : MonoBehaviour
     {
         cachedMovement = GetComponent<PlayerMovement>();
         controller = GetComponent<CharacterController>();
-        cameraLook = GetComponentInChildren<CamerTarget>(); // finds camera look script in children
+        cameraLook = GetComponentInChildren<CamerTarget>();
 
         foreach (var c in map1Crystals)
             if (c != null) originalMats[c] = c.materials;
@@ -119,6 +120,12 @@ public class TimeTravel : MonoBehaviour
 
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
+
+        // ✅ Change popup text depending on crystal
+        if (popupLabel != null)
+        {
+            popupLabel.text = pendingFromMap1 ? "Look into the Rift?" : "Exit the Rift?";
+        }
     }
 
     void HidePopup()
@@ -172,6 +179,19 @@ public class TimeTravel : MonoBehaviour
 
         if (cachedMovement != null) cachedMovement.enabled = true;
         if (cameraLook != null) cameraLook.enabled = true;
+
+        // ✅ Tell RiftCrystalReturn to ignore auto-teleport briefly
+        var returnScript = FindObjectOfType<RiftCrystalReturn>();
+        if (returnScript != null)
+        {
+            returnScript.SuppressReturn(2f);
+
+            // ✅ Extra: Reset Map 2 state when we teleport back to Map 1
+            if (!fromMap1)
+            {
+                returnScript.ForceExitRift();
+            }
+        }
 
         isTeleporting = false;
     }
