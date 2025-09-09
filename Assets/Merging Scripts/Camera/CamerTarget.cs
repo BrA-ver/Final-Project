@@ -5,6 +5,7 @@ public class CamerTarget : MonoBehaviour
 {
     // We need a player controls asset to get the mouse delta
     InputHandler controls;
+    Interactor interactor;
 
     // We need a Vector2 for the mouse sensitivity amd 2 floats for the x and y rotation. [1]
     [SerializeField] Vector2 mouseSens = new Vector2(0.09f, 0.09f); // 0.09 is responsive but not snappy
@@ -17,6 +18,7 @@ public class CamerTarget : MonoBehaviour
     private void Awake()
     {
         controls = GetComponentInParent<InputHandler>();
+        interactor = GetComponentInChildren<Interactor>();
     }
 
     // In start, hide the mouse cursor and get the player's transform from the transform's parent
@@ -36,7 +38,7 @@ public class CamerTarget : MonoBehaviour
 
     private void MouseLook()
     {
-        if (DialogueManager.Instance.dialogueStarted) return;
+        if (interactor.isInteracting) return;
         // Get the mouse delta from the look input
         Vector2 mouseDelta = controls.lookInput;
 

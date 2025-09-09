@@ -33,8 +33,8 @@ public class EvidenceManager : MonoBehaviour
 
     private void OnPresentEvidence()
     {
-        //onPresentEvidence?.Invoke(evidence);
-        EvidenceDisplay.instance.OpenEvidenceBoard();
+        onPresentEvidence?.Invoke(evidence);
+        //EvidenceDisplay.instance.OpenEvidenceBoard();
     }
 
     public void AddEvidence(Evidence evidence)

@@ -1,12 +1,11 @@
-using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class NPC : DialogueHolder
 {
     [Header("Evidence")]
-    [SerializeField] Evidence evidence;
-    [SerializeField] Dialogue responseDialoge;
-    [SerializeField] Dialogue unresponseDialoge;
+    [SerializeField] List<EvidenceResponce> evidenceResponses;
+    [SerializeField] Dialogue nullResponse;
 
     private void OnDisable()
     {
@@ -15,20 +14,45 @@ public class NPC : DialogueHolder
 
     public override void Interact()
     {
-        base.Interact();
-        EvidenceManager.Instance.onPresentEvidence += OnPresentEvidence;
+        //base.Interact();
+        //EvidenceManager.Instance.onPresentEvidence += OnPresentEvidence;
+
+        ActionScreen.instance.ShowActions();
     }
 
     private void OnPresentEvidence(Evidence evidence)
     {
-        if (evidence == this.evidence)
+        Dialogue responseDialogue = null;
+        if (HasResponce(evidence, out responseDialogue))
         {
-            Debug.Log("How did you get that?");
-            DialogueManager.Instance.SwitchDialogue(responseDialoge);
+            DialogueManager.Instance.SwitchDialogue(responseDialogue);
         }
         else
         {
-            Debug.Log("Is that supposed to mean something?");
+            DialogueManager.Instance.SwitchDialogue(nullResponse);
         }
     }
+
+    bool HasResponce(Evidence evidence, out Dialogue responseDialogue)
+    {
+        bool hasResponse = false;
+        responseDialogue = null;
+        foreach (EvidenceResponce responce in evidenceResponses)
+        {
+            if (responce.evidence == evidence) 
+            {
+                responseDialogue = responce.response;
+                hasResponse = true; 
+            }
+        }
+
+        return hasResponse;
+    }
+}
+
+[System.Serializable]
+public class EvidenceResponce
+{
+    public Evidence evidence;
+    public Dialogue response;
 }

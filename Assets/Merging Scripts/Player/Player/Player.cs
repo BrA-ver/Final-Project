@@ -47,7 +47,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if (DialogueManager.Instance.dialogueStarted)
+        if (interactor.isInteracting)
         {
             movement.Stop();
             animator.SetBool(moving, false);

@@ -9,7 +9,17 @@ public class Interactor : MonoBehaviour
     [SerializeField] LayerMask interactbleLayer;
     Interactable interactable;
 
-    
+    public bool isInteracting;
+
+    private void OnEnable()
+    {
+        DialogueManager.Instance.onDialogueFinished += StopInteracting;
+    }
+
+    private void OnDisable()
+    {
+        DialogueManager.Instance.onDialogueFinished -= StopInteracting;
+    }
 
     private void Update()
     {
@@ -23,7 +33,10 @@ public class Interactor : MonoBehaviour
             if (newInteractable == null) 
             {
                 if (interactable)
+                {
                     interactable.StopHighlight();
+                    HUD.instance.HideInteractIcon();
+                }
                 return; 
             }
 
@@ -34,6 +47,7 @@ public class Interactor : MonoBehaviour
             else if (interactable != newInteractable)
             {
                 interactable.StopHighlight();
+                HUD.instance.HideInteractIcon();
                 interactable = newInteractable;
             }
             
@@ -50,22 +64,12 @@ public class Interactor : MonoBehaviour
         }
     }
 
-    ////[SerializeField] Vector3 checkOffset;
-    ////[SerializeField] float checkRadius;
+    private void StopInteracting()
+    {
+        isInteracting = false;
+    }
 
-    //List<Interactable> interactables = new List<Interactable>();
-
-    ////Interactable interactable;
-
-    ////private void Update()
-    ////{
-    ////    if (interactables.Count > 0f)
-    ////    {
-    ////        interactable = interactables[0];
-    ////    }
-    ////    else
-    ////        interactable = null;
-    ////}
+    
 
     public void OnInteract(InputAction.CallbackContext context)
     {
@@ -77,26 +81,12 @@ public class Interactor : MonoBehaviour
 
     public void Interact()
     {
-        if (!interactable) return;
+        if (!interactable || isInteracting) return;
 
+        isInteracting = true;
         interactable.Interact();
+
     }
 
-    ////private void OnTriggerEnter(Collider other)
-    ////{
-    ////    if (other.TryGetComponent(out Interactable interactable))
-    ////    {
-    ////        this.interactables.Add(interactable);
-    ////        interactable.Highlight();
-    ////    }
-    ////}
-
-    ////private void OnTriggerExit(Collider other)
-    ////{
-    ////    if (other.TryGetComponent(out Interactable interactable))
-    ////    {
-    ////        this.interactables.Remove(interactable);
-    ////        interactable.StopHighlight();
-    ////    }
-    ////}
+    
 }
