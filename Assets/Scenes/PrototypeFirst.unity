@@ -7749,6 +7749,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 369712221330103468, guid: 408ae2944a4fd6d4bb5f044161626b49, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 239c2bf765f2d6c499b5e2aeaae8a934, type: 2}
     - target: {fileID: 2174271150788772078, guid: 408ae2944a4fd6d4bb5f044161626b49, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -7793,22 +7797,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Setting Present
       objectReference: {fileID: 0}
-    - target: {fileID: 4683866173440937064, guid: 408ae2944a4fd6d4bb5f044161626b49, type: 3}
-      propertyPath: m_Materials.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4683866173440937064, guid: 408ae2944a4fd6d4bb5f044161626b49, type: 3}
-      propertyPath: 'm_Materials.Array.data[1]'
-      value: 
-      objectReference: {fileID: 3609018082110429662, guid: c4dc010c6c1428c419c81d62c9e21ad8, type: 3}
     - target: {fileID: 5794508726498906088, guid: 408ae2944a4fd6d4bb5f044161626b49, type: 3}
       propertyPath: 'm_CapsuleColliders.Array.data[0]'
       value: 
       objectReference: {fileID: 1871899789}
-    - target: {fileID: 8352395480926301558, guid: 408ae2944a4fd6d4bb5f044161626b49, type: 3}
-      propertyPath: m_Lightmapping
-      value: 1
+    - target: {fileID: 8216105829780048448, guid: 408ae2944a4fd6d4bb5f044161626b49, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 8216105829780048448, guid: 408ae2944a4fd6d4bb5f044161626b49, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5a0bab5d200fe054296e5b10951b51f3, type: 2}
+    - target: {fileID: 9028432407467166920, guid: 408ae2944a4fd6d4bb5f044161626b49, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 239c2bf765f2d6c499b5e2aeaae8a934, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9100,9 +9104,17 @@ PrefabInstance:
       value: Medical Form
       objectReference: {fileID: 0}
     - target: {fileID: 7494105733291206426, guid: 719c04a9a928e2548a8fa1370395dbcd, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7494105733291206426, guid: 719c04a9a928e2548a8fa1370395dbcd, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 5856ed62a3f922b4b9f329b4e9a70bbf, type: 2}
+    - target: {fileID: 7494105733291206426, guid: 719c04a9a928e2548a8fa1370395dbcd, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5a0bab5d200fe054296e5b10951b51f3, type: 2}
     - target: {fileID: 8840094268700987360, guid: 719c04a9a928e2548a8fa1370395dbcd, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.514
