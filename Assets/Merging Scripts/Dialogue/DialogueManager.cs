@@ -1,6 +1,6 @@
 using System;
 using UnityEngine;
-using UnityEngine.EventSystems;
+//using UnityEngine.EventSystems;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -13,6 +13,8 @@ public class DialogueManager : MonoBehaviour
     public bool dialogueStarted;
     bool makingChoice;
     int index = 0;
+
+    bool isNpc;
 
     public event Action onDialogeStarted;
     public event Action onDialogueFinished;
@@ -42,9 +44,11 @@ public class DialogueManager : MonoBehaviour
         EnterDialogue(dialogue);
     }
 
-    public void EnterDialogue(Dialogue dialogue)
+    public void EnterDialogue(Dialogue dialogue, bool isNpc = false)
     {
         if (dialogueStarted) return;
+
+        this.isNpc = isNpc;
 
         onDialogeStarted?.Invoke();
         dialogueStarted = true;
@@ -89,8 +93,13 @@ public class DialogueManager : MonoBehaviour
         index = 0;
         dialogue = null;
 
+        if (!isNpc)
+        {
+            GameEvents.OnInteractStop();
+        }
+
         // When the button is clicked, set the selected button to null
-        EventSystem.current.SetSelectedGameObject(null);
+        //DeselectButton();
     }
 
     public void SelectChoice(DialogueChoice choice)
@@ -99,10 +108,11 @@ public class DialogueManager : MonoBehaviour
         makingChoice = false;
         index = 0;
         onHodeChoices?.Invoke();
+        //DeselectButton();
         ContinueOrExitDialogue();
 
         // When the button is clicked, set the selected button to null
-        EventSystem.current.SetSelectedGameObject(null);
+        
     }
 
     void OnSubmit()
@@ -112,4 +122,16 @@ public class DialogueManager : MonoBehaviour
 
         ContinueOrExitDialogue();
     }
+
+    //public void DeselectButton()
+    //{
+    //    // Get the currently selected button
+    //    var selected = EventSystem.current.currentSelectedGameObject;
+
+    //    // Trigger its OnDeselect (fires EventTrigger or IDeslectHandler)
+    //    UIHelper.TriggerOnDeselect(selected);
+
+    //    // Then clear selection
+    //    EventSystem.current.SetSelectedGameObject(null);
+    //}
 }

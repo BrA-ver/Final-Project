@@ -11,14 +11,14 @@ public class Interactor : MonoBehaviour
 
     public bool isInteracting;
 
-    private void OnEnable()
+    private void Start()
     {
-        DialogueManager.Instance.onDialogueFinished += StopInteracting;
+        GameEvents.onInteractStop += StopInteracting;
     }
 
     private void OnDisable()
     {
-        DialogueManager.Instance.onDialogueFinished -= StopInteracting;
+        GameEvents.onInteractStop -= StopInteracting;
     }
 
     private void Update()
@@ -67,6 +67,7 @@ public class Interactor : MonoBehaviour
     private void StopInteracting()
     {
         isInteracting = false;
+        Debug.Log("stopped interacting");
     }
 
     

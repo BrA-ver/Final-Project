@@ -15,9 +15,15 @@ public class NPC : DialogueHolder
     public override void Interact()
     {
         //base.Interact();
-        //EvidenceManager.Instance.onPresentEvidence += OnPresentEvidence;
+        
 
-        ActionScreen.instance.ShowActions();
+        ActionScreen.instance.ShowActions(this);
+    }
+
+    public void Talk()
+    {
+        //EvidenceManager.Instance.onPresentEvidence += OnPresentEvidence;
+        DialogueManager.Instance.EnterDialogue(dialogues[0], true);
     }
 
     private void OnPresentEvidence(Evidence evidence)

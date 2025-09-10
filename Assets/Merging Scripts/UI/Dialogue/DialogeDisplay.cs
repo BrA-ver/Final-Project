@@ -56,6 +56,7 @@ public class DialogeDisplay : MonoBehaviour
 
     public void OnShowChoices(DialogueChoice[] choices)
     {
+       
         Debug.Log("Showing Choices");
         if (choices.Length > 0)
         {
@@ -64,6 +65,7 @@ public class DialogeDisplay : MonoBehaviour
                 choiceButtons[i].gameObject.SetActive(true);
                 choiceButtons[i].SetChoice(choices[i]);
             }
+            //DialogueManager.Instance.DeselectButton();
             choiceButtons[0].Select();
         }
     }
