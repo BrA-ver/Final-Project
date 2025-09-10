@@ -15,10 +15,11 @@ MonoBehaviour:
   _name: Greeting
   Speaker: Orbin II
   lines:
-  - Good day.
-  - How goes it?
+  - 'Hello Detective. '
+  - Do you need something?
   choices:
   - text: What do you know about the victim?
     targetDialogue: {fileID: 11400000, guid: cd9d73a3816e005489dfe0fdd6e3ecac, type: 2}
-  - text: Meh.
+  - text: No.
     targetDialogue: {fileID: 11400000, guid: f1aed39e86828d84a852c77cd6bb65a1, type: 2}
+  evidence: {fileID: 0}

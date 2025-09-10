@@ -35,12 +35,14 @@ public class Player : MonoBehaviour
     {
         input.onJump += OnJump;
         input.onInteract += OnInteract;
+        input.onPresentEvidence += OnPresentEvidence;
     }
 
     private void OnDisable()
     {
         input.onJump -= OnJump;
         input.onInteract -= OnInteract;
+        input.onPresentEvidence -= OnPresentEvidence;
     }
 
     
@@ -94,5 +96,10 @@ public class Player : MonoBehaviour
     private void OnInteract()
     {
         interactor.Interact();
+    }
+
+    private void OnPresentEvidence()
+    {
+        EvidenceDisplay.instance.ToggleEvidence();
     }
 }

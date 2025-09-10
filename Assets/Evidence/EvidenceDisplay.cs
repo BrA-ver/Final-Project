@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using TMPro;
 
 public class EvidenceDisplay : MonoBehaviour
 {
@@ -20,9 +21,20 @@ public class EvidenceDisplay : MonoBehaviour
 
     public bool IsOpen;
 
+    [Header("Description")]
+    [SerializeField] TextMeshProUGUI descrition;
+
     private void Awake()
     {
         instance = this;
+    }
+
+    public void ToggleEvidence()
+    {
+        if (IsOpen)
+            CloseEvidenceBoard();
+        else
+            OpenEvidenceBoard();
     }
 
     public void OpenEvidenceBoard()
@@ -34,6 +46,19 @@ public class EvidenceDisplay : MonoBehaviour
         index = 0;
 
         SelectSlot();
+    }
+
+    public void CloseEvidenceBoard()
+    {
+        IsOpen = false;
+        parent.SetActive(false);
+        evidences.Clear();
+        
+        foreach (EvidenceSlot slot in activeSlots)
+        {
+            Destroy(slot.gameObject);
+        }
+        activeSlots.Clear();
     }
 
     void ShowEvidence()
@@ -53,11 +78,19 @@ public class EvidenceDisplay : MonoBehaviour
 
     void SelectSlot()
     {
+        if (activeSlots.Count <= 0) return;
         if (selectedSlot)
             selectedSlot.Deselect();
 
         selectedSlot = activeSlots[index];
         selectedSlot.Select();
+
+        ShowDescription();
+    }
+
+    void ShowDescription()
+    {
+        descrition.text = selectedSlot.Evidence.Description;
     }
 
     public void ToggleSlot(float slot)

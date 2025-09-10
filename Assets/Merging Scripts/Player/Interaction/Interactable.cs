@@ -2,21 +2,18 @@ using UnityEngine;
 
 public class Interactable: MonoBehaviour
 {
-    HighlightTarget target;
-
-    private void Awake()
-    {
-        target = GetComponent<HighlightTarget>();
-    }
+    [SerializeField] HighlightTarget[] targets;
 
     public void Highlight()
     {
-        target.HighlightObject();
+        foreach (HighlightTarget target in targets)
+            target.HighlightObject();
     }
 
     public void StopHighlight()
     {
-        target.ClearHighlight();
+        foreach(HighlightTarget target in targets)
+            target.ClearHighlight();
     }
 
     public virtual void Interact()

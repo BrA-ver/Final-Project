@@ -7,7 +7,6 @@ public class EvidenceManager : MonoBehaviour
 
     InputHandler input;
 
-    [SerializeField] Evidence evidence;
     [SerializeField] List<Evidence> allEvidence = new List<Evidence>();
 
     public event Action<Evidence> onPresentEvidence;
@@ -18,7 +17,7 @@ public class EvidenceManager : MonoBehaviour
     {
         Instance = this;
         input = FindFirstObjectByType<InputHandler>();
-        AddEvidence(evidence);
+        //AddEvidence(evidence);
     }
 
     private void OnEnable()
@@ -33,7 +32,7 @@ public class EvidenceManager : MonoBehaviour
 
     private void OnPresentEvidence()
     {
-        onPresentEvidence?.Invoke(evidence);
+        //onPresentEvidence?.Invoke(evidence);
         //EvidenceDisplay.instance.OpenEvidenceBoard();
     }
 

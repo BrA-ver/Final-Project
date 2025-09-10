@@ -3,6 +3,7 @@ using UnityEngine;
 public class HighlightTarget : MonoBehaviour
 {
     [SerializeField] MeshRenderer mesh;
+    [SerializeField] SkinnedMeshRenderer skinnedMeshRenderer;
     [SerializeField] Material outlineMaterial;
     [SerializeField] bool highlight;
     Material[] originalMaterials;
@@ -10,7 +11,15 @@ public class HighlightTarget : MonoBehaviour
     private void Awake()
     {
         mesh = GetComponent<MeshRenderer>();
-        originalMaterials = mesh.materials;
+        if (!mesh)
+        {
+            skinnedMeshRenderer = GetComponent<SkinnedMeshRenderer>();
+            originalMaterials = skinnedMeshRenderer.materials;
+        }
+        else
+        {
+            originalMaterials = mesh.materials;
+        }
     }
 
     //private void Update()
@@ -31,16 +40,35 @@ public class HighlightTarget : MonoBehaviour
             newMaterials[i] = currentMaterials[i];
         }
         newMaterials[newMaterials.Length - 1] = outlineMaterial;
-        mesh.materials = newMaterials;
+
+        if (mesh)
+            mesh.materials = newMaterials;
+        else
+            skinnedMeshRenderer.materials = newMaterials;
     }
 
     public void ClearHighlight()
     {
-        mesh.materials = originalMaterials;
+        if (mesh)
+            mesh.materials = originalMaterials;
+        else
+            skinnedMeshRenderer.materials = originalMaterials;
     }
 
     public void Interact(GameObject interactor)
     {
         //throw new System.NotImplementedException();
+    }
+}
+
+[System.Serializable]
+public class MeshHighlight
+{
+    public MeshRenderer mesh;
+    Material[] originalMaterials;
+
+    public void SetOriginal()
+    {
+        Material[] currentMaterials = originalMaterials;
     }
 }

@@ -14,6 +14,8 @@ public class EvidenceSlot : MonoBehaviour
     [Header("Selection")]
     [SerializeField] GameObject highlight;
 
+    public Evidence Evidence => evidence;
+
     public void SetEvidence(Evidence newEvidence)
     {
         evidence = newEvidence;
