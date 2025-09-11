@@ -13,21 +13,19 @@ public class PauseMenuController : MonoBehaviour
     public Button caseBoardButton;
     public Button backButton;
     public Button quitToMenuButton;
-    public Button playButton;
 
     [Header("Scene Management")]
     public string mainMenuScene = "MainMenuScene";
-    public string gamePlayScene = "GameplayScene";
 
     [Header("References")]
     public CaseBoardController caseboardController;
 
-    private bool isPaused = true;
+    private bool isPaused = false;
 
     void Start()
     {
         
-        pauseMenuPanel.SetActive(true);
+        pauseMenuPanel.SetActive(false);
         caseBoardPanel.SetActive(false);
 
         
@@ -45,9 +43,12 @@ public class PauseMenuController : MonoBehaviour
             quitToMenuButton.onClick.AddListener(QuitToMainMenu);
         }
 
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        isPaused = false;
+
     }
-
-
 
     void Update()
     {
