@@ -6177,6 +6177,10 @@ PrefabInstance:
       propertyPath: m_Radius
       value: 0.4
       objectReference: {fileID: 0}
+    - target: {fileID: 7953982859293777116, guid: 75fee1a5e000489468df32c8a8de6f9f, type: 3}
+      propertyPath: m_SlopeLimit
+      value: 60
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1443013951990317070, guid: 75fee1a5e000489468df32c8a8de6f9f, type: 3}
     - {fileID: 6296940131089826923, guid: 75fee1a5e000489468df32c8a8de6f9f, type: 3}
@@ -12713,7 +12717,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   open: 100
-  range: 10
+  range: 1
   Entrancedoor: {fileID: 744748315}
   Backdoor: {fileID: 578011147}
   Kitchendoor: {fileID: 1664431839}
@@ -13364,6 +13368,10 @@ PrefabInstance:
     - target: {fileID: 2436225690587956407, guid: 408ae2944a4fd6d4bb5f044161626b49, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 89.594
+      objectReference: {fileID: 0}
+    - target: {fileID: 2457041390914329322, guid: 408ae2944a4fd6d4bb5f044161626b49, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.339
       objectReference: {fileID: 0}
     - target: {fileID: 2895174743232559524, guid: 408ae2944a4fd6d4bb5f044161626b49, type: 3}
       propertyPath: m_IsActive
