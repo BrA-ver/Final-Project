@@ -27,11 +27,14 @@ public class TimeTravel : MonoBehaviour
     [SerializeField] private GameObject teleportPopup;
     [SerializeField] private Button yesButton;
     [SerializeField] private Button noButton;
-    [SerializeField] private Text popupLabel; // ✅ NEW: reference to the popup text
+    [SerializeField] private Text popupLabel;
+
+    [Header("UI Prompt")]
+    [SerializeField] private Text interactLabel; // ✅ NEW: "Press Q to interact" text
 
     private PlayerMovement cachedMovement;
     private CharacterController controller;
-    private CamerTarget cameraLook; // your camera look script
+    private CamerTarget cameraLook;
 
     private Dictionary<MeshRenderer, Material[]> originalMats = new Dictionary<MeshRenderer, Material[]>();
     private MeshRenderer activeCrystal = null;
@@ -53,29 +56,43 @@ public class TimeTravel : MonoBehaviour
         if (teleportPopup != null) teleportPopup.SetActive(false);
         if (yesButton != null) yesButton.onClick.AddListener(OnYesClicked);
         if (noButton != null) noButton.onClick.AddListener(OnNoClicked);
+
+        if (interactLabel != null) interactLabel.gameObject.SetActive(false); // hide on start
     }
 
     void Update()
     {
-        if (popupActive) return;
+        // ✅ ESC closes popup
+        if (popupActive)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                OnNoClicked();
+            }
+            return;
+        }
 
         MeshRenderer nearest = GetNearestCrystal();
         bool inRange = nearest != null;
 
+        // --- Highlight + prompt ---
         if (inRange && activeCrystal != nearest)
         {
             ClearHighlight();
             HighlightCrystal(nearest);
+            ShowInteractPrompt(true); // show "Press Q"
         }
         else if (!inRange && activeCrystal != null)
         {
             ClearHighlight();
+            ShowInteractPrompt(false);
         }
 
         if (inRange && !isTeleporting && Input.GetKeyDown(teleportKey))
         {
             pendingFromMap1 = map1Crystals.Contains(nearest);
             ShowPopup();
+            ShowInteractPrompt(false); // hide prompt once popup is open
         }
     }
 
@@ -109,7 +126,16 @@ public class TimeTravel : MonoBehaviour
         return nearest;
     }
 
-    // --- UI logic ---
+    // --- UI helpers ---
+    void ShowInteractPrompt(bool state)
+    {
+        if (interactLabel != null)
+        {
+            interactLabel.text = "Press Q";
+            interactLabel.gameObject.SetActive(state);
+        }
+    }
+
     void ShowPopup()
     {
         popupActive = true;
@@ -121,7 +147,6 @@ public class TimeTravel : MonoBehaviour
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
 
-        // ✅ Change popup text depending on crystal
         if (popupLabel != null)
         {
             popupLabel.text = pendingFromMap1 ? "Look into the Rift?" : "Exit the Rift?";
@@ -180,13 +205,11 @@ public class TimeTravel : MonoBehaviour
         if (cachedMovement != null) cachedMovement.enabled = true;
         if (cameraLook != null) cameraLook.enabled = true;
 
-        // ✅ Tell RiftCrystalReturn to ignore auto-teleport briefly
         var returnScript = FindObjectOfType<RiftCrystalReturn>();
         if (returnScript != null)
         {
             returnScript.SuppressReturn(2f);
 
-            // ✅ Extra: Reset Map 2 state when we teleport back to Map 1
             if (!fromMap1)
             {
                 returnScript.ForceExitRift();
