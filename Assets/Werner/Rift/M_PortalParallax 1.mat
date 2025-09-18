@@ -29,7 +29,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NebulaTex:
-        m_Texture: {fileID: 2800000, guid: 10247dd1933f75a46b090b677b2a541d, type: 3}
+        m_Texture: {fileID: 2800000, guid: ce89570c65f4c2d489534bd7374340d5, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RimNoiseTex:
@@ -77,14 +77,14 @@ Material:
     - _FlameColor: {r: 0.25348186, g: 1, b: 0, a: 0}
     - _FlameFlow: {r: 0.08, g: 0.03, b: 0, a: 0}
     - _FlameTiling: {r: 1, g: 1, b: 0, a: 0}
-    - _NebulaFlow: {r: 0.05, g: 0, b: 0, a: 0}
+    - _NebulaFlow: {r: 0.1, g: 0, b: 0, a: 0}
     - _NebulaTiling: {r: 4, g: 4, b: 0, a: 0}
     - _PlayerPos: {r: 0, g: 0, b: 0, a: 0}
     - _PortalPos: {r: 0, g: 0, b: 0, a: 0}
     - _RimColor: {r: 0.82484245, g: 0, b: 1, a: 0}
     - _RimFlow: {r: 0.4, g: 0.2, b: 0, a: 0}
     - _RimNoiseTiling: {r: 1, g: 1, b: 0, a: 0}
-    - _StarsFlow: {r: 0.1, g: 0, b: 0, a: 0}
+    - _StarsFlow: {r: -0.1, g: 0, b: 0, a: 0}
     - _StarsTiling: {r: 4, g: 4, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
