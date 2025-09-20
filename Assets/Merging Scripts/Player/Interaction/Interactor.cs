@@ -9,8 +9,6 @@ public class Interactor : MonoBehaviour
     [SerializeField] LayerMask interactbleLayer;
     Interactable interactable;
 
-    public bool isInteracting;
-
     private void Start()
     {
         GameEvents.onInteractStop += StopInteracting;
@@ -67,7 +65,7 @@ public class Interactor : MonoBehaviour
 
     private void StopInteracting()
     {
-        isInteracting = false;
+        GameManager.instance.IsInteracting = false;
         Debug.Log("stopped interacting");
     }
 
@@ -83,9 +81,9 @@ public class Interactor : MonoBehaviour
 
     public void Interact()
     {
-        if (!interactable || isInteracting) return;
+        if (!interactable || GameManager.instance.IsInteracting) return;
 
-        isInteracting = true;
+        GameManager.instance.IsInteracting = true;
         interactable.Interact();
 
     }

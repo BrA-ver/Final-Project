@@ -20,6 +20,7 @@ public class EvidenceDisplay : MonoBehaviour
     EvidenceSlot selectedSlot;
 
     public bool IsOpen;
+    public bool IsInterogating { get; set; }
 
     [Header("Description")]
     [SerializeField] TextMeshProUGUI descrition;
@@ -46,6 +47,7 @@ public class EvidenceDisplay : MonoBehaviour
         index = 0;
 
         SelectSlot();
+        GameManager.instance.IsInteracting = true;
     }
 
     public void CloseEvidenceBoard()
@@ -59,6 +61,9 @@ public class EvidenceDisplay : MonoBehaviour
             Destroy(slot.gameObject);
         }
         activeSlots.Clear();
+
+        if (!IsInterogating)
+            GameManager.instance.IsInteracting = false;
     }
 
     void ShowEvidence()

@@ -16,6 +16,13 @@ public class EvidenceSlot : MonoBehaviour
 
     public Evidence Evidence => evidence;
 
+    InputHandler handler;
+
+    private void Awake()
+    {
+        handler = FindObjectOfType<InputHandler>();
+    }
+
     public void SetEvidence(Evidence newEvidence)
     {
         evidence = newEvidence;
@@ -33,6 +40,10 @@ public class EvidenceSlot : MonoBehaviour
         highlight.SetActive(true);
         nameHolder.SetActive(true);
         nameText.text = evidence.Name;
+
+        if (EvidenceDisplay.instance.IsInterogating)
+            handler.onSumbit += OnSubmit;
+
     }
 
     public void Deselect()
@@ -40,5 +51,14 @@ public class EvidenceSlot : MonoBehaviour
         highlight.SetActive(false);
         nameHolder.SetActive(false);
         nameText.text = string.Empty;
+
+        if (EvidenceDisplay.instance.IsInterogating)
+            handler.onSumbit -= OnSubmit;
+    }
+
+    void OnSubmit()
+    {
+        EvidenceManager.Instance.PresentEvidence(evidence);
+        EvidenceDisplay.instance.CloseEvidenceBoard();
     }
 }

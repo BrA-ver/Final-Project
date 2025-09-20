@@ -42,4 +42,9 @@ public class EvidenceManager : MonoBehaviour
         Debug.Log($"Added {evidence.Name} to evidence list");
         allEvidence.Add(evidence);
     }
+
+    public void PresentEvidence(Evidence evidence)
+    {
+        onPresentEvidence?.Invoke(evidence);
+    }
 }

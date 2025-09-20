@@ -48,6 +48,7 @@ public class ActionScreen : MonoBehaviour
         //DeselectButton();
         HideActions();
         interactedNPC.Talk();
+        EvidenceDisplay.instance.IsInterogating = false;
 
         showActions = true;
     }
@@ -56,6 +57,7 @@ public class ActionScreen : MonoBehaviour
     {
         //DeselectButton();
         HideActions();
+        EvidenceDisplay.instance.IsInterogating = true;
         EvidenceDisplay.instance.OpenEvidenceBoard();
 
         showActions = true;

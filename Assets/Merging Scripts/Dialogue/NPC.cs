@@ -15,8 +15,8 @@ public class NPC : DialogueHolder
     public override void Interact()
     {
         //base.Interact();
-        
 
+        EvidenceManager.Instance.onPresentEvidence += OnPresentEvidence;
         ActionScreen.instance.ShowActions(this);
     }
 
@@ -31,7 +31,7 @@ public class NPC : DialogueHolder
         Dialogue responseDialogue = null;
         if (HasResponce(evidence, out responseDialogue))
         {
-            DialogueManager.Instance.SwitchDialogue(responseDialogue);
+            DialogueManager.Instance.EnterDialogue(responseDialogue, true);
         }
         else
         {

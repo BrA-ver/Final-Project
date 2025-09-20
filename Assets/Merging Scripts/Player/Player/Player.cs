@@ -49,7 +49,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if (interactor.isInteracting)
+        if (GameManager.instance.IsInteracting)
         {
             movement.Stop();
             animator.SetBool(moving, false);
