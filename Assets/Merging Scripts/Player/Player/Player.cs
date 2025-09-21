@@ -33,7 +33,7 @@ public class Player : MonoBehaviour
 
     private void OnEnable()
     {
-        input.onJump += OnJump;
+        input.onSumbit += OnJump;
         input.onInteract += OnInteract;
         input.onPresentEvidence += OnPresentEvidence;
     }
@@ -84,7 +84,7 @@ public class Player : MonoBehaviour
 
     void OnJump()
     {
-        if (waitForNextFrame) return;
+        if (waitForNextFrame || GameManager.instance.IsInteracting) return;
         movement.Jump();
     }
 

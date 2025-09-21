@@ -25,6 +25,8 @@ public class EvidenceDisplay : MonoBehaviour
     [Header("Description")]
     [SerializeField] TextMeshProUGUI descrition;
 
+    
+
     private void Awake()
     {
         instance = this;
@@ -40,6 +42,7 @@ public class EvidenceDisplay : MonoBehaviour
 
     public void OpenEvidenceBoard()
     {
+        Debug.Log("Opening Evidence Board");
         IsOpen = true;
         parent.SetActive(true);
         evidences = EvidenceManager.Instance.AllEvidence;
@@ -52,6 +55,7 @@ public class EvidenceDisplay : MonoBehaviour
 
     public void CloseEvidenceBoard()
     {
+        Debug.Log("Closing Evidence Board");
         IsOpen = false;
         parent.SetActive(false);
         evidences.Clear();
@@ -63,7 +67,13 @@ public class EvidenceDisplay : MonoBehaviour
         activeSlots.Clear();
 
         if (!IsInterogating)
+        {
             GameManager.instance.IsInteracting = false;
+        }
+        else
+        {
+            ActionScreen.instance.ShowActions();
+        }
     }
 
     void ShowEvidence()

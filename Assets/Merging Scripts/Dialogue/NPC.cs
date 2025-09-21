@@ -35,7 +35,7 @@ public class NPC : DialogueHolder
         }
         else
         {
-            DialogueManager.Instance.SwitchDialogue(nullResponse);
+            DialogueManager.Instance.EnterDialogue(nullResponse, true);
         }
     }
 

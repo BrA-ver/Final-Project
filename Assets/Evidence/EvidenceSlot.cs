@@ -18,6 +18,8 @@ public class EvidenceSlot : MonoBehaviour
 
     InputHandler handler;
 
+    bool canPress;
+
     private void Awake()
     {
         handler = FindObjectOfType<InputHandler>();
@@ -56,8 +58,19 @@ public class EvidenceSlot : MonoBehaviour
             handler.onSumbit -= OnSubmit;
     }
 
+    private void OnDestroy()
+    {
+        Deselect();
+    }
+
     void OnSubmit()
     {
+        //if (!canPress)
+        //{
+        //    canPress = true;
+        //    return;
+        //}
+        Debug.Log("Clicked Slot");
         EvidenceManager.Instance.PresentEvidence(evidence);
         EvidenceDisplay.instance.CloseEvidenceBoard();
     }

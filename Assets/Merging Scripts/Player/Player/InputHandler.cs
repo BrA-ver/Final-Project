@@ -15,10 +15,12 @@ public class InputHandler : MonoBehaviour
     public event Action onPresentEvidence;
     public event Action onInteract;
 
+    public InputAction jumpAction;
+
     private void Start()
     {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
     }
 
     public void OnMove(InputAction.CallbackContext context)

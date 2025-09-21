@@ -51,6 +51,7 @@ public class ActionScreen : MonoBehaviour
         EvidenceDisplay.instance.IsInterogating = false;
 
         showActions = true;
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
     public void Question()
@@ -61,6 +62,7 @@ public class ActionScreen : MonoBehaviour
         EvidenceDisplay.instance.OpenEvidenceBoard();
 
         showActions = true;
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
     public void Exit()
@@ -68,9 +70,10 @@ public class ActionScreen : MonoBehaviour
         //DeselectButton();
         GameEvents.OnInteractStop();
         HideActions();
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
-    void ShowActions()
+    public void ShowActions()
     {
         if (!showActions) return;
         holder.SetActive(true);

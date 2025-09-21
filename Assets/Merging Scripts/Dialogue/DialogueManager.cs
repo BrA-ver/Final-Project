@@ -16,8 +16,8 @@ public class DialogueManager : MonoBehaviour
 
     bool isNpc;
 
-    public event Action onDialogeStarted;
-    public event Action onDialogueFinished;
+    public event Action onDialogeStarted; // Activates the dialoge box whenever dialogue is started
+    public event Action onDialogueFinished; 
     public event Action<string> onDisplayDialogue;
     public event Action<DialogueChoice[]> onDisplayChoices;
     public event Action onHodeChoices;
@@ -48,7 +48,8 @@ public class DialogueManager : MonoBehaviour
     {
         if (dialogueStarted) return;
 
-        this.isNpc = isNpc;
+         this.isNpc = isNpc;
+        Debug.Log("Entering Dialogue");
 
         onDialogeStarted?.Invoke();
         dialogueStarted = true;
@@ -60,6 +61,7 @@ public class DialogueManager : MonoBehaviour
 
     private void ContinueOrExitDialogue()
     {
+        Debug.Log(index < dialogue.lines.Length);
         if (index < dialogue.lines.Length)
         {
             string dialogueLine = dialogue.lines[index];

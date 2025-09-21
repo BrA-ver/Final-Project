@@ -12,17 +12,3 @@ public static class GameEvents
     }
 }
 
-//public class UIHelper
-//{
-//    public static void TriggerOnDeselect(GameObject target)
-//    {
-//        if (target != null)
-//        {
-//            ExecuteEvents.Execute<IDeselectHandler>(
-//                target,
-//                new BaseEventData(EventSystem.current),
-//                ExecuteEvents.deselectHandler
-//            );
-//        }
-//    }
-//}
