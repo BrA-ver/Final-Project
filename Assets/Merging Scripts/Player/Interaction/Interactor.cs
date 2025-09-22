@@ -82,10 +82,7 @@ public class Interactor : MonoBehaviour
     public void Interact()
     {
         if (!interactable || GameManager.instance.IsInteracting) return;
-
-        GameManager.instance.IsInteracting = true;
         interactable.Interact();
-
     }
 
     

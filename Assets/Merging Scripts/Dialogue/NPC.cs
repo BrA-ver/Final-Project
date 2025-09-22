@@ -15,7 +15,7 @@ public class NPC : DialogueHolder
     public override void Interact()
     {
         //base.Interact();
-
+        GameManager.instance.IsInteracting = true;
         EvidenceManager.Instance.onPresentEvidence += OnPresentEvidence;
         ActionScreen.instance.ShowActions(this);
     }

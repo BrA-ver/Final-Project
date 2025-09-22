@@ -19,8 +19,8 @@ public class InputHandler : MonoBehaviour
 
     private void Start()
     {
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void OnMove(InputAction.CallbackContext context)
