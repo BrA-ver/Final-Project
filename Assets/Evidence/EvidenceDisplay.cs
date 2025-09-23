@@ -45,7 +45,10 @@ public class EvidenceDisplay : MonoBehaviour
         Debug.Log("Opening Evidence Board");
         IsOpen = true;
         parent.SetActive(true);
-        evidences = EvidenceManager.Instance.AllEvidence;
+
+        // Lists are not duplicatable with simple assignment,
+        List<Evidence> allEvidences = EvidenceManager.Instance.AllEvidence;
+        evidences = new List<Evidence>(allEvidences);
         ShowEvidence();
         index = 0;
 
