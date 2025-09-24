@@ -41,10 +41,13 @@ public class EvidenceManager : MonoBehaviour
         if (allEvidence.Contains(evidence)) return;
         Debug.Log($"Added {evidence.Name} to evidence list");
         allEvidence.Add(evidence);
+        EvidenceDisplay.instance.ShowPopUp(evidence.Name);
     }
 
     public void PresentEvidence(Evidence evidence)
     {
         onPresentEvidence?.Invoke(evidence);
+        EvidenceDisplay.instance.CloseEvidenceBoard();
+        DialogueManager.Instance.ShowActionsAfterDialogue();
     }
 }

@@ -16,6 +16,8 @@ public class DialogueManager : MonoBehaviour
 
     bool isNpc;
 
+    bool openActionsAfterDialogue;
+
     public event Action onDialogeStarted; // Activates the dialoge box whenever dialogue is started
     public event Action onDialogueFinished; 
     public event Action<string> onDisplayDialogue;
@@ -61,7 +63,7 @@ public class DialogueManager : MonoBehaviour
 
     private void ContinueOrExitDialogue()
     {
-        Debug.Log(index < dialogue.lines.Length);
+        Debug.Log($"Display dailogue: {index < dialogue.lines.Length}");
         if (index < dialogue.lines.Length)
         {
             string dialogueLine = dialogue.lines[index];
@@ -100,6 +102,11 @@ public class DialogueManager : MonoBehaviour
             GameEvents.OnInteractStop();
         }
 
+        if (openActionsAfterDialogue)
+        {
+            ActionScreen.instance.ShowActions();
+        }
+
         // When the button is clicked, set the selected button to null
         //DeselectButton();
     }
@@ -123,6 +130,11 @@ public class DialogueManager : MonoBehaviour
         if (!dialogueStarted) return;
 
         ContinueOrExitDialogue();
+    }
+
+    public void ShowActionsAfterDialogue()
+    {
+        openActionsAfterDialogue = true;
     }
 
     //public void DeselectButton()

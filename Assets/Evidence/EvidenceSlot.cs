@@ -72,6 +72,5 @@ public class EvidenceSlot : MonoBehaviour
         //}
         Debug.Log("Clicked Slot");
         EvidenceManager.Instance.PresentEvidence(evidence);
-        EvidenceDisplay.instance.CloseEvidenceBoard();
     }
 }

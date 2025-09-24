@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 using TMPro;
 
 public class EvidenceDisplay : MonoBehaviour
@@ -25,7 +26,10 @@ public class EvidenceDisplay : MonoBehaviour
     [Header("Description")]
     [SerializeField] TextMeshProUGUI descrition;
 
-    
+    [Header("Pop Up")]
+    [SerializeField] GameObject popupObj;
+    [SerializeField] TextMeshProUGUI popupText;
+    [SerializeField] float popUpTime = 1f;
 
     private void Awake()
     {
@@ -34,6 +38,9 @@ public class EvidenceDisplay : MonoBehaviour
 
     public void ToggleEvidence()
     {
+        if (DialogueManager.Instance.dialogueStarted) return;
+        if (ActionScreen.instance.performingAction && !IsInterogating) return;
+
         if (IsOpen)
             CloseEvidenceBoard();
         else
@@ -53,7 +60,7 @@ public class EvidenceDisplay : MonoBehaviour
         index = 0;
 
         SelectSlot();
-        GameManager.instance.IsInteracting = true;
+        GameManager.instance.StartInteracting();
     }
 
     public void CloseEvidenceBoard()
@@ -71,7 +78,7 @@ public class EvidenceDisplay : MonoBehaviour
 
         if (!IsInterogating)
         {
-            GameManager.instance.IsInteracting = false;
+            GameManager.instance.StopInteracting();
         }
         else
         {
@@ -128,4 +135,22 @@ public class EvidenceDisplay : MonoBehaviour
 
         SelectSlot();
     }
+
+    #region Pop Up
+    public void ShowPopUp(string clueName)
+    {
+        StopCoroutine(PopUpRoutine(clueName));
+        StartCoroutine(PopUpRoutine(clueName));
+    }
+
+    IEnumerator PopUpRoutine(string clueName)
+    {
+        popupObj.SetActive(true);
+        popupText.text = $"{clueName} added to inventory";
+        yield return new WaitForSeconds(popUpTime);
+
+        popupText.text = string.Empty;
+        popupObj.SetActive(false);
+    }
+    #endregion
 }

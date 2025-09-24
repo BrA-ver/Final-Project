@@ -18,4 +18,14 @@ public class GameButton : MonoBehaviour
 
         EventSystem.current.SetSelectedGameObject(null);
     }
+
+    public void Selected()
+    {
+        Debug.Log("Selected " + name);
+    }
+
+    public void Deselected()
+    {
+        Debug.Log("Deselected " + name);
+    }
 }

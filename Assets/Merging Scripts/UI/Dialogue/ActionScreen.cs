@@ -13,6 +13,8 @@ public class ActionScreen : MonoBehaviour
 
     bool showActions;
 
+    public bool performingAction = false;
+
     private void Awake()
     {
         instance = this;
@@ -28,14 +30,6 @@ public class ActionScreen : MonoBehaviour
         DialogueManager.Instance.onDialogueFinished -= ShowActions;
     }
 
-    public void ShowActions(NPC npc)
-    {
-        interactedNPC = npc;
-
-        holder.SetActive(true);
-        firstButton.Select();
-    }
-
     public void HideActions()
     {
         holder.SetActive(false);
@@ -46,6 +40,7 @@ public class ActionScreen : MonoBehaviour
     public void Talk()
     {
         //DeselectButton();
+
         HideActions();
         interactedNPC.Talk();
         EvidenceDisplay.instance.IsInterogating = false;
@@ -71,6 +66,8 @@ public class ActionScreen : MonoBehaviour
         GameEvents.OnInteractStop();
         HideActions();
         EventSystem.current.SetSelectedGameObject(null);
+
+        performingAction = false;
     }
 
     public void ShowActions()
@@ -78,10 +75,22 @@ public class ActionScreen : MonoBehaviour
         if (!showActions) return;
         holder.SetActive(true);
         Invoke(nameof(SelectFirst), .5f);
+
+        performingAction = true;
+    }
+
+    public void ShowActions(NPC npc)
+    {
+        holder.SetActive(true);
+        Invoke(nameof(SelectFirst), .5f);
+        interactedNPC = npc;
+
+        performingAction = true;
     }
 
     void SelectFirst()
     {
+        Debug.Log("Selected Button");
         firstButton.Select();
     }
 
