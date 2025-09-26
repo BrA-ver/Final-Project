@@ -2,34 +2,32 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class EvidenceDisplay : MonoBehaviour
 {
     public static EvidenceDisplay instance;
 
+    [Header("Display")]
+    [SerializeField] GameObject Display;
+    [SerializeField] TextMeshProUGUI descrition;
+
+    [Header("Evidence Slots")]
     [SerializeField] EvidenceSlot slotPrefab;
     [SerializeField] RectTransform evidenceHolder;
-    [SerializeField] GameObject parent;
-
     [SerializeField] int maxSlots = 12;
-    List<EvidenceSlot> activeSlots = new List<EvidenceSlot>();
-
-    List<Evidence> evidences;
-
-    // Selecting Slots
-    [SerializeField] int index = 0;
-    EvidenceSlot selectedSlot;
-
-    public bool IsOpen;
-    public bool IsInterogating { get; set; }
-
-    [Header("Description")]
-    [SerializeField] TextMeshProUGUI descrition;
 
     [Header("Pop Up")]
     [SerializeField] GameObject popupObj;
     [SerializeField] TextMeshProUGUI popupText;
     [SerializeField] float popUpTime = 1f;
+
+    List<EvidenceSlot> activeSlots = new List<EvidenceSlot>();
+
+    List<Evidence> evidences;
+
+    public bool IsOpen { get; private set; }
+    public bool IsInterogating { get; set; }
 
     private void Awake()
     {
@@ -42,32 +40,40 @@ public class EvidenceDisplay : MonoBehaviour
         if (ActionScreen.instance.performingAction && !IsInterogating) return;
 
         if (IsOpen)
-            CloseEvidenceBoard();
+        {
+            CloseEvidenceBoard(false);
+            if (IsInterogating)
+            {
+                ActionScreen.instance.showActions = true;
+                ActionScreen.instance.ShowActions();
+                //Debug.Log("Actions Shown");
+            }
+        }
         else
             OpenEvidenceBoard();
     }
 
     public void OpenEvidenceBoard()
     {
-        Debug.Log("Opening Evidence Board");
+        //Debug.Log("Opening Evidence Board");
         IsOpen = true;
-        parent.SetActive(true);
+        Display.SetActive(true);
 
         // Lists are not duplicatable with simple assignment,
         List<Evidence> allEvidences = EvidenceManager.Instance.AllEvidence;
         evidences = new List<Evidence>(allEvidences);
         ShowEvidence();
-        index = 0;
 
-        SelectSlot();
+        //SelectSlot();
         GameManager.instance.StartInteracting();
+        StartCoroutine(SelectFirstSlot());
     }
 
-    public void CloseEvidenceBoard()
+    public void CloseEvidenceBoard(bool interogating)
     {
-        Debug.Log("Closing Evidence Board");
+        //Debug.Log("Closing Evidence Board");
         IsOpen = false;
-        parent.SetActive(false);
+        Display.SetActive(false);
         evidences.Clear();
         
         foreach (EvidenceSlot slot in activeSlots)
@@ -80,10 +86,7 @@ public class EvidenceDisplay : MonoBehaviour
         {
             GameManager.instance.StopInteracting();
         }
-        else
-        {
-            ActionScreen.instance.ShowActions();
-        }
+        
     }
 
     void ShowEvidence()
@@ -94,46 +97,22 @@ public class EvidenceDisplay : MonoBehaviour
             EvidenceSlot slot = Instantiate(slotPrefab, evidenceHolder);
 
             // Assign evidence to the slot
-            slot.SetEvidence(evidence);
+            slot.Initialize(evidence);
 
             // Add the slot to the active slots list
             activeSlots.Add(slot);
         }
     }
 
-    void SelectSlot()
+    public void ShowDescription(EvidenceSlot slot)
     {
-        if (activeSlots.Count <= 0) return;
-        if (selectedSlot)
-            selectedSlot.Deselect();
-
-        selectedSlot = activeSlots[index];
-        selectedSlot.Select();
-
-        ShowDescription();
+        descrition.text = slot.Evidence.Description;
     }
 
-    void ShowDescription()
+    public void Interogate()
     {
-        descrition.text = selectedSlot.Evidence.Description;
-    }
-
-    public void ToggleSlot(float slot)
-    {
-        if (slot > 0.1)
-        {
-            index++;
-            if (index >= activeSlots.Count)
-                index = 0;
-        }
-        else if (slot < -0.1)
-        {
-            index--;
-            if (index < 0)
-                index = activeSlots.Count - 1;
-        }
-
-        SelectSlot();
+        IsInterogating = true;
+        OpenEvidenceBoard();
     }
 
     #region Pop Up
@@ -153,4 +132,13 @@ public class EvidenceDisplay : MonoBehaviour
         popupObj.SetActive(false);
     }
     #endregion
+
+    IEnumerator SelectFirstSlot()
+    {
+        EventSystem.current.SetSelectedGameObject(null);
+        yield return new WaitForEndOfFrame();
+        
+        if (activeSlots.Count > 0)
+            EventSystem.current.SetSelectedGameObject(activeSlots[0].gameObject);
+    }
 }

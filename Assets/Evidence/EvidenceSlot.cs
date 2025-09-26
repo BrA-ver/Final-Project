@@ -5,72 +5,53 @@ using TMPro;
 
 public class EvidenceSlot : MonoBehaviour
 {
+    [Header("Evidence")]
     [SerializeField] Evidence evidence;
 
+    [Header("Button Look")]
     [SerializeField] Image icon;
     [SerializeField] GameObject nameHolder;
     [SerializeField] TextMeshProUGUI nameText;
-
-    [Header("Selection")]
     [SerializeField] GameObject highlight;
 
     public Evidence Evidence => evidence;
 
-    InputHandler handler;
-
-    bool canPress;
-
-    private void Awake()
-    {
-        handler = FindObjectOfType<InputHandler>();
-    }
-
-    public void SetEvidence(Evidence newEvidence)
+    public void Initialize(Evidence newEvidence)
     {
         evidence = newEvidence;
-        UpdateSlot();
-    }
-
-    private void UpdateSlot()
-    {
         icon.sprite = evidence.sprite;
     }
 
-    // Selection
-    public void Select()
+
+    #region Button Events
+
+    public void PresentEvidence() // Called when the slot button is pressed
+    {
+        Debug.Log("Clicked Slot");
+        EvidenceManager.Instance.PresentEvidence(evidence);
+    }
+
+    public void Select() // Called when the slot is selected, but not pressed
     {
         highlight.SetActive(true);
         nameHolder.SetActive(true);
         nameText.text = evidence.Name;
 
-        if (EvidenceDisplay.instance.IsInterogating)
-            handler.onSumbit += OnSubmit;
-
+        EvidenceDisplay.instance.ShowDescription(this);
     }
 
-    public void Deselect()
+    
+
+    public void Deselect() // Called When the slot is deselected
     {
         highlight.SetActive(false);
         nameHolder.SetActive(false);
         nameText.text = string.Empty;
-
-        if (EvidenceDisplay.instance.IsInterogating)
-            handler.onSumbit -= OnSubmit;
     }
+    #endregion
 
     private void OnDestroy()
     {
         Deselect();
-    }
-
-    void OnSubmit()
-    {
-        //if (!canPress)
-        //{
-        //    canPress = true;
-        //    return;
-        //}
-        Debug.Log("Clicked Slot");
-        EvidenceManager.Instance.PresentEvidence(evidence);
     }
 }

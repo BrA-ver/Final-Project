@@ -5,6 +5,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     [field: SerializeField] public bool IsInteracting { get; private set; }
+    [field: SerializeField] public InteractionState CurrentState;
 
     [SerializeField] GameObject selected;
 
@@ -38,4 +39,11 @@ public class GameManager : MonoBehaviour
     {
         selected = EventSystem.current.currentSelectedGameObject;
     }
+
+    public void SetInteractionState(InteractionState newState)
+    {
+        CurrentState = newState;
+    }
 }
+
+public enum InteractionState { None, ActionScreen, EvidenceBoard, Dialogue}

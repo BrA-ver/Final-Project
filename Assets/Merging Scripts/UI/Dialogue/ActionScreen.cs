@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System;
 
 public class ActionScreen : MonoBehaviour
 {
@@ -11,23 +12,15 @@ public class ActionScreen : MonoBehaviour
 
     NPC interactedNPC;
 
-    bool showActions;
+    public bool showActions;
 
     public bool performingAction = false;
+
+    public event Action onExitActions;
 
     private void Awake()
     {
         instance = this;
-    }
-
-    private void Start()
-    {
-        DialogueManager.Instance.onDialogueFinished += ShowActions;
-    }
-
-    private void OnDisable()
-    {
-        DialogueManager.Instance.onDialogueFinished -= ShowActions;
     }
 
     public void HideActions()
@@ -53,8 +46,7 @@ public class ActionScreen : MonoBehaviour
     {
         //DeselectButton();
         HideActions();
-        EvidenceDisplay.instance.IsInterogating = true;
-        EvidenceDisplay.instance.OpenEvidenceBoard();
+        EvidenceDisplay.instance.Interogate();
 
         showActions = true;
         EventSystem.current.SetSelectedGameObject(null);
@@ -68,6 +60,7 @@ public class ActionScreen : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(null);
 
         performingAction = false;
+        onExitActions?.Invoke();
     }
 
     public void ShowActions()
@@ -90,7 +83,7 @@ public class ActionScreen : MonoBehaviour
 
     void SelectFirst()
     {
-        Debug.Log("Selected Button");
+        //Debug.Log("Selected Button");
         firstButton.Select();
     }
 

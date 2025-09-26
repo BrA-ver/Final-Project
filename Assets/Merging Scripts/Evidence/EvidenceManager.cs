@@ -39,7 +39,7 @@ public class EvidenceManager : MonoBehaviour
     public void AddEvidence(Evidence evidence)
     {
         if (allEvidence.Contains(evidence)) return;
-        Debug.Log($"Added {evidence.Name} to evidence list");
+        //Debug.Log($"Added {evidence.Name} to evidence list");
         allEvidence.Add(evidence);
         EvidenceDisplay.instance.ShowPopUp(evidence.Name);
     }
@@ -47,7 +47,7 @@ public class EvidenceManager : MonoBehaviour
     public void PresentEvidence(Evidence evidence)
     {
         onPresentEvidence?.Invoke(evidence);
-        EvidenceDisplay.instance.CloseEvidenceBoard();
+        EvidenceDisplay.instance.CloseEvidenceBoard(true);
         DialogueManager.Instance.ShowActionsAfterDialogue();
     }
 }

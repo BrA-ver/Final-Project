@@ -17,6 +17,13 @@ public class InputHandler : MonoBehaviour
 
     public InputAction jumpAction;
 
+    public static InputHandler instance;
+
+    private void Awake()
+    {
+        instance = this;
+    }
+
     private void Start()
     {
         Cursor.visible = false;

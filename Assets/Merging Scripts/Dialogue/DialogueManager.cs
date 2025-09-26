@@ -51,7 +51,7 @@ public class DialogueManager : MonoBehaviour
         if (dialogueStarted) return;
 
          this.isNpc = isNpc;
-        Debug.Log("Entering Dialogue");
+        //Debug.Log("Entering Dialogue");
 
         onDialogeStarted?.Invoke();
         dialogueStarted = true;
@@ -63,11 +63,11 @@ public class DialogueManager : MonoBehaviour
 
     private void ContinueOrExitDialogue()
     {
-        Debug.Log($"Display dailogue: {index < dialogue.lines.Length}");
+        //Debug.Log($"Display dailogue: {index < dialogue.lines.Length}");
         if (index < dialogue.lines.Length)
         {
             string dialogueLine = dialogue.lines[index];
-            Debug.Log(dialogueLine);
+            //Debug.Log(dialogueLine);
             onDisplayDialogue?.Invoke(dialogueLine);
 
             if (dialogue.evidence != null)
@@ -77,7 +77,7 @@ public class DialogueManager : MonoBehaviour
 
             if (index == dialogue.lines.Length - 1 && dialogue.choices.Length > 0)
             {
-                Debug.Log("Choosing");
+                //Debug.Log("Choosing");
                 onDisplayChoices?.Invoke(dialogue.choices);
                 makingChoice = true;
             }
@@ -89,7 +89,7 @@ public class DialogueManager : MonoBehaviour
 
     private void ExitDialogue()
     {
-        Debug.Log("Exiting Dialogue");
+        //Debug.Log("Exiting Dialogue");
         dialogueStarted = false;
         makingChoice = false;
         onDialogueFinished?.Invoke();
@@ -100,11 +100,6 @@ public class DialogueManager : MonoBehaviour
         if (!isNpc)
         {
             GameEvents.OnInteractStop();
-        }
-
-        if (openActionsAfterDialogue)
-        {
-            ActionScreen.instance.ShowActions();
         }
 
         // When the button is clicked, set the selected button to null

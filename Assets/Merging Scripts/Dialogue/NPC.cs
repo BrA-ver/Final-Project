@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +7,8 @@ public class NPC : DialogueHolder
     [Header("Evidence")]
     [SerializeField] List<EvidenceResponce> evidenceResponses;
     [SerializeField] Dialogue nullResponse;
+
+    bool responding;
 
     private void OnDisable()
     {
@@ -18,25 +21,59 @@ public class NPC : DialogueHolder
         GameManager.instance.StartInteracting();
         EvidenceManager.Instance.onPresentEvidence += OnPresentEvidence;
         ActionScreen.instance.ShowActions(this);
+
+        ActionScreen.instance.onExitActions += OnExitActions;
+    }
+
+    private void OnExitActions()
+    {
+        EvidenceManager.Instance.onPresentEvidence -= OnPresentEvidence;
+        ActionScreen.instance.onExitActions -= OnExitActions;
     }
 
     public void Talk()
     {
         //EvidenceManager.Instance.onPresentEvidence += OnPresentEvidence;
         DialogueManager.Instance.EnterDialogue(dialogues[0], true);
+        DialogueManager.Instance.onDialogueFinished += OnDialogueFinished;
     }
 
     private void OnPresentEvidence(Evidence evidence)
     {
+        Debug.Log("Present Evidence");
         Dialogue responseDialogue = null;
         if (HasResponce(evidence, out responseDialogue))
         {
-            DialogueManager.Instance.EnterDialogue(responseDialogue, true);
+            RespondToEvidence(responseDialogue);
         }
         else
         {
-            DialogueManager.Instance.EnterDialogue(nullResponse, true);
+            RespondToEvidence(nullResponse);
         }
+    }
+
+    void RespondToEvidence(Dialogue dialogue)
+    {
+        responding = true;
+        DialogueManager.Instance.EnterDialogue(dialogue, true);
+        
+        ActionScreen.instance.HideActions();
+        DialogueManager.Instance.onDialogueFinished += OnDialogueFinished;
+    }
+
+    private void OnDialogueFinished()
+    {
+        Debug.Log("Dialogue End");
+        if (responding)
+        {
+            responding = false;
+            EvidenceDisplay.instance.OpenEvidenceBoard();
+        }
+        else
+        {
+            ActionScreen.instance.ShowActions(this);
+        }
+        DialogueManager.Instance.onDialogueFinished -= OnDialogueFinished;
     }
 
     bool HasResponce(Evidence evidence, out Dialogue responseDialogue)

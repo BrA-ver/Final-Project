@@ -744,6 +744,11 @@ MonoBehaviour:
   renderer: {fileID: 0}
   outlineMaterial: {fileID: 2100000, guid: c04ccf9af89a092499b3be1ce389ec25, type: 2}
   highlight: 0
+--- !u!1 &62783925 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1299488048438645921, guid: 16bb53a71e4e37b4384c5db048d08c96, type: 3}
+  m_PrefabInstance: {fileID: 508098400}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &78588712
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4820,6 +4825,10 @@ PrefabInstance:
       value: Evidence Display
       objectReference: {fileID: 0}
     - target: {fileID: 4847486783930753736, guid: 16bb53a71e4e37b4384c5db048d08c96, type: 3}
+      propertyPath: Display
+      value: 
+      objectReference: {fileID: 62783925}
+    - target: {fileID: 4847486783930753736, guid: 16bb53a71e4e37b4384c5db048d08c96, type: 3}
       propertyPath: descrition
       value: 
       objectReference: {fileID: 1735525219}
@@ -7782,6 +7791,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   holder: {fileID: 152469356}
   firstButton: {fileID: 1351946606}
+  showActions: 0
   performingAction: 0
 --- !u!1001 &929873140
 PrefabInstance:
@@ -13751,6 +13761,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <IsInteracting>k__BackingField: 0
+  CurrentState: 0
   selected: {fileID: 0}
 --- !u!1 &1704826354
 GameObject:
