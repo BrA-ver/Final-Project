@@ -5,6 +5,8 @@ public class GroundCheck : MonoBehaviour
     [SerializeField] float checkRadius = .5f;
     [SerializeField] bool drawGizmos = false;
     [SerializeField] LayerMask groundLayer;
+
+
     public bool OnGround()
     {
         bool onGround = Physics.CheckSphere(transform.position, checkRadius, groundLayer);

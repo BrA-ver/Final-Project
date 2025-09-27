@@ -40,9 +40,15 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
 
-        groundedPlayer = false;
+        Debug.Log(groundCheck.OnGround());
         if (controller.isGrounded || groundCheck.OnGround())
+        {
             groundedPlayer = true;
+        }
+        else
+        {
+            groundedPlayer = false;
+        }
 
         GroundMovement();
         VerticalMovement();
