@@ -27,7 +27,7 @@ public class EvidenceDisplay : MonoBehaviour
     List<Evidence> evidences;
 
     public bool IsOpen { get; private set; }
-    public bool IsInterogating { get; set; }
+    [field: SerializeField] public bool IsInterogating { get; set; }
 
     private void Awake()
     {
@@ -36,8 +36,14 @@ public class EvidenceDisplay : MonoBehaviour
 
     public void ToggleEvidence()
     {
-        if (DialogueManager.Instance.dialogueStarted) return;
-        if (ActionScreen.instance.performingAction && !IsInterogating) return;
+        //if (DialogueManager.Instance.dialogueStarted) return;
+        //if (ActionScreen.instance.performingAction && !IsInterogating) return;
+
+        InteractionState currentState = GameManager.instance.CurrentState;
+        if (currentState != InteractionState.None && currentState != InteractionState.EvidenceBoard)
+        {
+            return;
+        }
 
         if (IsOpen)
         {
@@ -47,10 +53,17 @@ public class EvidenceDisplay : MonoBehaviour
                 ActionScreen.instance.showActions = true;
                 ActionScreen.instance.ShowActions();
                 //Debug.Log("Actions Shown");
+                IsInterogating = false;
+
+                GameManager.instance.SetInteractionState(InteractionState.ActionScreen);
+                return;
             }
+            GameManager.instance.SetInteractionState(InteractionState.None);
         }
         else
+        {
             OpenEvidenceBoard();
+        }
     }
 
     public void OpenEvidenceBoard()
@@ -67,6 +80,7 @@ public class EvidenceDisplay : MonoBehaviour
         //SelectSlot();
         GameManager.instance.StartInteracting();
         StartCoroutine(SelectFirstSlot());
+        GameManager.instance.SetInteractionState(InteractionState.EvidenceBoard);
     }
 
     public void CloseEvidenceBoard(bool interogating)
@@ -115,6 +129,11 @@ public class EvidenceDisplay : MonoBehaviour
         OpenEvidenceBoard();
     }
 
+    public void StopInterogating()
+    {
+        IsInterogating = false;
+    }
+
     #region Pop Up
     public void ShowPopUp(string clueName)
     {
@@ -125,7 +144,7 @@ public class EvidenceDisplay : MonoBehaviour
     IEnumerator PopUpRoutine(string clueName)
     {
         popupObj.SetActive(true);
-        popupText.text = $"{clueName} added to inventory";
+        popupText.text = $"{clueName} collected";
         yield return new WaitForSeconds(popUpTime);
 
         popupText.text = string.Empty;
