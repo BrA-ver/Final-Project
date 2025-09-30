@@ -4533,11 +4533,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 1453043773871479701, guid: f8ba20484d7cafb4b97d0fa68f3f37eb, type: 3}
---- !u!198 &707738533 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 2528538358636903936, guid: 75fee1a5e000489468df32c8a8de6f9f, type: 3}
-  m_PrefabInstance: {fileID: 929873140}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &710576375
 GameObject:
   m_ObjectHideFlags: 0
@@ -5740,6 +5735,10 @@ PrefabInstance:
     - target: {fileID: 6296940131089826923, guid: 75fee1a5e000489468df32c8a8de6f9f, type: 3}
       propertyPath: rightIndicator
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7334379818158399378, guid: 75fee1a5e000489468df32c8a8de6f9f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7733156469763749852, guid: 75fee1a5e000489468df32c8a8de6f9f, type: 3}
       propertyPath: jumpAction.m_Name
@@ -8037,17 +8036,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 218d5e2e914164d4ba3befa33a302162, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxDistance: 10
-  delayBeforeReturn: 0.5
+  maxDistance: 12
+  delayBeforeReturn: 1
   mapOffsetZ: 400
-  effect1: {fileID: 1537329977}
-  effect2: {fileID: 2026088772}
-  effect3: {fileID: 707738533}
   player: {fileID: 1538082197}
   cameraHolder: {fileID: 1444514981}
-  shakeStartDistance: 4
+  shakeStartDistance: 3
   maxShakeStrength: 0.3
-  shakeSpeed: 20
+  shakeSpeed: 30
+  returnRiftVideo: {fileID: 32900000, guid: 9ffe602140ba7a7459ec939009320ab3, type: 3}
+  videoDisplay: {fileID: 1264521579}
+  videoCanvas: {fileID: 1896860181}
+  fadeDuration: 0.1
 --- !u!65 &1359951848
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9769,11 +9769,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!198 &1537329977 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 3857897673545285107, guid: 75fee1a5e000489468df32c8a8de6f9f, type: 3}
-  m_PrefabInstance: {fileID: 929873140}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1538082197 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1374344514096153236, guid: 75fee1a5e000489468df32c8a8de6f9f, type: 3}
@@ -12671,7 +12666,7 @@ MonoBehaviour:
   exitRiftVideo: {fileID: 32900000, guid: 9ffe602140ba7a7459ec939009320ab3, type: 3}
   videoDisplay: {fileID: 1264521579}
   videoCanvas: {fileID: 1896860181}
-  fadeDuration: 0.3
+  fadeDuration: 0.1
   suctionDuration: 0.94
   maxSuctionIntensity: 0.3
   suctionCurve:
@@ -12698,9 +12693,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  effect1: {fileID: 1537329977}
-  effect2: {fileID: 2026088772}
-  effect3: {fileID: 707738533}
+  playSuctionOnEnter: 1
+  playSuctionOnExit: 1
   map1Crystals:
   - {fileID: 468672188}
   map2Crystals:
@@ -13559,11 +13553,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2011986160}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!198 &2026088772 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 6504084174333421102, guid: 75fee1a5e000489468df32c8a8de6f9f, type: 3}
-  m_PrefabInstance: {fileID: 929873140}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2038056209 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 963001957570653385, guid: 99bae74f2b5133e4897ce12faa5401d0, type: 3}

@@ -4,10 +4,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Video;
 
-
 public class TimeTravel : MonoBehaviour
 {
-    
     [Header("Teleport Settings")]
     [SerializeField] private float mapOffsetZ = 200f;
     [SerializeField] private float delayBeforeTeleport = 2f;
@@ -27,10 +25,8 @@ public class TimeTravel : MonoBehaviour
     [SerializeField] private float maxSuctionIntensity = 0.3f;
     [SerializeField] private AnimationCurve suctionCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
 
-    [Header("Particle Effects (on the player)")]
-    public ParticleSystem effect1;
-    public ParticleSystem effect2;
-    public ParticleSystem effect3;
+    [SerializeField] private bool playSuctionOnEnter = true;
+    [SerializeField] private bool playSuctionOnExit = true;
 
     [Header("Crystals")]
     [SerializeField] private List<MeshRenderer> map1Crystals;
@@ -95,7 +91,6 @@ public class TimeTravel : MonoBehaviour
             videoCanvasGroup.alpha = 0f;
             videoCanvas.SetActive(false);
 
-            // Make sure canvas is set to full screen overlay
             Canvas canvas = videoCanvas.GetComponent<Canvas>();
             if (canvas != null)
             {
@@ -106,38 +101,30 @@ public class TimeTravel : MonoBehaviour
 
         if (videoDisplay != null)
         {
-            // Make sure the RawImage covers the entire screen
             RectTransform rect = videoDisplay.GetComponent<RectTransform>();
             rect.anchorMin = Vector2.zero;
             rect.anchorMax = Vector2.one;
             rect.offsetMin = Vector2.zero;
             rect.offsetMax = Vector2.zero;
 
-            // Get or add VideoPlayer component
             videoPlayer = videoDisplay.GetComponent<VideoPlayer>();
             if (videoPlayer == null)
                 videoPlayer = videoDisplay.gameObject.AddComponent<VideoPlayer>();
 
-            // Use RenderTexture mode for fullscreen control
             videoPlayer.playOnAwake = false;
             videoPlayer.waitForFirstFrame = true;
             videoPlayer.skipOnDrop = false;
 
-            // Create and assign a RenderTexture for fullscreen
             RenderTexture renderTexture = new RenderTexture(Screen.width, Screen.height, 24);
             videoPlayer.renderMode = VideoRenderMode.RenderTexture;
             videoPlayer.targetTexture = renderTexture;
             videoDisplay.texture = renderTexture;
 
-            // Set audio output
             videoPlayer.audioOutputMode = VideoAudioOutputMode.Direct;
 
-            // Subscribe to events
             videoPlayer.loopPointReached += OnVideoFinished;
             videoPlayer.errorReceived += OnVideoError;
             videoPlayer.prepareCompleted += OnVideoPrepared;
-
-            Debug.Log("VideoPlayer initialized with RenderTexture for fullscreen");
         }
         else
         {
@@ -262,7 +249,6 @@ public class TimeTravel : MonoBehaviour
     {
         isTeleporting = true;
 
-        // Disable player control
         if (cachedMovement != null) cachedMovement.enabled = false;
         if (cameraLook != null) cameraLook.enabled = false;
 
@@ -270,11 +256,9 @@ public class TimeTravel : MonoBehaviour
 
         if (videoPlayer != null && targetClip != null)
         {
-            Debug.Log($"Starting teleport sequence: {(fromMap1 ? "Entering" : "Exiting")} rift");
-
-            if (fromMap1)
+            // ✅ suction runs based on toggle + direction
+            if ((fromMap1 && playSuctionOnEnter) || (!fromMap1 && playSuctionOnExit))
             {
-                // ENTERING RIFT: Play suction effect before video
                 yield return StartCoroutine(PlayPortalSuctionEffect());
             }
 
@@ -282,17 +266,9 @@ public class TimeTravel : MonoBehaviour
         }
         else
         {
-            Debug.Log("Video not available, using fallback particles");
-            // Fallback to particle effects
-            PlayEffects();
             yield return new WaitForSeconds(delayBeforeTeleport);
-            StopEffects();
-            DeactivateEffects();
         }
 
-        Debug.Log("Video finished, performing teleport");
-
-        // Perform teleport
         Vector3 pos = transform.position;
         pos = fromMap1 ? new Vector3(pos.x, pos.y, pos.z + mapOffsetZ)
                        : new Vector3(pos.x, pos.y, pos.z - mapOffsetZ);
@@ -308,38 +284,25 @@ public class TimeTravel : MonoBehaviour
             transform.position = pos;
         }
 
-        // Re-enable player control
         if (cachedMovement != null) cachedMovement.enabled = true;
         if (cameraLook != null) cameraLook.enabled = true;
 
-        // Handle rift return logic
         if (returnScript != null)
         {
             returnScript.SuppressReturn(2f);
-
-            if (!fromMap1)
-            {
-                returnScript.ForceExitRift();
-            }
+            if (!fromMap1) returnScript.ForceExitRift();
         }
 
         isTeleporting = false;
-        Debug.Log("Teleport sequence completed");
     }
 
     IEnumerator PlayPortalSuctionEffect()
     {
-        Debug.Log("Starting portal suction effect");
-
-        // Store original camera position
         if (cameraLook != null)
         {
             originalCameraPosition = cameraLook.transform.localPosition;
             originalCameraRotation = cameraLook.transform.localRotation;
         }
-
-        // Start particle effects
-        PlayEffects();
 
         float elapsed = 0f;
 
@@ -348,10 +311,8 @@ public class TimeTravel : MonoBehaviour
             float progress = elapsed / suctionDuration;
             float intensity = suctionCurve.Evaluate(progress) * maxSuctionIntensity;
 
-            // Apply camera shake/wobble to simulate suction
             if (cameraLook != null)
             {
-                // Add random wobble to camera
                 Vector3 shake = new Vector3(
                     Random.Range(-intensity, intensity),
                     Random.Range(-intensity, intensity),
@@ -360,7 +321,6 @@ public class TimeTravel : MonoBehaviour
 
                 cameraLook.transform.localPosition = originalCameraPosition + shake;
 
-                // Slight rotation wobble
                 Vector3 rotationShake = new Vector3(
                     Random.Range(-intensity * 10f, intensity * 10f),
                     Random.Range(-intensity * 10f, intensity * 10f),
@@ -369,67 +329,35 @@ public class TimeTravel : MonoBehaviour
                 cameraLook.transform.localRotation = Quaternion.Euler(rotationShake) * originalCameraRotation;
             }
 
-            // Increase particle effects intensity
-            if (effect1 != null) effect1.transform.localScale = Vector3.one * (1f + intensity * 2f);
-            if (effect2 != null) effect2.transform.localScale = Vector3.one * (1f + intensity * 2f);
-            if (effect3 != null) effect3.transform.localScale = Vector3.one * (1f + intensity * 2f);
-
             elapsed += Time.deltaTime;
             yield return null;
         }
-
-        Debug.Log("Portal suction effect completed");
     }
 
     IEnumerator PlayVideoFullDuration(VideoClip clip)
     {
-        Debug.Log($"Preparing to play video: {clip.name}");
-
-        // Reset camera after suction effect
-        if (cameraLook != null && pendingFromMap1)
+        if (cameraLook != null)
         {
             cameraLook.transform.localPosition = originalCameraPosition;
             cameraLook.transform.localRotation = originalCameraRotation;
         }
 
-        // Set up video
         videoPlayer.clip = clip;
-
-        // Show canvas first
         videoCanvas.SetActive(true);
 
-        // Fade in
         yield return StartCoroutine(FadeVideoIn());
 
-        // Show cursor during video
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
 
-        Debug.Log("Starting video playback");
-
-        // Play video
         videoPlayer.Play();
-
-        // Wait for the FULL video length
         float videoLength = (float)clip.length;
-        Debug.Log($"Waiting for full video duration: {videoLength} seconds");
-
         yield return new WaitForSeconds(videoLength);
 
-        Debug.Log("Video duration completed, starting fade out");
-
-        // Fade out
         yield return StartCoroutine(FadeVideoOut());
 
-        // Stop particle effects
-        StopEffects();
-        DeactivateEffects();
-
-        // Hide cursor after video
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-
-        Debug.Log("Video playback fully completed");
     }
 
     IEnumerator FadeVideoIn()
@@ -464,51 +392,26 @@ public class TimeTravel : MonoBehaviour
             videoPlayer.Stop();
     }
 
-    void OnVideoFinished(VideoPlayer vp)
-    {
-        Debug.Log("Video finished event received");
-    }
-
-    void OnVideoPrepared(VideoPlayer vp)
-    {
-        Debug.Log("Video prepared successfully");
-    }
-
+    void OnVideoFinished(VideoPlayer vp) { }
+    void OnVideoPrepared(VideoPlayer vp) { }
     void OnVideoError(VideoPlayer vp, string message)
     {
         Debug.LogError($"Video Player Error: {message}");
-
-        // Fallback to particles if video fails
-        if (isTeleporting)
-        {
-            StartCoroutine(VideoFallback());
-        }
+        if (isTeleporting) StartCoroutine(VideoFallback());
     }
 
     IEnumerator VideoFallback()
     {
-        Debug.Log("Using fallback particle effects due to video error");
-
-        if (videoCanvas != null)
-        {
-            videoCanvas.SetActive(false);
-        }
-
-        PlayEffects();
+        if (videoCanvas != null) videoCanvas.SetActive(false);
         yield return new WaitForSeconds(delayBeforeTeleport);
-        StopEffects();
-        DeactivateEffects();
 
-        // Continue with teleport
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    // --- Highlight helpers ---
     void HighlightCrystal(MeshRenderer crystal)
     {
         if (crystal == null) return;
-
         Material[] newMats = new Material[originalMats[crystal].Length + 1];
         for (int i = 0; i < originalMats[crystal].Length; i++)
             newMats[i] = originalMats[crystal][i];
@@ -522,27 +425,5 @@ public class TimeTravel : MonoBehaviour
         if (activeCrystal == null) return;
         activeCrystal.materials = originalMats[activeCrystal];
         activeCrystal = null;
-    }
-
-    // --- Particle helpers ---
-    void PlayEffects()
-    {
-        if (effect1) { effect1.gameObject.SetActive(true); effect1.Play(true); }
-        if (effect2) { effect2.gameObject.SetActive(true); effect2.Play(true); }
-        if (effect3) { effect3.gameObject.SetActive(true); effect3.Play(true); }
-    }
-
-    void StopEffects()
-    {
-        if (effect1) effect1.Stop(true, ParticleSystemStopBehavior.StopEmitting);
-        if (effect2) effect2.Stop(true, ParticleSystemStopBehavior.StopEmitting);
-        if (effect3) effect3.Stop(true, ParticleSystemStopBehavior.StopEmitting);
-    }
-
-    void DeactivateEffects()
-    {
-        if (effect1) effect1.gameObject.SetActive(false);
-        if (effect2) effect2.gameObject.SetActive(false);
-        if (effect3) effect3.gameObject.SetActive(false);
     }
 }

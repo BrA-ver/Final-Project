@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.Video;
+using UnityEngine.UI;
 
 public class RiftCrystalReturn : MonoBehaviour
 {
@@ -7,11 +9,6 @@ public class RiftCrystalReturn : MonoBehaviour
     [SerializeField] private float maxDistance = 15f;
     [SerializeField] private float delayBeforeReturn = 1.5f;
     [SerializeField] private float mapOffsetZ = 200f;
-
-    [Header("Effects")]
-    public ParticleSystem effect1;
-    public ParticleSystem effect2;
-    public ParticleSystem effect3;
 
     [Header("Player Reference")]
     [SerializeField] private Transform player;
@@ -22,13 +19,22 @@ public class RiftCrystalReturn : MonoBehaviour
     [SerializeField] private float maxShakeStrength = 0.3f;
     [SerializeField] private float shakeSpeed = 20f;
 
+    [Header("Video Settings")]
+    [SerializeField] private VideoClip returnRiftVideo;
+    [SerializeField] private RawImage videoDisplay;
+    [SerializeField] private GameObject videoCanvas;
+    [SerializeField] private float fadeDuration = 1f;
+
     private CharacterController controller;
     private PlayerMovement movement;
     private bool isReturning = false;
     private bool playerInRift = false;
-    private bool isTeleportingBack = false; // ✅ NEW
+    private bool isTeleportingBack = false;
 
     private Vector3 camOriginalLocalPos;
+
+    private VideoPlayer videoPlayer;
+    private CanvasGroup videoCanvasGroup;
 
     void Start()
     {
@@ -48,6 +54,8 @@ public class RiftCrystalReturn : MonoBehaviour
         {
             camOriginalLocalPos = cameraHolder.localPosition;
         }
+
+        InitializeVideoSystem();
     }
 
     void LateUpdate()
@@ -70,10 +78,9 @@ public class RiftCrystalReturn : MonoBehaviour
                 intensity = Mathf.Clamp01(t);
             }
 
-            // ✅ Keep shaking while teleport countdown is active
             if (isTeleportingBack)
             {
-                ApplyCameraShake(1f); // full intensity during teleport delay
+                ApplyCameraShake(1f); 
             }
             else
             {
@@ -91,18 +98,18 @@ public class RiftCrystalReturn : MonoBehaviour
     IEnumerator ReturnToMap1()
     {
         isReturning = true;
-        isTeleportingBack = true; // ✅ start shake loop
+        isTeleportingBack = true;
         if (movement != null) movement.enabled = false;
 
-        PlayEffects();
-
-        // ✅ custom wait loop that keeps shaking
-        float elapsed = 0f;
-        while (elapsed < delayBeforeReturn)
+        // Instead of particles, play video
+        if (videoPlayer != null && returnRiftVideo != null)
         {
-            ApplyCameraShake(1f); // shake hard while waiting
-            elapsed += Time.deltaTime;
-            yield return null;
+            yield return StartCoroutine(PlayVideoFullDuration(returnRiftVideo));
+        }
+        else
+        {
+            // fallback if no video
+            yield return new WaitForSeconds(delayBeforeReturn);
         }
 
         Vector3 pos = player.position;
@@ -119,9 +126,6 @@ public class RiftCrystalReturn : MonoBehaviour
             player.position = pos;
         }
 
-        StopEffects();
-        DeactivateEffects();
-
         if (movement != null) movement.enabled = true;
 
         if (cameraHolder != null)
@@ -131,7 +135,7 @@ public class RiftCrystalReturn : MonoBehaviour
 
         playerInRift = false;
         isReturning = false;
-        isTeleportingBack = false; // ✅ stop shake after teleport
+        isTeleportingBack = false;
     }
 
     // --- NEW: suppress auto-return after manual teleport ---
@@ -147,7 +151,6 @@ public class RiftCrystalReturn : MonoBehaviour
         isReturning = false;
     }
 
-    // --- NEW: reset state when teleporting back to Map 1 ---
     public void ForceExitRift()
     {
         playerInRift = false;
@@ -155,26 +158,105 @@ public class RiftCrystalReturn : MonoBehaviour
         isTeleportingBack = false;
     }
 
-    // --- Particle helpers ---
-    void PlayEffects()
+    // ---------------- VIDEO HELPERS ----------------
+    void InitializeVideoSystem()
     {
-        if (effect1) { effect1.gameObject.SetActive(true); effect1.Play(true); }
-        if (effect2) { effect2.gameObject.SetActive(true); effect2.Play(true); }
-        if (effect3) { effect3.gameObject.SetActive(true); effect3.Play(true); }
+        if (videoCanvas != null)
+        {
+            videoCanvasGroup = videoCanvas.GetComponent<CanvasGroup>();
+            if (videoCanvasGroup == null)
+                videoCanvasGroup = videoCanvas.AddComponent<CanvasGroup>();
+
+            videoCanvasGroup.alpha = 0f;
+            videoCanvas.SetActive(false);
+
+            Canvas canvas = videoCanvas.GetComponent<Canvas>();
+            if (canvas != null)
+            {
+                canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+                canvas.sortingOrder = 9999;
+            }
+        }
+
+        if (videoDisplay != null)
+        {
+            RectTransform rect = videoDisplay.GetComponent<RectTransform>();
+            rect.anchorMin = Vector2.zero;
+            rect.anchorMax = Vector2.one;
+            rect.offsetMin = Vector2.zero;
+            rect.offsetMax = Vector2.zero;
+
+            videoPlayer = videoDisplay.GetComponent<VideoPlayer>();
+            if (videoPlayer == null)
+                videoPlayer = videoDisplay.gameObject.AddComponent<VideoPlayer>();
+
+            videoPlayer.playOnAwake = false;
+            videoPlayer.waitForFirstFrame = true;
+            videoPlayer.skipOnDrop = false;
+
+            RenderTexture renderTexture = new RenderTexture(Screen.width, Screen.height, 24);
+            videoPlayer.renderMode = VideoRenderMode.RenderTexture;
+            videoPlayer.targetTexture = renderTexture;
+            videoDisplay.texture = renderTexture;
+
+            videoPlayer.audioOutputMode = VideoAudioOutputMode.Direct;
+        }
+        else
+        {
+            Debug.LogError("VideoDisplay RawImage is not assigned!");
+        }
     }
 
-    void StopEffects()
+    IEnumerator PlayVideoFullDuration(VideoClip clip)
     {
-        if (effect1) effect1.Stop(true, ParticleSystemStopBehavior.StopEmitting);
-        if (effect2) effect2.Stop(true, ParticleSystemStopBehavior.StopEmitting);
-        if (effect3) effect3.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+        videoPlayer.clip = clip;
+        videoCanvas.SetActive(true);
+
+        yield return StartCoroutine(FadeVideoIn());
+
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+
+        videoPlayer.Play();
+        float videoLength = (float)clip.length;
+        yield return new WaitForSeconds(videoLength);
+
+        yield return StartCoroutine(FadeVideoOut());
+
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
-    void DeactivateEffects()
+    IEnumerator FadeVideoIn()
     {
-        if (effect1) effect1.gameObject.SetActive(false);
-        if (effect2) effect2.gameObject.SetActive(false);
-        if (effect3) effect3.gameObject.SetActive(false);
+        if (videoCanvasGroup == null) yield break;
+
+        float elapsed = 0f;
+        while (elapsed < fadeDuration)
+        {
+            videoCanvasGroup.alpha = Mathf.Lerp(0f, 1f, elapsed / fadeDuration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        videoCanvasGroup.alpha = 1f;
+    }
+
+    IEnumerator FadeVideoOut()
+    {
+        if (videoCanvasGroup == null) yield break;
+
+        float elapsed = 0f;
+        while (elapsed < fadeDuration)
+        {
+            videoCanvasGroup.alpha = Mathf.Lerp(1f, 0f, elapsed / fadeDuration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        videoCanvasGroup.alpha = 0f;
+
+        videoCanvas.SetActive(false);
+        if (videoPlayer != null)
+            videoPlayer.Stop();
     }
 
     void ApplyCameraShake(float intensity)
