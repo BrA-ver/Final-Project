@@ -36,6 +36,7 @@ public class Player : MonoBehaviour
         input.onSumbit += OnJump;
         input.onInteract += OnInteract;
         input.onPresentEvidence += OnPresentEvidence;
+        input.onCaseBoard += OnCaseBoard;
     }
 
     private void OnDisable()
@@ -43,13 +44,14 @@ public class Player : MonoBehaviour
         input.onJump -= OnJump;
         input.onInteract -= OnInteract;
         input.onPresentEvidence -= OnPresentEvidence;
+        input.onCaseBoard += OnCaseBoard;
     }
 
     
 
     private void Update()
     {
-        if (GameManager.instance.IsInteracting)
+        if (GameManager.instance.CurrentState != InteractionState.None)
         {
             movement.Stop();
             animator.SetBool(moving, false);
@@ -102,5 +104,25 @@ public class Player : MonoBehaviour
     private void OnPresentEvidence()
     {
         EvidenceDisplay.instance.ToggleEvidence();
+    }
+
+    void OnCaseBoard()
+    {
+        InteractionState currentState = GameManager.instance.CurrentState;
+        // Only toggle the case file if we are free or in the case file
+        if (currentState != InteractionState.None && currentState != InteractionState.CaseFile)
+        {
+            return;
+        }
+
+        CaseFile file = CaseFile.instance;
+        if (file.IsOpen)
+        {
+            file.CloseCaseFile();
+        }
+        else
+        {
+            file.OpenCaseFile();
+        }
     }
 }

@@ -62,7 +62,7 @@ public class ActionScreen : MonoBehaviour
         performingAction = false;
         onExitActions?.Invoke();
 
-        GameManager.instance.SetInteractionState(InteractionState.None);
+        GameManager.instance.SwitchState(InteractionState.None);
     }
 
     public void ShowActions()
@@ -73,7 +73,7 @@ public class ActionScreen : MonoBehaviour
 
         performingAction = true;
 
-        GameManager.instance.SetInteractionState(InteractionState.ActionScreen);
+        GameManager.instance.SwitchState(InteractionState.ActionScreen);
     }
 
     public void ShowActions(NPC npc)
@@ -84,7 +84,7 @@ public class ActionScreen : MonoBehaviour
 
         performingAction = true;
 
-        GameManager.instance.SetInteractionState(InteractionState.ActionScreen);
+        GameManager.instance.SwitchState(InteractionState.ActionScreen);
     }
 
     void SelectFirst()

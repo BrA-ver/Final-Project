@@ -14,6 +14,7 @@ public class InputHandler : MonoBehaviour
     public event Action onSumbit;
     public event Action onPresentEvidence;
     public event Action onInteract;
+    public event Action onCaseBoard;
 
     public InputAction jumpAction;
 
@@ -67,5 +68,13 @@ public class InputHandler : MonoBehaviour
     {
         if (context.started)
             onInteract?.Invoke();
+    }
+
+    public void OnCaseBoard(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            onCaseBoard?.Invoke();
+        }
     }
 }

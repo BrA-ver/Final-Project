@@ -49,6 +49,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "CaseBoard",
+                    "type": "Button",
+                    "id": "d3f872aa-4b91-478c-85a3-ac1ff17b3088",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -258,6 +267,17 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "ShowEvidence",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "aaedc89b-61ba-4fb1-991c-2555c39391cc",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "CaseBoard",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

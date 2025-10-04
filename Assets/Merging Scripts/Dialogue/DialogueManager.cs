@@ -58,7 +58,7 @@ public class DialogueManager : MonoBehaviour
         this.dialogue = dialogue;
 
         ContinueOrExitDialogue();
-        GameManager.instance.SetInteractionState(InteractionState.Dialogue);
+        GameManager.instance.SwitchState(InteractionState.Dialogue);
     }
 
     private void ContinueOrExitDialogue()

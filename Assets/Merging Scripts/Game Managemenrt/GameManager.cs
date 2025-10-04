@@ -40,10 +40,26 @@ public class GameManager : MonoBehaviour
         selected = EventSystem.current.currentSelectedGameObject;
     }
 
-    public void SetInteractionState(InteractionState newState)
+    public void SwitchState(InteractionState newState)
     {
         CurrentState = newState;
     }
+
+    public void HideMouse()
+    {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+#if UNITY_EDITOR
+        Cursor.lockState = CursorLockMode.None;
+#endif
+
+    }
+
+    public void ShowMouse()
+    {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
+    }
 }
 
-public enum InteractionState { None, ActionScreen, EvidenceBoard, Dialogue}
+public enum InteractionState { None, ActionScreen, EvidenceBoard, Dialogue, CaseFile}

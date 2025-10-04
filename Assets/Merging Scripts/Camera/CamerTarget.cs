@@ -38,7 +38,7 @@ public class CamerTarget : MonoBehaviour
 
     private void MouseLook()
     {
-        if (GameManager.instance.IsInteracting) return;
+        if (GameManager.instance.CurrentState != InteractionState.None) return;
         // Get the mouse delta from the look input
         Vector2 mouseDelta = controls.lookInput;
 

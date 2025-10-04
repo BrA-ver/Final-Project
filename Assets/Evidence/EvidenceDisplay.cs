@@ -55,10 +55,10 @@ public class EvidenceDisplay : MonoBehaviour
                 //Debug.Log("Actions Shown");
                 IsInterogating = false;
 
-                GameManager.instance.SetInteractionState(InteractionState.ActionScreen);
+                GameManager.instance.SwitchState(InteractionState.ActionScreen);
                 return;
             }
-            GameManager.instance.SetInteractionState(InteractionState.None);
+            GameManager.instance.SwitchState(InteractionState.None);
         }
         else
         {
@@ -80,7 +80,7 @@ public class EvidenceDisplay : MonoBehaviour
         //SelectSlot();
         GameManager.instance.StartInteracting();
         StartCoroutine(SelectFirstSlot());
-        GameManager.instance.SetInteractionState(InteractionState.EvidenceBoard);
+        GameManager.instance.SwitchState(InteractionState.EvidenceBoard);
     }
 
     public void CloseEvidenceBoard(bool interogating)
