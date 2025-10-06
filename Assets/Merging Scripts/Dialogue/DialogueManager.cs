@@ -59,6 +59,7 @@ public class DialogueManager : MonoBehaviour
 
         ContinueOrExitDialogue();
         GameManager.instance.SwitchState(InteractionState.Dialogue);
+        GameManager.instance.ShowMouse();
     }
 
     private void ContinueOrExitDialogue()
@@ -102,6 +103,7 @@ public class DialogueManager : MonoBehaviour
             GameEvents.OnInteractStop();
         }
 
+        GameManager.instance.HideMouse();
         // When the button is clicked, set the selected button to null
         //DeselectButton();
     }

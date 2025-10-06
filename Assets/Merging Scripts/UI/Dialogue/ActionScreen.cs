@@ -28,6 +28,7 @@ public class ActionScreen : MonoBehaviour
         holder.SetActive(false);
         showActions = false;
         //firstButton.Select();
+        GameManager.instance.HideMouse();
     }
 
     public void Talk()
@@ -74,6 +75,7 @@ public class ActionScreen : MonoBehaviour
         performingAction = true;
 
         GameManager.instance.SwitchState(InteractionState.ActionScreen);
+        GameManager.instance.ShowMouse();
     }
 
     public void ShowActions(NPC npc)
@@ -85,6 +87,7 @@ public class ActionScreen : MonoBehaviour
         performingAction = true;
 
         GameManager.instance.SwitchState(InteractionState.ActionScreen);
+        GameManager.instance.ShowMouse();
     }
 
     void SelectFirst()

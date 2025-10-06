@@ -69,6 +69,9 @@ public class WernerMovement : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.instance.CurrentState != InteractionState.None)
+            return;
+
         groundedPlayer = controller.isGrounded || groundCheck.OnGround();
 
         HandleCrouchInput();
