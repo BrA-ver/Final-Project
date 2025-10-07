@@ -3710,7 +3710,7 @@ Transform:
   m_GameObject: {fileID: 363460373}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 24.55, y: 15.809999, z: 28.6}
+  m_LocalPosition: {x: 24.55, y: 15.809999, z: 28.95}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7507,7 +7507,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4571605982943762130, guid: dabbeedf30da6a0448ea0cca7690e278, type: 3}
       propertyPath: m_Materials.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -4571605982943762130, guid: dabbeedf30da6a0448ea0cca7690e278, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -16683,9 +16683,9 @@ MonoBehaviour:
   jumpHeight: 1.5
   gravityValue: -25
   standCameraOffset: {x: 0, y: 1.7, z: 0.35}
-  walkBobAmplitude: 0.1
+  walkBobAmplitude: 0.05
   walkBobFrequency: 15
-  sprintBobAmplitude: 0.15
+  sprintBobAmplitude: 0.1
   sprintBobFrequency: 19
   walkSwayAmplitude: 0.02
   sprintSwayAmplitude: 0.04
@@ -18382,6 +18382,50 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -6853427968488064796, guid: a45f5af7adf759042892e1409c14ac34, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -6853427968488064796, guid: a45f5af7adf759042892e1409c14ac34, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: aa5ba0915d78f0046bb03cade03c42f8, type: 2}
+    - target: {fileID: -6853427968488064796, guid: a45f5af7adf759042892e1409c14ac34, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: c03d7cbee4ac9a047ac2b7eb80545577, type: 2}
+    - target: {fileID: -6853427968488064796, guid: a45f5af7adf759042892e1409c14ac34, type: 3}
+      propertyPath: 'm_Materials.Array.data[2]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 33fb2358cdbd93240acd34745f146e84, type: 2}
+    - target: {fileID: -6853427968488064796, guid: a45f5af7adf759042892e1409c14ac34, type: 3}
+      propertyPath: 'm_Materials.Array.data[3]'
+      value: 
+      objectReference: {fileID: 2100000, guid: e608f4eba27210f4985be559df2f7005, type: 2}
+    - target: {fileID: -6853427968488064796, guid: a45f5af7adf759042892e1409c14ac34, type: 3}
+      propertyPath: 'm_Materials.Array.data[4]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 2f92deb0819e9544386170c1b898d5f9, type: 2}
+    - target: {fileID: -6853427968488064796, guid: a45f5af7adf759042892e1409c14ac34, type: 3}
+      propertyPath: 'm_Materials.Array.data[5]'
+      value: 
+      objectReference: {fileID: 2100000, guid: b76edafec7bf0ec4fb66b1fb5253cb84, type: 2}
+    - target: {fileID: -6853427968488064796, guid: a45f5af7adf759042892e1409c14ac34, type: 3}
+      propertyPath: 'm_Materials.Array.data[6]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 1818d33c5d7f50243bd81387563b1567, type: 2}
+    - target: {fileID: -6853427968488064796, guid: a45f5af7adf759042892e1409c14ac34, type: 3}
+      propertyPath: 'm_Materials.Array.data[7]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5a0bab5d200fe054296e5b10951b51f3, type: 2}
+    - target: {fileID: -6853427968488064796, guid: a45f5af7adf759042892e1409c14ac34, type: 3}
+      propertyPath: 'm_Materials.Array.data[8]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5a0bab5d200fe054296e5b10951b51f3, type: 2}
+    - target: {fileID: -6853427968488064796, guid: a45f5af7adf759042892e1409c14ac34, type: 3}
+      propertyPath: 'm_Materials.Array.data[9]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5a0bab5d200fe054296e5b10951b51f3, type: 2}
     - target: {fileID: 919132149155446097, guid: a45f5af7adf759042892e1409c14ac34, type: 3}
       propertyPath: m_Name
       value: Unarmed Idle 01 (1)
@@ -18423,7 +18467,7 @@ Transform:
   m_GameObject: {fileID: 5827291475105970657}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 24.55, y: 15.809999, z: 28.6}
+  m_LocalPosition: {x: 24.55, y: 15.809999, z: 28.95}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -18486,7 +18530,7 @@ Transform:
   m_GameObject: {fileID: 7117028332392751166}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.7, z: 0}
+  m_LocalPosition: {x: 0, y: 1.7, z: 0.35}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
