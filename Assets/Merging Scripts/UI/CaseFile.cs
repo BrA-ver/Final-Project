@@ -41,8 +41,16 @@ public class CaseFile : MonoBehaviour
     }
     #endregion
 
+    #region Profile Info
+    public void ShowProfileInfo(CharacterProfile profile)
+    {
+        SetNameText(profile.profile._name);
+    }
+
     public void SetNameText(string _name)
     {
         nameText.text = _name;
     }
+
+    #endregion
 }

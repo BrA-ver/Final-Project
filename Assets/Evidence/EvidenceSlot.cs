@@ -5,6 +5,7 @@ using TMPro;
 
 public class EvidenceSlot : MonoBehaviour
 {
+    EvidenceDisplay display;
     [Header("Evidence")]
     [SerializeField] Evidence evidence;
 
@@ -16,12 +17,17 @@ public class EvidenceSlot : MonoBehaviour
 
     public Evidence Evidence => evidence;
 
-    public void Initialize(Evidence newEvidence)
+    public void Initialize(Evidence newEvidence, EvidenceDisplay display)
     {
         evidence = newEvidence;
         icon.sprite = evidence.sprite;
+        this.display = display;
     }
 
+    public void OnClick()
+    {
+        display.ClickEvidence(evidence);
+    }
 
     #region Button Events
 

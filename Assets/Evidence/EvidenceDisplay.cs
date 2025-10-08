@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections;
 using TMPro;
 using UnityEngine.EventSystems;
+using System;
 
 public class EvidenceDisplay : MonoBehaviour
 {
@@ -28,6 +29,8 @@ public class EvidenceDisplay : MonoBehaviour
 
     public bool IsOpen { get; private set; }
     [field: SerializeField] public bool IsInterogating { get; set; }
+
+    public event Action<Evidence> onEvidenceClick;
 
     private void Awake()
     {
@@ -79,7 +82,7 @@ public class EvidenceDisplay : MonoBehaviour
 
         //SelectSlot();
         GameManager.instance.StartInteracting();
-        StartCoroutine(SelectFirstSlot());
+        //StartCoroutine(SelectFirstSlot());
         GameManager.instance.SwitchState(InteractionState.EvidenceBoard);
     }
 
@@ -111,7 +114,7 @@ public class EvidenceDisplay : MonoBehaviour
             EvidenceSlot slot = Instantiate(slotPrefab, evidenceHolder);
 
             // Assign evidence to the slot
-            slot.Initialize(evidence);
+            slot.Initialize(evidence, this);
 
             // Add the slot to the active slots list
             activeSlots.Add(slot);
@@ -159,5 +162,10 @@ public class EvidenceDisplay : MonoBehaviour
         
         if (activeSlots.Count > 0)
             EventSystem.current.SetSelectedGameObject(activeSlots[0].gameObject);
+    }
+
+    public void ClickEvidence(Evidence evidence)
+    {
+        onEvidenceClick?.Invoke(evidence);
     }
 }
