@@ -87,7 +87,7 @@ public class Player : MonoBehaviour
     void OnJump()
     {
         if (waitForNextFrame || GameManager.instance.IsInteracting) return;
-        Debug.Log("Jump Called");
+        //Debug.Log("Jump Called");
         movement.Jump();
     }
 
