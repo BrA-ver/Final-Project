@@ -25,7 +25,7 @@ public class WernerMovement : MonoBehaviour
     [Header("Gravity")]
     [SerializeField] private float gravityValue = -9.81f;
 
-    // 🟨 CROUCH SETTINGS (commented out except standCameraOffset)
+    // CROUCH SETTINGS (commented out except standCameraOffset)
     /*
     [Header("Crouch Settings")]
     [SerializeField] private float standHeight = 2.0f;
@@ -44,19 +44,19 @@ public class WernerMovement : MonoBehaviour
     [SerializeField] private float walkBobFrequency = 6f;
     [SerializeField] private float sprintBobAmplitude = 0.08f;
     [SerializeField] private float sprintBobFrequency = 10f;
-    // 🟨 [SerializeField] private float crouchBobAmplitude = 0.02f;
-    // 🟨 [SerializeField] private float crouchBobFrequency = 4f;
+    // [SerializeField] private float crouchBobAmplitude = 0.02f;
+    // [SerializeField] private float crouchBobFrequency = 4f;
 
     [Header("Head Sway (horizontal)")]
     [SerializeField] private float walkSwayAmplitude = 0.02f;
     [SerializeField] private float sprintSwayAmplitude = 0.04f;
-    // 🟨 [SerializeField] private float crouchSwayAmplitude = 0.01f;
+    // [SerializeField] private float crouchSwayAmplitude = 0.01f;
     [SerializeField] private float swayFrequencyMultiplier = 0.5f;
 
     private bool groundedPlayer = true;
-    // 🟨 private bool isCrouching = false;
+    // private bool isCrouching = false;
     private bool isJumping = false;
-    // 🟨 private bool isTransitioningCrouch = false;
+    // private bool isTransitioningCrouch = false;
 
     private float bobTimer;
     private Vector3 baseCamPos;
@@ -72,14 +72,8 @@ public class WernerMovement : MonoBehaviour
         if (animator == null)
             animator = GetComponentInChildren<Animator>();
 
-        if (animator == null)
-            Debug.LogError("❌ Animator not found! Please assign it manually in the Inspector.");
-        else
-            Debug.Log($"✅ Animator linked: {animator.gameObject.name}");
-
         if (cameraTarget != null)
         {
-            // ✅ Keep the stand camera offset active
             cameraTarget.localPosition = standCameraOffset;
             baseCamPos = standCameraOffset;
             currentCameraOffset = standCameraOffset;
@@ -93,9 +87,9 @@ public class WernerMovement : MonoBehaviour
 
         groundedPlayer = controller.isGrounded || (groundCheck != null && groundCheck.OnGround());
 
-        // 🟨 HandleCrouchInput();
+        // HandleCrouchInput();
         HandleMovementAndGravity();
-        // 🟨 UpdateCrouchHeightSmooth();
+        // UpdateCrouchHeightSmooth();
         HandleHeadBobAndSway();
         HandleAnimations();
     }
@@ -107,11 +101,11 @@ public class WernerMovement : MonoBehaviour
 
         float currentSpeed = moveSpeed;
 
-        // 🟨 if (Input.GetKey(KeyCode.LeftShift) && !isCrouching)
+        // if (Input.GetKey(KeyCode.LeftShift) && !isCrouching)
         if (Input.GetKey(KeyCode.LeftShift))
             currentSpeed = sprintSpeed;
-        // 🟨 else if (isCrouching)
-        // 🟨     currentSpeed = crouchSpeed;
+        // else if (isCrouching)
+        //     currentSpeed = crouchSpeed;
 
         Vector3 move = Camera.main.transform.forward * inputZ + Camera.main.transform.right * inputX;
         move.y = 0f;
@@ -130,7 +124,7 @@ public class WernerMovement : MonoBehaviour
             }
         }
 
-        if (Input.GetButtonDown("Jump") && groundedPlayer /* 🟨 && !isCrouching */)
+        if (Input.GetButtonDown("Jump") && groundedPlayer /* && !isCrouching */)
         {
             yVelocity.y = Mathf.Sqrt(-2f * jumpHeight * gravityValue);
             isJumping = true;
@@ -143,7 +137,7 @@ public class WernerMovement : MonoBehaviour
         moveDirection = move;
     }
 
-    // 🟨 CROUCH FUNCTIONS REMOVED
+    // CROUCH FUNCTIONS REMOVED
     /*
     private void HandleCrouchInput() { ... }
     private IEnumerator SmoothCrouchTransition(...) { ... }
@@ -166,15 +160,15 @@ public class WernerMovement : MonoBehaviour
         }
 
         float amplitude =
-            // 🟨 isCrouching ? crouchBobAmplitude :
+            // isCrouching ? crouchBobAmplitude :
             Input.GetKey(KeyCode.LeftShift) ? sprintBobAmplitude : walkBobAmplitude;
 
         float frequency =
-            // 🟨 isCrouching ? crouchBobFrequency :
+            // isCrouching ? crouchBobFrequency :
             Input.GetKey(KeyCode.LeftShift) ? sprintBobFrequency : walkBobFrequency;
 
         float swayAmp =
-            // 🟨 isCrouching ? crouchSwayAmplitude :
+            // isCrouching ? crouchSwayAmplitude :
             Input.GetKey(KeyCode.LeftShift) ? sprintSwayAmplitude : walkSwayAmplitude;
 
         bobTimer += Time.deltaTime * frequency;
@@ -182,14 +176,13 @@ public class WernerMovement : MonoBehaviour
         float offsetY = Mathf.Sin(bobTimer) * amplitude;
         float offsetX = Mathf.Sin(bobTimer * swayFrequencyMultiplier + Mathf.PI / 2f) * swayAmp;
 
-        // ✅ Keep the stand offset baseline
         cameraTarget.localPosition = baseCamPos + new Vector3(offsetX, offsetY, 0);
     }
 
     private void HandleAnimations()
     {
         if (animator == null) return;
-        // 🟨 if (isJumping || isTransitioningCrouch) return;
+        // if (isJumping || isTransitioningCrouch) return;
         if (isJumping) return;
 
         float inputX = Input.GetAxisRaw("Horizontal");
@@ -197,7 +190,7 @@ public class WernerMovement : MonoBehaviour
         Vector2 inputVector = new Vector2(inputX, inputZ);
         float inputMagnitude = Mathf.Clamp01(inputVector.magnitude);
 
-        // 🟨 bool isSprinting = Input.GetKey(KeyCode.LeftShift) && inputMagnitude > 0.1f && !isCrouching;
+        // bool isSprinting = Input.GetKey(KeyCode.LeftShift) && inputMagnitude > 0.1f && !isCrouching;
         bool isSprinting = Input.GetKey(KeyCode.LeftShift) && inputMagnitude > 0.1f;
 
         float targetSpeed = isSprinting ? sprintSpeed : moveSpeed;

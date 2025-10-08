@@ -4795,9 +4795,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4309491781398476856, guid: 99bae74f2b5133e4897ce12faa5401d0, type: 3}
       insertIndex: 1
       addedObject: {fileID: 953301490}
-    - targetCorrespondingSourceObject: {fileID: 4309491781398476856, guid: 99bae74f2b5133e4897ce12faa5401d0, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1044708946}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 99bae74f2b5133e4897ce12faa5401d0, type: 3}
 --- !u!1 &578011147 stripped
@@ -7521,17 +7518,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1044708945}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.0587286, y: 1.0587286, z: 1.0587286}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1885031227}
+  m_Father: {fileID: 2088155278}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -162, y: -140}
-  m_SizeDelta: {x: 288, y: 239.09998}
+  m_AnchoredPosition: {x: -239, y: -549}
+  m_SizeDelta: {x: 422.9, y: 970.81}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1044708947
 MonoBehaviour:
@@ -7555,29 +7552,35 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 30
+    m_FontSize: 42
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 3
-    m_MaxSize: 50
+    m_MaxSize: 55
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'WASD = Movement
+  m_Text: 'WASD = Mvement
+
 
     Shift = Sprint
 
+
     Spacebar = Jump
 
+
     E = Interact
+
 
     Q
     = Look into Rift
 
+
     Tab = Evidence
+
 
     R = Case File'
 --- !u!222 &1044708948
@@ -16385,7 +16388,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerControllers:
-  - {fileID: 0}
   - {fileID: 7733156470013070120}
   - {fileID: 1128576071494189055}
 --- !u!114 &1871899813
@@ -16769,6 +16771,10 @@ PrefabInstance:
     - target: {fileID: 1889818422825923948, guid: 408ae2944a4fd6d4bb5f044161626b49, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1966414644949506424, guid: 408ae2944a4fd6d4bb5f044161626b49, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2069670542870455192, guid: 408ae2944a4fd6d4bb5f044161626b49, type: 3}
       propertyPath: m_IsActive
@@ -17595,6 +17601,7 @@ RectTransform:
   - {fileID: 754845945}
   - {fileID: 1226405187}
   - {fileID: 1458623752}
+  - {fileID: 1044708946}
   m_Father: {fileID: 1331700901}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

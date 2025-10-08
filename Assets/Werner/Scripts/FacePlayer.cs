@@ -4,7 +4,7 @@ public class FacePlayer : MonoBehaviour
 {
     private Transform playerCamera;
 
-    [Header("Adjust this if your object faces the wrong way")]
+    [Header("Face Player")]
     public Vector3 rotationOffset = new Vector3(0, 90, 0);
 
     void Start()
@@ -19,7 +19,6 @@ public class FacePlayer : MonoBehaviour
 
         transform.LookAt(playerCamera);
 
-        // Apply extra rotation to fix the facing direction
         transform.Rotate(rotationOffset);
     }
 }

@@ -14,10 +14,10 @@ public class RoadSetup
 
 public class CarManager : MonoBehaviour
 {
-    [Header("Roads Setup (1 per car)")]
+    [Header("Roads Setup")]
     public List<RoadSetup> roads = new List<RoadSetup>();
 
-    private int carsRemaining;  // how many cars are still alive
+    private int carsRemaining;
     private List<GameObject> activeCars = new List<GameObject>();
 
     private void Start()
@@ -53,7 +53,6 @@ public class CarManager : MonoBehaviour
 
         if (carsRemaining <= 0)
         {
-            // All cars finished -> respawn all
             SpawnAllCars();
         }
     }
@@ -83,7 +82,6 @@ public class CarController : MonoBehaviour
                 breakPoints.Add(t.position);
         }
 
-        // start moving
         if (breakPoints.Count > 0)
             agent.SetDestination(breakPoints[0]);
         else
@@ -94,12 +92,10 @@ public class CarController : MonoBehaviour
     {
         if (agent == null || agent.pathPending || isWaiting) return;
 
-        // Handle break points
         if (currentBreakIndex < breakPoints.Count && agent.remainingDistance <= agent.stoppingDistance)
         {
-            StartCoroutine(WaitAtBreak(2f)); // <-- fixed 2 second delay (can be made adjustable per break later)
+            StartCoroutine(WaitAtBreak(2f));
         }
-        // Handle end point
         else if (currentBreakIndex >= breakPoints.Count && agent.remainingDistance <= agent.stoppingDistance)
         {
             manager.OnCarDestroyed(car);

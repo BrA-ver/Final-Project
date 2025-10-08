@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Video;
 
-public class TimeTravel : MonoBehaviour
+public class RiftTravel : MonoBehaviour
 {
     [Header("Teleport Settings")]
     [SerializeField] private float mapOffsetZ = 200f;

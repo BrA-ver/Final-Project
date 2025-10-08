@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class HoverAndRotate : MonoBehaviour
 {
-    [Header("Hover (bobbing)")]
+    [Header("Hover")]
     public float hoverAmplitude = 0.25f;
 
     public float hoverFrequency = 1.0f;
