@@ -17,10 +17,10 @@ public class FileButton : MonoBehaviour
         EvidenceDisplay.instance.onEvidenceClick -= OnEvidenceClick;
     }
 
-    public void OpenEvidenceBoard()
+    public void OpenEvidenceBoard() // Called when the button is clicked
     {
         EvidenceDisplay.instance.OpenEvidenceBoard();
-        EvidenceDisplay.instance.onEvidenceClick += OnEvidenceClick;
+        EvidenceDisplay.instance.onEvidenceClick += OnEvidenceClick; // Subribes the button to the evidence click
     }
 
     private void OnEvidenceClick(Evidence evidence)

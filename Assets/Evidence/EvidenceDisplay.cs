@@ -83,7 +83,9 @@ public class EvidenceDisplay : MonoBehaviour
         //SelectSlot();
         GameManager.instance.StartInteracting();
         //StartCoroutine(SelectFirstSlot());
-        GameManager.instance.SwitchState(InteractionState.EvidenceBoard);
+        
+        if (GameManager.instance.CurrentState != InteractionState.CaseFile) // Enter the evidence state unless the case file is open
+            GameManager.instance.SwitchState(InteractionState.EvidenceBoard);
     }
 
     public void CloseEvidenceBoard(bool interogating)

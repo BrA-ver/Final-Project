@@ -12,16 +12,13 @@ public class CharacterProfile : MonoBehaviour
 
     public bool solvedMotive, solvedMeans, solvedOpp;
 
+    [SerializeField] bool subribed = false;
+
     private void Start()
     {
         file = CaseFile.instance;
-        fileButtons = FindObjectsByType<FileButton>(FindObjectsSortMode.None);
-        answerTexts = FindObjectsByType<AnswerText>(FindObjectsInactive.Include,FindObjectsSortMode.None);
-
-        foreach (FileButton button in fileButtons)
-        {
-            button.onButtonSolved += OnButtonSolved;
-        }
+        fileButtons = file.FileButtons;
+        answerTexts = file.AnswerTexts;
     }
 
     private void OnButtonSolved(AnswerType type)
@@ -66,35 +63,97 @@ public class CharacterProfile : MonoBehaviour
     public void SelectProfile() // Called when the profile is clicked
     {
         file.ShowProfileInfo(this);
+        file.UnsubscribeProfiles();
+        SubscribeToButtonSolved();
 
-        
         foreach (FileButton button in fileButtons)
         {
-            Debug.Log("Start Loop");
+            //Debug.Log("Start Loop");
             switch (button.type)
             {
                 case AnswerType.Motive:
                     if (solvedMotive)
                     {
+                        //Debug.Log("Solved Motive");
                         // Turn off the button
                         button.gameObject.SetActive(false);
 
                         // Turn on the solved text
+                        ToggleAnswerText(AnswerType.Motive, true);
                     }
-                    else button.gameObject.SetActive(true);
+                    else
+                    {
+                        button.gameObject.SetActive(true);
+                        ToggleAnswerText(AnswerType.Motive, false);
+                    }
                     break;
 
                 case AnswerType.Means:
-                    if (solvedMeans) button.gameObject.SetActive(false);
-                    else button.gameObject.SetActive(true);
+                    if (solvedMeans)
+                    {
+                        //Debug.Log("Solved Motive");
+                        // Turn off the button
+                        button.gameObject.SetActive(false);
+
+                        // Turn on the solved text
+                        ToggleAnswerText(AnswerType.Means, true);
+                    }
+                    else
+                    {
+                        button.gameObject.SetActive(true);
+                        ToggleAnswerText(AnswerType.Means, false);
+                    }
                     break;
 
                 case AnswerType.Opportunity:
-                    if (solvedOpp) button.gameObject.SetActive(false);
-                    else button.gameObject.SetActive(true);
+                    if (solvedOpp)
+                    {
+                        //Debug.Log("Solved Motive");
+                        // Turn off the button
+                        button.gameObject.SetActive(false);
+
+                        // Turn on the solved text
+                        ToggleAnswerText(AnswerType.Opportunity, true);
+                    }
+                    else
+                    {
+                        button.gameObject.SetActive(true);
+                        ToggleAnswerText(AnswerType.Opportunity, false);
+                    }
                     break;
             }
-            Debug.Log("loop");
+            //Debug.Log("loop");
+        }
+    }
+
+    public void SubscribeToButtonSolved()
+    {
+        Debug.Log(name + " scubscribed");
+        subribed = true;
+        foreach (FileButton button in fileButtons)
+        {
+            button.onButtonSolved += OnButtonSolved;
+        }
+    }
+
+    public void UnSubscribeToButtonSolved() // Called when another profile is selected
+    {
+        Debug.Log(name + " unscubscribed");
+        subribed = false;
+        foreach (FileButton button in fileButtons)
+        {
+            button.onButtonSolved -= OnButtonSolved;
+        }
+    }
+
+    void ToggleAnswerText(AnswerType type, bool turnOn)
+    {
+        foreach (AnswerText text in answerTexts)
+        {
+            if (text.type == type)
+            {
+                text.gameObject.SetActive(turnOn);
+            }
         }
     }
 

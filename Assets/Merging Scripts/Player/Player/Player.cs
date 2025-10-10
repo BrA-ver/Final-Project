@@ -54,7 +54,7 @@ public class Player : MonoBehaviour
         if (GameManager.instance.CurrentState != InteractionState.None)
         {
             movement.Stop();
-            animator.SetBool(moving, false);
+            //animator.SetBool(moving, false);
             return;
         }
 

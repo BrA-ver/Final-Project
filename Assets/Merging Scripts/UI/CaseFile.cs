@@ -11,14 +11,27 @@ public class CaseFile : MonoBehaviour
     [SerializeField] GameObject bg;
     [SerializeField] TextMeshProUGUI nameText;
 
+    [SerializeField] FileButton[] fileButtons;
+    [SerializeField] AnswerText[] answerTexts;
+
+    [SerializeField] ProfileSO[] profileObjects;
+
+    CharacterProfile[] profiles;
+
+    public FileButton[] FileButtons => fileButtons;
+    public AnswerText[] AnswerTexts => answerTexts;
+
     private void Awake()
     {
         instance = this;
+        fileButtons = GetComponentsInChildren<FileButton>(true);
+        answerTexts = GetComponentsInChildren<AnswerText>(true);
     }
 
     private void Start()
     {
         CloseCaseFile();
+        
     }
 
     #region Toggle
@@ -29,6 +42,8 @@ public class CaseFile : MonoBehaviour
         IsOpen = true;
 
         bg.SetActive(true);
+
+        profiles = GetComponentsInChildren<CharacterProfile>();
     }
 
     public void CloseCaseFile()
@@ -38,6 +53,9 @@ public class CaseFile : MonoBehaviour
         IsOpen = false;
 
         bg.SetActive(false);
+
+        //UnsubscribeProfiles();
+        ResetPage();
     }
     #endregion
 
@@ -53,4 +71,18 @@ public class CaseFile : MonoBehaviour
     }
 
     #endregion
+
+    public void UnsubscribeProfiles()
+    {
+        if (profiles.Length <= 0 || profiles == null) return;
+        foreach (CharacterProfile profile in profiles)
+        {
+            profile.UnSubscribeToButtonSolved();
+        }
+    }
+
+    void ResetPage()
+    {
+
+    }
 }
