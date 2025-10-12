@@ -1,11 +1,14 @@
 using UnityEngine;
 using TMPro;
+using System.Collections.Generic;
 
 public class DialogeDisplay : MonoBehaviour
 {
     [SerializeField] GameObject displayHolder;
     [SerializeField] TextMeshProUGUI dialogueText;
-    [SerializeField] DialogueChoiceButton[] choiceButtons;
+    List<DialogueChoiceButton> choiceButtons =  new List<DialogueChoiceButton>();
+
+    [SerializeField] Transform buttonHolder;
 
     private void Awake()
     {
@@ -21,8 +24,12 @@ public class DialogeDisplay : MonoBehaviour
         DialogueManager.Instance.onDisplayChoices += OnShowChoices;
         DialogueManager.Instance.onHodeChoices += OnHideChoices;
 
-        foreach (DialogueChoiceButton button in choiceButtons)
+        foreach (Transform button in buttonHolder)
         {
+            if (button.TryGetComponent<DialogueChoiceButton>(out DialogueChoiceButton choiceButton))
+            {
+                choiceButtons.Add(choiceButton);
+            }
             button.gameObject.SetActive(false);
         }
     }
@@ -66,7 +73,6 @@ public class DialogeDisplay : MonoBehaviour
                 choiceButtons[i].SetChoice(choices[i]);
             }
             //DialogueManager.Instance.DeselectButton();
-            choiceButtons[0].Select();
         }
     }
 

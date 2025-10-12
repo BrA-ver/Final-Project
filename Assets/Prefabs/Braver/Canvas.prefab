@@ -321,7 +321,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7111932992597481614}
-  - {fileID: 3042437855865350699}
   - {fileID: 2619750683996743632}
   m_Father: {fileID: 2320706587742581285}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -827,10 +826,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayHolder: {fileID: 752190481501295920}
   dialogueText: {fileID: 3167539985382991090}
-  choiceButtons:
-  - {fileID: 7678162232567007969}
-  - {fileID: 3173544016678790637}
-  - {fileID: 8487731181136518960}
+  buttonHolder: {fileID: 0}
 --- !u!1 &4319292664217302057
 GameObject:
   m_ObjectHideFlags: 0
@@ -1689,11 +1685,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8125314934058418424}
+  m_Father: {fileID: 7111932992597481614}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -373}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1450, y: 223.451}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2298138889193798941
@@ -2341,7 +2337,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 3042437855865350699}
   m_Father: {fileID: 8125314934058418424}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -3875,14 +3872,3 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7734663265925836180, guid: 23df08e1500c5314983737903b50a38c, type: 3}
   m_PrefabInstance: {fileID: 8885241649198142993}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7678162232567007969 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1279294881185668336, guid: 23df08e1500c5314983737903b50a38c, type: 3}
-  m_PrefabInstance: {fileID: 8885241649198142993}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3b39ab0933306341bad9bcc94d32659, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

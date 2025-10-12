@@ -103,21 +103,28 @@ public class DialogueManager : MonoBehaviour
             GameEvents.OnInteractStop();
         }
 
-        GameManager.instance.HideMouse();
+        //GameManager.instance.HideMouse();
         // When the button is clicked, set the selected button to null
         //DeselectButton();
     }
 
     public void SelectChoice(DialogueChoice choice)
     {
-        this.dialogue = choice.targetDialogue;
-        makingChoice = false;
-        index = 0;
-        onHodeChoices?.Invoke();
-        //DeselectButton();
-        ContinueOrExitDialogue();
+        if (choice.targetDialogue != null)
+        {
+            this.dialogue = choice.targetDialogue;
+            makingChoice = false;
+            index = 0;
+            onHodeChoices?.Invoke();
+            //DeselectButton();
+            ContinueOrExitDialogue();
 
-        // When the button is clicked, set the selected button to null
+            // When the button is clicked, set the selected button to null
+        }
+        else
+        {
+            Debug.LogWarning("WARNING: There is no dialogue following this choice");
+        }
         
     }
 

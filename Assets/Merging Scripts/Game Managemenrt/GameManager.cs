@@ -49,10 +49,6 @@ public class GameManager : MonoBehaviour
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-#if UNITY_EDITOR
-        Cursor.lockState = CursorLockMode.None;
-#endif
-
     }
 
     public void ShowMouse()

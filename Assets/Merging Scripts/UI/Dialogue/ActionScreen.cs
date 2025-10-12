@@ -28,7 +28,7 @@ public class ActionScreen : MonoBehaviour
         holder.SetActive(false);
         showActions = false;
         //firstButton.Select();
-        GameManager.instance.HideMouse();
+        //GameManager.instance.HideMouse();
     }
 
     public void Talk()
@@ -64,13 +64,14 @@ public class ActionScreen : MonoBehaviour
         onExitActions?.Invoke();
 
         GameManager.instance.SwitchState(InteractionState.None);
+        GameManager.instance.HideMouse();
     }
 
     public void ShowActions()
     {
         if (!showActions) return;
         holder.SetActive(true);
-        Invoke(nameof(SelectFirst), .5f);
+        
 
         performingAction = true;
 
@@ -81,19 +82,13 @@ public class ActionScreen : MonoBehaviour
     public void ShowActions(NPC npc)
     {
         holder.SetActive(true);
-        Invoke(nameof(SelectFirst), .5f);
+        
         interactedNPC = npc;
 
         performingAction = true;
 
         GameManager.instance.SwitchState(InteractionState.ActionScreen);
         GameManager.instance.ShowMouse();
-    }
-
-    void SelectFirst()
-    {
-        //Debug.Log("Selected Button");
-        firstButton.Select();
     }
 
     //void DeselectButton()
