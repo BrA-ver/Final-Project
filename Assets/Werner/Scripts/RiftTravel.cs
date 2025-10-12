@@ -43,7 +43,7 @@ public class RiftTravel : MonoBehaviour
     [Header("UI Prompt")]
     [SerializeField] private Text interactLabel;
 
-    private PlayerMovement cachedMovement;
+    private WernerMovement cachedMovement;
     private CharacterController controller;
     private CamerTarget cameraLook;
     private VideoPlayer videoPlayer;
@@ -60,7 +60,7 @@ public class RiftTravel : MonoBehaviour
 
     void Awake()
     {
-        cachedMovement = GetComponent<PlayerMovement>();
+        cachedMovement = GetComponent<WernerMovement>();
         controller = GetComponent<CharacterController>();
         cameraLook = GetComponentInChildren<CamerTarget>();
 
@@ -256,7 +256,7 @@ public class RiftTravel : MonoBehaviour
 
         if (videoPlayer != null && targetClip != null)
         {
-            // ✅ suction runs based on toggle + direction
+            // suction runs based on toggle + direction
             if ((fromMap1 && playSuctionOnEnter) || (!fromMap1 && playSuctionOnExit))
             {
                 yield return StartCoroutine(PlayPortalSuctionEffect());
@@ -282,6 +282,13 @@ public class RiftTravel : MonoBehaviour
         else
         {
             transform.position = pos;
+        }
+
+        // REFRESH CAMERA right after teleport
+        var move = GetComponent<WernerMovement>();
+        if (move != null)
+        {
+            move.RefreshCamera();
         }
 
         if (cachedMovement != null) cachedMovement.enabled = true;

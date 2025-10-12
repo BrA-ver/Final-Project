@@ -4,7 +4,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     InputHandler input;
-    PlayerMovement movement;
+    WernerMovement movement;
     Animator animator;
     Interactor interactor;
 
@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         input = GetComponent<InputHandler>();
-        movement = GetComponent<PlayerMovement>();
+        movement = GetComponent<WernerMovement>();
         animator = GetComponent<Animator>();
         interactor = GetComponentInChildren<Interactor>();
     }
@@ -26,14 +26,11 @@ public class Player : MonoBehaviour
     private void Start()
     {
         waitForNextFrame = true;
-        //movement.enabled = true;
-
-        //transform.position = startPos;
     }
 
     private void OnEnable()
     {
-        input.onSumbit += OnJump;
+        input.onJump += OnJump;
         input.onInteract += OnInteract;
         input.onPresentEvidence += OnPresentEvidence;
         input.onCaseBoard += OnCaseBoard;
@@ -44,51 +41,29 @@ public class Player : MonoBehaviour
         input.onJump -= OnJump;
         input.onInteract -= OnInteract;
         input.onPresentEvidence -= OnPresentEvidence;
-        input.onCaseBoard += OnCaseBoard;
+        input.onCaseBoard -= OnCaseBoard;
     }
-
-    
 
     private void Update()
     {
-        if (GameManager.instance.CurrentState != InteractionState.None)
+        if (GameManager.instance != null && GameManager.instance.CurrentState != InteractionState.None)
         {
-            movement.Stop();
-            //animator.SetBool(moving, false);
             return;
-        }
-
-        HandleMovement();
-    }
-
-    void AnimateMovement()
-    {
-        //bool isMoving = movement.Velocity.magnitude > 0.1f;
-        //animator.SetBool(moving, isMoving);
-
-        //animator.SetBool(grounded, movement.OnGround);
-    }
-
-    private void HandleMovement()
-    {
-        if (waitForNextFrame)
-        {
-            waitForNextFrame = false;
-        }
-        else
-        {
-            Vector2 moveInput = input.moveInput;
-            movement.Move(moveInput);
         }
 
         AnimateMovement();
     }
 
+    void AnimateMovement()
+    {
+        if (animator == null) return;
+        bool isGrounded = movement != null && movement.OnGround;
+        animator.SetBool(grounded, isGrounded);
+    }
+
     void OnJump()
     {
         if (waitForNextFrame || GameManager.instance.IsInteracting) return;
-        //Debug.Log("Jump Called");
-        movement.Jump();
     }
 
     public void SetPosition(Vector3 newPos)
@@ -98,7 +73,7 @@ public class Player : MonoBehaviour
 
     private void OnInteract()
     {
-        interactor.Interact();
+        interactor?.Interact();
     }
 
     private void OnPresentEvidence()
@@ -109,20 +84,13 @@ public class Player : MonoBehaviour
     void OnCaseBoard()
     {
         InteractionState currentState = GameManager.instance.CurrentState;
-        // Only toggle the case file if we are free or in the case file
         if (currentState != InteractionState.None && currentState != InteractionState.CaseFile)
-        {
             return;
-        }
 
         CaseFile file = CaseFile.instance;
         if (file.IsOpen)
-        {
             file.CloseCaseFile();
-        }
         else
-        {
             file.OpenCaseFile();
-        }
     }
 }
