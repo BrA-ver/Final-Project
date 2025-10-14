@@ -72,14 +72,39 @@ public class WernerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.instance != null && GameManager.instance.CurrentState != InteractionState.None)
-            return;
-
         groundedPlayer = controller.isGrounded || (groundCheck != null && groundCheck.OnGround());
+
+        // ✅ If interacting, still apply gravity but stop other inputs
+        if (GameManager.instance != null && GameManager.instance.CurrentState != InteractionState.None)
+        {
+            ApplyGravityOnly();
+            StopAnimationsWhileInteracting();
+            return;
+        }
 
         HandleMovementAndGravity();
         HandleHeadBobAndSway();
         HandleAnimations();
+    }
+
+    private void ApplyGravityOnly()
+    {
+        if (groundedPlayer && yVelocity.y < 0f)
+        {
+            yVelocity.y = -2f;
+        }
+
+        yVelocity.y += gravityValue * Time.deltaTime;
+        controller.Move(yVelocity * Time.deltaTime);
+    }
+
+    private void StopAnimationsWhileInteracting()
+    {
+        if (animator != null)
+        {
+            animator.SetFloat("Speed", 0f);
+            animator.SetBool("IsJumping", false);
+        }
     }
 
     private void HandleMovementAndGravity()
