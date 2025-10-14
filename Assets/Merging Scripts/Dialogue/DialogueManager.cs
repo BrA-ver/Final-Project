@@ -24,6 +24,10 @@ public class DialogueManager : MonoBehaviour
     public event Action<DialogueChoice[]> onDisplayChoices;
     public event Action onHodeChoices;
 
+    //----- WERNER ADDED -----
+    public static event Action<Dialogue> OnDialogueStarted;
+    //----- WERNER ADDED -----
+
     private void Awake()
     {
         Instance = this;
@@ -56,6 +60,10 @@ public class DialogueManager : MonoBehaviour
         onDialogeStarted?.Invoke();
         dialogueStarted = true;
         this.dialogue = dialogue;
+
+        //----- WERNER ADDED -----
+        OnDialogueStarted?.Invoke(dialogue);
+        //----- WERNER ADDED -----
 
         ContinueOrExitDialogue();
         GameManager.instance.SwitchState(InteractionState.Dialogue);
@@ -117,6 +125,11 @@ public class DialogueManager : MonoBehaviour
             index = 0;
             onHodeChoices?.Invoke();
             //DeselectButton();
+
+            //----- WERNER ADDED -----
+            OnDialogueStarted?.Invoke(choice.targetDialogue);
+            //----- WERNER ADDED -----
+
             ContinueOrExitDialogue();
 
             // When the button is clicked, set the selected button to null

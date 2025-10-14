@@ -1,34 +1,43 @@
-using UnityEngine;
+using UnityEngine; 
 using UnityEngine.AI;
+using System.Collections;
 
 public class PoliceNavMesh : MonoBehaviour
 {
     [Header("Patrol Settings")]
-    [SerializeField] private Transform[] movePoints;  // List of waypoints
-    [SerializeField] private float pointReachedThreshold = 0.5f; // How close before switching
+    [SerializeField] private Transform[] movePoints;
+    [SerializeField] private float pointReachedThreshold = 0.5f;
+
+    [Header("Animation")]
+    [SerializeField] private Animator animator;
+    private static readonly int IsWalking = Animator.StringToHash("isWalking");
+
+    [Header("Finish Rotation")]
+    [SerializeField] private bool rotateOnFinish = true;
+    [SerializeField] private float finishYawDegrees = 180f;
+    [SerializeField] private float rotateDuration = 0.25f;
+
+    [Header("Optional Components")]
+    [SerializeField] private MonoBehaviour npcScriptToRemove;
 
     private NavMeshAgent navMeshAgent;
     private int currentPointIndex = 0;
-    private bool finishedPatrol = false;
+    private bool finishedPatrol = true;
 
     private void Awake()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
-    }
+        if (animator == null)
+            animator = GetComponentInChildren<Animator>();
 
-    private void Start()
-    {
-        if (movePoints.Length > 0)
-        {
-            navMeshAgent.SetDestination(movePoints[currentPointIndex].position);
-        }
+        navMeshAgent.isStopped = true;
+        navMeshAgent.ResetPath();
     }
 
     private void Update()
     {
         if (finishedPatrol || movePoints.Length == 0) return;
 
-        // Check if police has reached the current point
         if (!navMeshAgent.pathPending && navMeshAgent.remainingDistance <= pointReachedThreshold)
         {
             currentPointIndex++;
@@ -39,9 +48,83 @@ public class PoliceNavMesh : MonoBehaviour
             }
             else
             {
-                finishedPatrol = true; // Stop moving at the last point
+                // ---- Patrol complete ----
+                finishedPatrol = true;
+                navMeshAgent.isStopped = true;
                 navMeshAgent.ResetPath();
+
+                if (animator != null)
+                    animator.SetBool(IsWalking, false);
+
+                if (rotateOnFinish)
+                {
+                    float targetY = transform.eulerAngles.y + finishYawDegrees;
+                    if (rotateDuration <= 0f)
+                    {
+                        transform.rotation = Quaternion.Euler(0f, targetY, 0f);
+                        TriggerPoliceSwap();
+                    }
+                    else
+                    {
+                        StartCoroutine(RotateAndSwap(targetY, rotateDuration));
+                    }
+                }
+                else
+                {
+                    TriggerPoliceSwap();
+                }
             }
+        }
+    }
+
+    public void StartPatrol()
+    {
+        if (movePoints == null || movePoints.Length == 0)
+        {
+            return;
+        }
+
+        finishedPatrol = false;
+        currentPointIndex = 0;
+
+        navMeshAgent.isStopped = false;
+        navMeshAgent.SetDestination(movePoints[currentPointIndex].position);
+
+        // Remove NPC interaction script permanently
+        if (npcScriptToRemove != null)
+        {
+            Destroy(npcScriptToRemove);
+        }
+
+        if (animator != null)
+            animator.SetBool(IsWalking, true);
+    }
+
+    private IEnumerator RotateAndSwap(float targetY, float duration)
+    {
+        Quaternion start = transform.rotation;
+        Quaternion target = Quaternion.Euler(0f, targetY, 0f);
+        float t = 0f;
+
+        while (t < 1f)
+        {
+            t += Time.deltaTime / duration;
+            transform.rotation = Quaternion.Slerp(start, target, t);
+            yield return null;
+        }
+
+        transform.rotation = target;
+
+        // Trigger PoliceSwap after rotation
+        TriggerPoliceSwap();
+    }
+
+    private void TriggerPoliceSwap()
+    {
+        PoliceSwap swapper = GetComponent<PoliceSwap>();
+        if (swapper != null)
+        {
+            swapper.enabled = true;
         }
     }
 }
