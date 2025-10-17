@@ -15,12 +15,15 @@ public class Player : MonoBehaviour
 
     Vector3 startPos;
 
+    public CharacterController Controller { get; private set; }
+
     private void Awake()
     {
         input = GetComponent<InputHandler>();
         movement = GetComponent<WernerMovement>();
         animator = GetComponent<Animator>();
         interactor = GetComponentInChildren<Interactor>();
+        Controller = GetComponent<CharacterController>();
     }
 
     private void Start()

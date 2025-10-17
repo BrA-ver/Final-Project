@@ -18,6 +18,11 @@ public class CaseFile : MonoBehaviour
 
     CharacterProfile[] profiles;
 
+    [Header("Verdict")]
+    [SerializeField] TextMeshProUGUI conclusion;
+    [SerializeField] Color guiltyColour = Color.red;
+    [SerializeField] Color notGuiltyColour = Color.green;
+
     public FileButton[] FileButtons => fileButtons;
     public AnswerText[] AnswerTexts => answerTexts;
 
@@ -31,7 +36,7 @@ public class CaseFile : MonoBehaviour
     private void Start()
     {
         CloseCaseFile();
-        
+        conclusion.gameObject.SetActive(false);
     }
 
     #region Toggle
@@ -85,4 +90,22 @@ public class CaseFile : MonoBehaviour
     {
 
     }
+
+    #region Conclusion
+    public void DeclareGuilty(bool isGuilty)
+    {
+        conclusion.gameObject.SetActive(true);
+        if (isGuilty)
+        {
+            conclusion.text = "Guilty";
+            conclusion.color = guiltyColour;
+        }
+        else
+        {
+            conclusion.text = "Not Guilty";
+            conclusion.color = notGuiltyColour;
+        }
+    }
+    #endregion
+
 }
