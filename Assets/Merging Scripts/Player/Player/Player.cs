@@ -81,6 +81,11 @@ public class Player : MonoBehaviour
 
     private void OnPresentEvidence()
     {
+        ToggleEvidenceDisplay();
+    }
+
+    void ToggleEvidenceDisplay()
+    {
         EvidenceDisplay.instance.ToggleEvidence();
     }
 

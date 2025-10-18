@@ -47,7 +47,7 @@ public class EvidenceManager : MonoBehaviour
     public void PresentEvidence(Evidence evidence)
     {
         onPresentEvidence?.Invoke(evidence);
-        EvidenceDisplay.instance.CloseEvidenceBoard(true);
+        EvidenceDisplay.instance.CloseEvidenceBoard();
         DialogueManager.Instance.ShowActionsAfterDialogue();
     }
 }

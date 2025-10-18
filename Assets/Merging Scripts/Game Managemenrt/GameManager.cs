@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     [field: SerializeField] public bool IsInteracting { get; private set; }
     [field: SerializeField] public InteractionState CurrentState;
+    [field: SerializeField] public InteractionState PreviousState;
 
     [SerializeField] GameObject selected;
 
@@ -42,6 +43,7 @@ public class GameManager : MonoBehaviour
 
     public void SwitchState(InteractionState newState)
     {
+        PreviousState = CurrentState;
         CurrentState = newState;
     }
 

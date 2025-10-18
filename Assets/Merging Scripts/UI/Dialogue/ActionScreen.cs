@@ -47,7 +47,8 @@ public class ActionScreen : MonoBehaviour
     {
         //DeselectButton();
         HideActions();
-        EvidenceDisplay.instance.Interogate();
+        EvidenceDisplay.instance.OpenEvidenceBoard();
+        GameManager.instance.SwitchState(InteractionState.EvidenceBoard);
 
         showActions = true;
         EventSystem.current.SetSelectedGameObject(null);

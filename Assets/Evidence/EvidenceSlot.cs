@@ -11,53 +11,22 @@ public class EvidenceSlot : MonoBehaviour
 
     [Header("Button Look")]
     [SerializeField] Image icon;
-    [SerializeField] GameObject nameHolder;
     [SerializeField] TextMeshProUGUI nameText;
-    [SerializeField] GameObject highlight;
 
     public Evidence Evidence => evidence;
+
+    public event Action<Evidence> onSlotClick;
 
     public void Initialize(Evidence newEvidence, EvidenceDisplay display)
     {
         evidence = newEvidence;
         icon.sprite = evidence.sprite;
         this.display = display;
+        nameText.text = evidence.Name;
     }
 
     public void OnClick()
     {
-        display.ClickEvidence(evidence);
-    }
-
-    #region Button Events
-
-    public void PresentEvidence() // Called when the slot button is pressed
-    {
-        Debug.Log("Clicked Slot");
-        EvidenceManager.Instance.PresentEvidence(evidence);
-    }
-
-    public void Select() // Called when the slot is selected, but not pressed
-    {
-        highlight.SetActive(true);
-        nameHolder.SetActive(true);
-        nameText.text = evidence.Name;
-
-        EvidenceDisplay.instance.ShowDescription(this);
-    }
-
-    
-
-    public void Deselect() // Called When the slot is deselected
-    {
-        highlight.SetActive(false);
-        nameHolder.SetActive(false);
-        nameText.text = string.Empty;
-    }
-    #endregion
-
-    private void OnDestroy()
-    {
-        Deselect();
+        onSlotClick?.Invoke(evidence);
     }
 }
