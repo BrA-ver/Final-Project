@@ -83,7 +83,8 @@ public class EvidenceDisplay : MonoBehaviour
             // If the previos state is case file - Open the case file
             if (previousState == InteractionState.CaseFile)
             {
-                CaseFile.instance.OpenCaseFile();
+                //CaseFile.instance.OpenCaseFile();
+                GameManager.instance.SwitchState(InteractionState.CaseFile);
             }
         }
 
@@ -167,6 +168,9 @@ public class EvidenceDisplay : MonoBehaviour
     private void OnSlotClick(Evidence evidence)
     {
         ShowDescription(evidence);
+
+        // When in the case file, do something
+        onEvidenceClick?.Invoke(evidence);
     }
 
     public void ShowDescription(Evidence evidence)
@@ -215,10 +219,5 @@ public class EvidenceDisplay : MonoBehaviour
         
         if (activeSlots.Count > 0)
             EventSystem.current.SetSelectedGameObject(activeSlots[0].gameObject);
-    }
-
-    public void ClickEvidence(Evidence evidence)
-    {
-        onEvidenceClick?.Invoke(evidence);
     }
 }

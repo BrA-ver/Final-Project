@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class CaseFile : MonoBehaviour
 {
@@ -9,14 +10,21 @@ public class CaseFile : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] GameObject bg;
+
+    [Header("Character Info")]
     [SerializeField] TextMeshProUGUI nameText;
 
+    [Header("Answers")]
+    [SerializeField] GameObject buttonHolder;
     [SerializeField] FileButton[] fileButtons;
     [SerializeField] AnswerText[] answerTexts;
 
     [SerializeField] ProfileSO[] profileObjects;
 
     CharacterProfile[] profiles;
+    CharacterProfile selectedProfile;
+    public event Action<CharacterProfile> onProfileSelect;
+    public event Action<Evidence> onAnswerSelect;
 
     [Header("Verdict")]
     [SerializeField] TextMeshProUGUI conclusion;
@@ -37,7 +45,15 @@ public class CaseFile : MonoBehaviour
     {
         CloseCaseFile();
         conclusion.gameObject.SetActive(false);
+        HideQuestions();
     }
+
+    #region Answering Questions
+    public void ClickButton()
+    {
+
+    }
+    #endregion
 
     #region Toggle
     public void OpenCaseFile()
@@ -67,7 +83,7 @@ public class CaseFile : MonoBehaviour
     #region Profile Info
     public void ShowProfileInfo(CharacterProfile profile)
     {
-        SetNameText(profile.profile._name);
+        //SetNameText(profile.profile._name);
     }
 
     public void SetNameText(string _name)
@@ -82,7 +98,7 @@ public class CaseFile : MonoBehaviour
         if (profiles.Length <= 0 || profiles == null) return;
         foreach (CharacterProfile profile in profiles)
         {
-            profile.UnSubscribeToButtonSolved();
+            //profile.UnSubscribeToButtonSolved();
         }
     }
 
@@ -108,4 +124,38 @@ public class CaseFile : MonoBehaviour
     }
     #endregion
 
+
+    public void SelectProfile(CharacterProfile profile)
+    {
+        selectedProfile = profile; // Set the selected profile
+        nameText.text = profile.ProfileSO._name; // Update the info screen
+        ShowButtons();
+
+        onProfileSelect?.Invoke(selectedProfile);
+    }
+
+    void HideQuestions()
+    {
+        buttonHolder.SetActive(false);
+    }
+
+    void ShowButtons()
+    {
+        buttonHolder.SetActive(true);
+    }
+
+    public void PickAnswer()
+    {
+        EvidenceDisplay.instance.OpenEvidenceBoard();
+        GameManager.instance.SwitchState(InteractionState.EvidenceBoard);
+        EvidenceDisplay.instance.onEvidenceClick += OnEvidenceClick;
+
+        // Disable all the buttons
+    }
+
+    private void OnEvidenceClick(Evidence evidence)
+    {
+        onAnswerSelect?.Invoke(evidence);
+        EvidenceDisplay.instance.onEvidenceClick -= OnEvidenceClick;
+    }
 }

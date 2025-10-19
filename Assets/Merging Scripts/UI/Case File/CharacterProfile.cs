@@ -1,164 +1,182 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharacterProfile : MonoBehaviour
 {
+    Button button;
     CaseFile file;
 
-    public ProfileSO profile;
-
-    FileButton[] fileButtons;
-    AnswerText[] answerTexts;
-
+    [field: SerializeField] public ProfileSO ProfileSO { get; private set; }
     public bool solvedMotive, solvedMeans, solvedOpp;
-
-    [SerializeField] bool subribed = false;
 
     private void Start()
     {
         file = CaseFile.instance;
-        fileButtons = file.FileButtons;
-        answerTexts = file.AnswerTexts;
+        button = GetComponent<Button>();
     }
 
-    private void OnButtonSolved(AnswerType type)
+    public void SelectProfile()
     {
-        foreach (FileButton button in fileButtons)
-        {
-            if (button.type == type)
-            {
-                button.gameObject.SetActive(false);
-            }
-        }
-
-        foreach (AnswerText text in answerTexts)
-        {
-            if (text.type == type)
-            {
-                text.gameObject.SetActive(true);
-                SetProfileText(type, text);
-            }
-        }
+        file.SelectProfile(this);
     }
 
-    void SetProfileText(AnswerType answerType, AnswerText text)
-    {
-        switch (answerType)
-        {
-            case AnswerType.Motive:
-                text.SetText(profile.Motive);
-                solvedMotive = true;
-                break;
-            case AnswerType.Means:
-                text.SetText(profile.Means);
-                solvedMeans = true;
-                break;
-            case AnswerType.Opportunity:
-                text.SetText(profile.Opportunity);
-                solvedOpp = true;
-                break;
-        }
-    }
+    //CaseFile file;
 
-    public void SelectProfile() // Called when the profile is clicked
-    {
-        file.ShowProfileInfo(this);
-        file.UnsubscribeProfiles();
-        SubscribeToButtonSolved();
+    //public ProfileSO profile;
 
-        foreach (FileButton button in fileButtons)
-        {
-            //Debug.Log("Start Loop");
-            switch (button.type)
-            {
-                case AnswerType.Motive:
-                    if (solvedMotive)
-                    {
-                        //Debug.Log("Solved Motive");
-                        // Turn off the button
-                        button.gameObject.SetActive(false);
+    //FileButton[] fileButtons;
+    //AnswerText[] answerTexts;
 
-                        // Turn on the solved text
-                        ToggleAnswerText(AnswerType.Motive, true);
-                    }
-                    else
-                    {
-                        button.gameObject.SetActive(true);
-                        ToggleAnswerText(AnswerType.Motive, false);
-                    }
-                    break;
+    
 
-                case AnswerType.Means:
-                    if (solvedMeans)
-                    {
-                        //Debug.Log("Solved Motive");
-                        // Turn off the button
-                        button.gameObject.SetActive(false);
+    //[SerializeField] bool subribed = false;
 
-                        // Turn on the solved text
-                        ToggleAnswerText(AnswerType.Means, true);
-                    }
-                    else
-                    {
-                        button.gameObject.SetActive(true);
-                        ToggleAnswerText(AnswerType.Means, false);
-                    }
-                    break;
+    //private void Start()
+    //{
+    //    file = CaseFile.instance;
+    //    fileButtons = file.FileButtons;
+    //    answerTexts = file.AnswerTexts;
+    //}
 
-                case AnswerType.Opportunity:
-                    if (solvedOpp)
-                    {
-                        //Debug.Log("Solved Motive");
-                        // Turn off the button
-                        button.gameObject.SetActive(false);
+    //private void OnButtonSolved(AnswerType type)
+    //{
+    //    foreach (FileButton button in fileButtons)
+    //    {
+    //        if (button.type == type)
+    //        {
+    //            button.gameObject.SetActive(false);
+    //        }
+    //    }
 
-                        // Turn on the solved text
-                        ToggleAnswerText(AnswerType.Opportunity, true);
-                    }
-                    else
-                    {
-                        button.gameObject.SetActive(true);
-                        ToggleAnswerText(AnswerType.Opportunity, false);
-                    }
-                    break;
-            }
-            //Debug.Log("loop");
-        }
-    }
+    //    foreach (AnswerText text in answerTexts)
+    //    {
+    //        if (text.type == type)
+    //        {
+    //            text.gameObject.SetActive(true);
+    //            SetProfileText(type, text);
+    //        }
+    //    }
+    //}
 
-    public void SubscribeToButtonSolved()
-    {
-        Debug.Log(name + " scubscribed");
-        subribed = true;
-        foreach (FileButton button in fileButtons)
-        {
-            button.onButtonSolved += OnButtonSolved;
-        }
-    }
+    //void SetProfileText(AnswerType answerType, AnswerText text)
+    //{
+    //    switch (answerType)
+    //    {
+    //        case AnswerType.Motive:
+    //            text.SetText(profile.Motive);
+    //            solvedMotive = true;
+    //            break;
+    //        case AnswerType.Means:
+    //            text.SetText(profile.Means);
+    //            solvedMeans = true;
+    //            break;
+    //        case AnswerType.Opportunity:
+    //            text.SetText(profile.Opportunity);
+    //            solvedOpp = true;
+    //            break;
+    //    }
+    //}
 
-    public void UnSubscribeToButtonSolved() // Called when another profile is selected
-    {
-        Debug.Log(name + " unscubscribed");
-        subribed = false;
-        foreach (FileButton button in fileButtons)
-        {
-            button.onButtonSolved -= OnButtonSolved;
-        }
-    }
+    //public void SelectProfile() // Called when the profile is clicked
+    //{
+    //    file.ShowProfileInfo(this);
+    //    file.UnsubscribeProfiles();
+    //    SubscribeToButtonSolved();
 
-    void ToggleAnswerText(AnswerType type, bool turnOn)
-    {
-        foreach (AnswerText text in answerTexts)
-        {
-            if (text.type == type)
-            {
-                text.gameObject.SetActive(turnOn);
-            }
-        }
-    }
+    //    foreach (FileButton button in fileButtons)
+    //    {
+    //        //Debug.Log("Start Loop");
+    //        switch (button.type)
+    //        {
+    //            case AnswerType.Motive:
+    //                if (solvedMotive)
+    //                {
+    //                    //Debug.Log("Solved Motive");
+    //                    // Turn off the button
+    //                    button.gameObject.SetActive(false);
 
-    void UpdateProfileData()
-    {
+    //                    // Turn on the solved text
+    //                    ToggleAnswerText(AnswerType.Motive, true);
+    //                }
+    //                else
+    //                {
+    //                    button.gameObject.SetActive(true);
+    //                    ToggleAnswerText(AnswerType.Motive, false);
+    //                }
+    //                break;
 
-    }
+    //            case AnswerType.Means:
+    //                if (solvedMeans)
+    //                {
+    //                    //Debug.Log("Solved Motive");
+    //                    // Turn off the button
+    //                    button.gameObject.SetActive(false);
+
+    //                    // Turn on the solved text
+    //                    ToggleAnswerText(AnswerType.Means, true);
+    //                }
+    //                else
+    //                {
+    //                    button.gameObject.SetActive(true);
+    //                    ToggleAnswerText(AnswerType.Means, false);
+    //                }
+    //                break;
+
+    //            case AnswerType.Opportunity:
+    //                if (solvedOpp)
+    //                {
+    //                    //Debug.Log("Solved Motive");
+    //                    // Turn off the button
+    //                    button.gameObject.SetActive(false);
+
+    //                    // Turn on the solved text
+    //                    ToggleAnswerText(AnswerType.Opportunity, true);
+    //                }
+    //                else
+    //                {
+    //                    button.gameObject.SetActive(true);
+    //                    ToggleAnswerText(AnswerType.Opportunity, false);
+    //                }
+    //                break;
+    //        }
+    //        //Debug.Log("loop");
+    //    }
+    //}
+
+    //public void SubscribeToButtonSolved()
+    //{
+    //    Debug.Log(name + " scubscribed");
+    //    subribed = true;
+    //    foreach (FileButton button in fileButtons)
+    //    {
+    //        button.onButtonSolved += OnButtonSolved;
+    //    }
+    //}
+
+    //public void UnSubscribeToButtonSolved() // Called when another profile is selected
+    //{
+    //    Debug.Log(name + " unscubscribed");
+    //    subribed = false;
+    //    foreach (FileButton button in fileButtons)
+    //    {
+    //        button.onButtonSolved -= OnButtonSolved;
+    //    }
+    //}
+
+    //void ToggleAnswerText(AnswerType type, bool turnOn)
+    //{
+    //    foreach (AnswerText text in answerTexts)
+    //    {
+    //        if (text.type == type)
+    //        {
+    //            text.gameObject.SetActive(turnOn);
+    //        }
+    //    }
+    //}
+
+    //void UpdateProfileData()
+    //{
+
+    //}
 }

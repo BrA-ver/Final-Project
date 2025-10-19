@@ -385,6 +385,44 @@ Transform:
   - {fileID: 155912920}
   m_Father: {fileID: 1216293977}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &74665854
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 74665855}
+  m_Layer: 5
+  m_Name: FIle Buttons
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &74665855
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 74665854}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 649706841105180857}
+  - {fileID: 5346224383105564305}
+  - {fileID: 6111849750119631020}
+  m_Father: {fileID: 5875297839874976295}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -51.562}
+  m_SizeDelta: {x: 0, y: 460.328}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &88244284
 GameObject:
   m_ObjectHideFlags: 0
@@ -14926,8 +14964,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3d5886f70f83254ea8f353a07252041, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  requiredEvidence: {fileID: 11400000, guid: 428b51ff7334a3644ab1ca255a1337fa, type: 2}
   type: 2
+  answer: {fileID: 11400000, guid: d6448fd0a5163b943b299880bec5c62e, type: 2}
 --- !u!4 &366175168561611013
 Transform:
   m_ObjectHideFlags: 0
@@ -15251,11 +15289,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5364089627266175835}
-  m_Father: {fileID: 5875297839874976295}
+  m_Father: {fileID: 74665855}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 361, y: 123}
+  m_AnchoredPosition: {x: 361, y: 174.562}
   m_SizeDelta: {x: 500, y: 52.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &656209196266219376
@@ -17815,8 +17853,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3d5886f70f83254ea8f353a07252041, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  requiredEvidence: {fileID: 11400000, guid: 428b51ff7334a3644ab1ca255a1337fa, type: 2}
   type: 0
+  answer: {fileID: 11400000, guid: 3d167e7376c68f64b8acebf57585f5fe, type: 2}
 --- !u!114 &2760287938990215125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18600,7 +18638,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 362843340492235414}
         m_TargetAssemblyTypeName: FileButton, Assembly-CSharp
-        m_MethodName: OpenEvidenceBoard
+        m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -19305,11 +19343,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01a46b20b51a34747a4457a8f26ece8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  profile: {fileID: 11400000, guid: d62e47c3d8527e847974a72f88006b29, type: 2}
+  <ProfileSO>k__BackingField: {fileID: 11400000, guid: d62e47c3d8527e847974a72f88006b29, type: 2}
   solvedMotive: 0
   solvedMeans: 0
   solvedOpp: 0
-  subribed: 0
 --- !u!224 &4221471741909199048
 RectTransform:
   m_ObjectHideFlags: 0
@@ -19936,6 +19973,7 @@ MonoBehaviour:
   <IsOpen>k__BackingField: 0
   bg: {fileID: 3747961938927710315}
   nameText: {fileID: 3857260807664356744}
+  buttonHolder: {fileID: 74665854}
   fileButtons: []
   answerTexts: []
   profileObjects: []
@@ -20098,7 +20136,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8919417891650068989}
         m_TargetAssemblyTypeName: FileButton, Assembly-CSharp
-        m_MethodName: OpenEvidenceBoard
+        m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -20211,11 +20249,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01a46b20b51a34747a4457a8f26ece8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  profile: {fileID: 11400000, guid: d62e47c3d8527e847974a72f88006b29, type: 2}
+  <ProfileSO>k__BackingField: {fileID: 11400000, guid: d62e47c3d8527e847974a72f88006b29, type: 2}
   solvedMotive: 0
   solvedMeans: 0
   solvedOpp: 0
-  subribed: 0
 --- !u!4 &5048025440838376764
 Transform:
   m_ObjectHideFlags: 0
@@ -20391,11 +20428,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3654195633582272833}
-  m_Father: {fileID: 5875297839874976295}
+  m_Father: {fileID: 74665855}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 361, y: -11}
+  m_AnchoredPosition: {x: 361, y: 40.562023}
   m_SizeDelta: {x: 500, y: 52.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &5364089627266175835
@@ -20885,10 +20922,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4418917209212653863}
-  - {fileID: 649706841105180857}
-  - {fileID: 5346224383105564305}
-  - {fileID: 6111849750119631020}
   - {fileID: 5771934468323704730}
+  - {fileID: 74665855}
   m_Father: {fileID: 5853507925753467430}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -21098,7 +21133,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2739312747482196669}
         m_TargetAssemblyTypeName: FileButton, Assembly-CSharp
-        m_MethodName: OpenEvidenceBoard
+        m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -21152,11 +21187,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01a46b20b51a34747a4457a8f26ece8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  profile: {fileID: 11400000, guid: d62e47c3d8527e847974a72f88006b29, type: 2}
+  <ProfileSO>k__BackingField: {fileID: 11400000, guid: d62e47c3d8527e847974a72f88006b29, type: 2}
   solvedMotive: 0
   solvedMeans: 0
   solvedOpp: 0
-  subribed: 0
 --- !u!222 &6064151299933705049
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -21193,11 +21227,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 353846920772797133}
-  m_Father: {fileID: 5875297839874976295}
+  m_Father: {fileID: 74665855}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 361, y: -138}
+  m_AnchoredPosition: {x: 361, y: -86.43797}
   m_SizeDelta: {x: 500, y: 52.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &6136935970417436129
@@ -23654,8 +23688,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3d5886f70f83254ea8f353a07252041, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  requiredEvidence: {fileID: 11400000, guid: 428b51ff7334a3644ab1ca255a1337fa, type: 2}
   type: 1
+  answer: {fileID: 11400000, guid: d6448fd0a5163b943b299880bec5c62e, type: 2}
 --- !u!1 &8932621590800182933
 GameObject:
   m_ObjectHideFlags: 0

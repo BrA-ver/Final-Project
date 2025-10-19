@@ -1,38 +1,97 @@
 using System;
 using UnityEngine;
-using UnityEditor;
+using UnityEngine.UI;
 
 public class FileButton : MonoBehaviour
 {
-    [SerializeField] Evidence requiredEvidence;
+    CaseFile file;
+    [SerializeField] AnswerType type;
+    [SerializeField] Evidence answer;
+    Button button;
 
-    [Header("Type")]
-    public AnswerType type;
-    
+    private void Start()
+    {
+        file = CaseFile.instance;
+        file.onProfileSelect += OnProfileSelect;
 
-    public event Action<AnswerType> onButtonSolved;
+        button = GetComponent<Button>();
+    }
 
     private void OnDisable()
     {
-        EvidenceDisplay.instance.onEvidenceClick -= OnEvidenceClick;
+        if (file)
+            file.onProfileSelect -= OnProfileSelect;
     }
 
-    public void OpenEvidenceBoard() // Called when the button is clicked
+    public void OnClick()
     {
-        EvidenceDisplay.instance.OpenEvidenceBoard();
-        EvidenceDisplay.instance.onEvidenceClick += OnEvidenceClick; // Subribes the button to the evidence click
+        file.PickAnswer();
+        file.onAnswerSelect += OnAnswerSelect;
     }
 
-    private void OnEvidenceClick(Evidence evidence)
+    private void OnProfileSelect(CharacterProfile profile)
     {
-        if (evidence.Name != requiredEvidence.Name)
+        if (profile.solvedMotive || profile.solvedMeans || profile.solvedOpp)
+        {
+            ShowAnswer(profile);
+        }
+    }
+
+    void ShowAnswer(CharacterProfile profile)
+    {
+        switch (type)
+        {
+            case AnswerType.Motive:
+                if (profile.solvedMotive)
+                {
+                    // Show Answer
+                }
+                break;
+        }
+    }
+
+    private void OnAnswerSelect(Evidence answer)
+    {
+        if (answer != this.answer)
+        {
             Debug.Log("Wrong");
+        }
         else
         {
             Debug.Log("Correct");
-            onButtonSolved?.Invoke(type);
         }
     }
-    
+
+    //[SerializeField] Evidence requiredEvidence;
+
+    //[Header("Type")]
+    //public AnswerType type;
+
+
+    //public event Action<AnswerType> onButtonSolved;
+
+    //private void OnDisable()
+    //{
+    //    EvidenceDisplay.instance.onEvidenceClick -= OnEvidenceClick;
+    //}
+
+    //public void OpenEvidenceBoard() // Called when the button is clicked
+    //{
+    //    EvidenceDisplay.instance.OpenEvidenceBoard();
+    //    GameManager.instance.SwitchState(InteractionState.EvidenceBoard);
+    //    EvidenceDisplay.instance.onEvidenceClick += OnEvidenceClick; // Subribes the button to the evidence click
+    //}
+
+    //private void OnEvidenceClick(Evidence evidence)
+    //{
+    //    if (evidence.Name != requiredEvidence.Name)
+    //        Debug.Log("Wrong");
+    //    else
+    //    {
+    //        Debug.Log("Correct");
+    //        onButtonSolved?.Invoke(type);
+    //    }
+    //}
+
 }
 public enum AnswerType { Motive, Means, Opportunity }
