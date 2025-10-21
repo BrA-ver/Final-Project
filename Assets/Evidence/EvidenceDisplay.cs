@@ -129,9 +129,8 @@ public class EvidenceDisplay : MonoBehaviour
         ShowEvidence();
 
         //SelectSlot();
-        GameManager.instance.StartInteracting();
+        
         //StartCoroutine(SelectFirstSlot());
-        GameManager.instance.ShowMouse();
     }
 
     public void CloseEvidenceBoard()

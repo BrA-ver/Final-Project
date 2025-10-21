@@ -1,17 +1,27 @@
 using UnityEngine;
 using TMPro;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class DialogeDisplay : MonoBehaviour
 {
+    public static DialogeDisplay instance;
+
     [SerializeField] GameObject displayHolder;
     [SerializeField] TextMeshProUGUI dialogueText;
     List<DialogueChoiceButton> choiceButtons =  new List<DialogueChoiceButton>();
 
     [SerializeField] Transform buttonHolder;
 
+    [Header("NPC Dialogue")]
+    [SerializeField] GameObject profileHolder;
+    [SerializeField] Image characterImage;
+    [SerializeField] TextMeshProUGUI nameText;
+
     private void Awake()
     {
+        instance = this;
+
         displayHolder.gameObject.SetActive(false);
         dialogueText.text = string.Empty;
     }
@@ -82,6 +92,13 @@ public class DialogeDisplay : MonoBehaviour
         {
             button.gameObject.SetActive(false);
         }
+    }
+
+    public void ShowCharacterProfile(ProfileSO profile)
+    {
+        profileHolder.SetActive(true);
+        characterImage.sprite = profile.picture;
+        nameText.text = profile._name;
     }
 }
  

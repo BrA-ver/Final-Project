@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    [field: SerializeField] public bool IsInteracting { get; private set; }
+
     [field: SerializeField] public InteractionState CurrentState;
     [field: SerializeField] public InteractionState PreviousState;
 
@@ -24,16 +24,6 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         GetSelected();
-    }
-
-    public void StartInteracting()
-    {
-        IsInteracting = true;
-    }
-
-    public void StopInteracting()
-    {
-        IsInteracting = false;
     }
 
     public void GetSelected()

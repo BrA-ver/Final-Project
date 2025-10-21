@@ -7,13 +7,29 @@ public class CharacterProfile : MonoBehaviour
     Button button;
     CaseFile file;
 
+
     [field: SerializeField] public ProfileSO ProfileSO { get; private set; }
+
+    [Header("UI")]
+    [SerializeField] Image characterImage;
+
+    [Header("Case Data")]
     public bool solvedMotive, solvedMeans, solvedOpp;
 
     private void Start()
     {
         file = CaseFile.instance;
         button = GetComponent<Button>();
+
+        if (ProfileSO == null || ProfileSO.picture == null)
+        {
+            characterImage.color = Color.black;
+        }
+        else
+        {
+            characterImage.color = Color.white;
+            characterImage.sprite = ProfileSO.picture;
+        }
     }
 
     public void SelectProfile()

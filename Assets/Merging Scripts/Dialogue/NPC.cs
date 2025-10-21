@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class NPC : DialogueHolder
 {
-    [Header("Evidence")]
+    [Header("Character Profile")]
+    [SerializeField] ProfileSO profile;
+
     [SerializeField] List<EvidenceResponce> evidenceResponses;
     [SerializeField] Dialogue nullResponse;
 
@@ -18,7 +20,7 @@ public class NPC : DialogueHolder
     public override void Interact()
     {
         //base.Interact();
-        GameManager.instance.StartInteracting();
+
         EvidenceManager.Instance.onPresentEvidence += OnPresentEvidence;
         ActionScreen.instance.ShowActions(this);
 
@@ -36,6 +38,8 @@ public class NPC : DialogueHolder
         //EvidenceManager.Instance.onPresentEvidence += OnPresentEvidence;
         DialogueManager.Instance.EnterDialogue(dialogues[0], true);
         DialogueManager.Instance.onDialogueFinished += OnDialogueFinished;
+
+        DialogeDisplay.instance.ShowCharacterProfile(profile);
     }
 
     private void OnPresentEvidence(Evidence evidence)

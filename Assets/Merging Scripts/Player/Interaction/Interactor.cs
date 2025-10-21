@@ -65,7 +65,7 @@ public class Interactor : MonoBehaviour
 
     private void StopInteracting()
     {
-        GameManager.instance.StopInteracting();
+        //GameManager.instance.StopInteracting();
         Debug.Log("stopped interacting");
     }
 
@@ -81,7 +81,7 @@ public class Interactor : MonoBehaviour
 
     public void Interact()
     {
-        if (!interactable || GameManager.instance.IsInteracting) return;
+        if (!interactable || GameManager.instance.CurrentState != InteractionState.None) return;
         interactable.Interact();
     }
 

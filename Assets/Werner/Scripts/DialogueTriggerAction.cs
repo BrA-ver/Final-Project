@@ -63,7 +63,6 @@ public class DialogueTriggerAction : MonoBehaviour
         // Re-enable player movement
         if (GameManager.instance != null)
         {
-            GameManager.instance.StopInteracting();
             GameManager.instance.HideMouse();
             GameManager.instance.SwitchState(InteractionState.None);
         }

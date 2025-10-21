@@ -3,8 +3,18 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "ProfileSO", menuName = "Scriptable Objects/ProfileSO")]
 public class ProfileSO : ScriptableObject
 {
-    [Header("test")]
+    [Header("Info")]
     public string _name;
+    public string occupation;
+    public Sprite picture;
+
+    [Header("Dialogue")]
+    [SerializeField] Dialogue[] dialogues;
+
+    [Header("Evidence")]
+    [SerializeField] EvidenceResponce[] evidenceResponces;
+
+    [Header("Case Data")]
     public Evidence motive;
     public Evidence means;
     public Evidence opportunity;

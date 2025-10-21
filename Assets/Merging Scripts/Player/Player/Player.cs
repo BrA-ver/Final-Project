@@ -33,7 +33,6 @@ public class Player : MonoBehaviour
 
     private void OnEnable()
     {
-        input.onJump += OnJump;
         input.onInteract += OnInteract;
         input.onPresentEvidence += OnPresentEvidence;
         input.onCaseBoard += OnCaseBoard;
@@ -41,7 +40,6 @@ public class Player : MonoBehaviour
 
     private void OnDisable()
     {
-        input.onJump -= OnJump;
         input.onInteract -= OnInteract;
         input.onPresentEvidence -= OnPresentEvidence;
         input.onCaseBoard -= OnCaseBoard;
@@ -62,11 +60,6 @@ public class Player : MonoBehaviour
         if (animator == null) return;
         bool isGrounded = movement != null && movement.OnGround;
         animator.SetBool(grounded, isGrounded);
-    }
-
-    void OnJump()
-    {
-        if (waitForNextFrame || GameManager.instance.IsInteracting) return;
     }
 
     public void SetPosition(Vector3 newPos)
