@@ -23,7 +23,7 @@ public class CaseFile : MonoBehaviour
 
     CharacterProfile[] profiles;
     CharacterProfile selectedProfile;
-    public event Action<CharacterProfile> onProfileSelect;
+    public event Action<CharacterProfile> onProfileSelect; // Subscribbers: FileButton
     public event Action<Evidence> onAnswerSelect;
 
     [Header("Verdict")]
@@ -48,13 +48,6 @@ public class CaseFile : MonoBehaviour
         HideQuestions();
     }
 
-    #region Answering Questions
-    public void ClickButton()
-    {
-
-    }
-    #endregion
-
     #region Toggle
     public void OpenCaseFile()
     {
@@ -74,9 +67,6 @@ public class CaseFile : MonoBehaviour
         IsOpen = false;
 
         bg.SetActive(false);
-
-        //UnsubscribeProfiles();
-        ResetPage();
     }
     #endregion
 
@@ -92,20 +82,6 @@ public class CaseFile : MonoBehaviour
     }
 
     #endregion
-
-    public void UnsubscribeProfiles()
-    {
-        if (profiles.Length <= 0 || profiles == null) return;
-        foreach (CharacterProfile profile in profiles)
-        {
-            //profile.UnSubscribeToButtonSolved();
-        }
-    }
-
-    void ResetPage()
-    {
-
-    }
 
     #region Conclusion
     public void DeclareGuilty(bool isGuilty)
@@ -124,7 +100,7 @@ public class CaseFile : MonoBehaviour
     }
     #endregion
 
-
+    #region Profile Functions
     public void SelectProfile(CharacterProfile profile)
     {
         selectedProfile = profile; // Set the selected profile
@@ -158,4 +134,31 @@ public class CaseFile : MonoBehaviour
         onAnswerSelect?.Invoke(evidence);
         EvidenceDisplay.instance.onEvidenceClick -= OnEvidenceClick;
     }
+    #endregion
 }
+
+/*HOW SHOULD THE CASE FILE WORK?
+ * STEP 1: OPEN HE CASE FILE
+ *     ### Go open the case file 
+ *     ### Change the game state to case file 
+ * 
+ * STEP 2: CLICK ON A CHARACTER PROFILE 
+ *     ### Click on the profile
+ *     ### Activate the answer buttons 
+ *     ### Pass the answers of the profile to the buttons so each knows what it's answer is
+ * 
+ * STEP 3: CLICK ON AN ANSWER BUTTON
+ *     Click on the answer button
+ *     Open the evidence board
+ *     Select evidence in the case board
+ *     Close the evidence board
+ *     Check if the chosen evidence is the same as the button's answer
+ *     if correct:
+ *         Disable the button and activate the answer text 
+ *     else:
+ *         Show a prompt that says the answer was wrong (maybe a hint depending on the profile?)
+ *         
+ * REQUIREMENTS:
+ *      You need to be able to close the evidence board by pressing it's button
+ *      The buttons need to automatically update depending on the chosen profile
+ */

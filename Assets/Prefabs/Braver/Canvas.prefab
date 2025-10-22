@@ -2503,6 +2503,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4309491781398476856}
     m_Modifications:
+    - target: {fileID: 2809055931001717315, guid: 929c40a1256239c46ae1300c78040be4, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2809055931001717315, guid: 929c40a1256239c46ae1300c78040be4, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2809055931001717315, guid: 929c40a1256239c46ae1300c78040be4, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2809055931001717315, guid: 929c40a1256239c46ae1300c78040be4, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3654031204255575451, guid: 929c40a1256239c46ae1300c78040be4, type: 3}
       propertyPath: m_Name
       value: Case File

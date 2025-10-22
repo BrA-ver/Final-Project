@@ -1,10 +1,12 @@
 using UnityEngine;
 using TMPro;
+using System;
 
 public class AnswerText : MonoBehaviour
 {
-    public AnswerType type;
     [SerializeField] TextMeshProUGUI answerText;
+
+    
 
     public void SetText(string text)
     {
