@@ -156,6 +156,37 @@ Transform:
   - {fileID: 750939815}
   m_Father: {fileID: 537045617}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &13763136
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 13763137}
+  m_Layer: 9
+  m_Name: Wire Pieces
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &13763137
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 13763136}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2051134525}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &14644010 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -3384896052656666637, guid: 82a2914d8f86c62488456950c8330e38, type: 3}
@@ -6602,13 +6633,13 @@ MonoBehaviour:
     - {fileID: 232807688}
     - {fileID: 1860800276}
     endPoint: {fileID: 1442182851}
-  - carPrefab: {fileID: 3438287873855729696, guid: b9a5116acbd6e074c8408d29106bc479, type: 3}
+  - carPrefab: {fileID: 3438287873855729696, guid: 0669f62212039de4d9d134a78d46a821, type: 3}
     startPoint: {fileID: 484206695}
     breakPoints:
     - {fileID: 317281432}
     - {fileID: 185084227}
     endPoint: {fileID: 1780299757}
-  - carPrefab: {fileID: 3438287873855729696, guid: b9a5116acbd6e074c8408d29106bc479, type: 3}
+  - carPrefab: {fileID: 3438287873855729696, guid: 25bc3375a30b94c40a0ffd34b8c5119e, type: 3}
     startPoint: {fileID: 1373176881}
     breakPoints:
     - {fileID: 549992331}
@@ -6618,12 +6649,12 @@ MonoBehaviour:
     breakPoints:
     - {fileID: 970259306}
     endPoint: {fileID: 1573832424}
-  - carPrefab: {fileID: 3438287873855729696, guid: b9a5116acbd6e074c8408d29106bc479, type: 3}
+  - carPrefab: {fileID: 3438287873855729696, guid: 0669f62212039de4d9d134a78d46a821, type: 3}
     startPoint: {fileID: 1059428145}
     breakPoints:
     - {fileID: 167620736}
     endPoint: {fileID: 744659958}
-  - carPrefab: {fileID: 3438287873855729696, guid: b9a5116acbd6e074c8408d29106bc479, type: 3}
+  - carPrefab: {fileID: 3438287873855729696, guid: 25bc3375a30b94c40a0ffd34b8c5119e, type: 3}
     startPoint: {fileID: 1320097833}
     breakPoints:
     - {fileID: 1360958595}
@@ -6916,7 +6947,7 @@ GameObject:
   - component: {fileID: 913605007}
   - component: {fileID: 913605006}
   m_Layer: 0
-  m_Name: Puzzle Manager
+  m_Name: Fingerprint Puzzle Manager
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -6939,6 +6970,7 @@ MonoBehaviour:
   puzzleLayer:
     serializedVersion: 2
     m_Bits: 512
+  interactDistance: 5
 --- !u!4 &913605007
 Transform:
   m_ObjectHideFlags: 0
@@ -6948,7 +6980,7 @@ Transform:
   m_GameObject: {fileID: 913605005}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 17.06, y: 16.15, z: 37.6}
+  m_LocalPosition: {x: 17.05, y: 16.15, z: 37.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8350,8 +8382,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1162892789}
-  m_Layer: 0
-  m_Name: GamePieces
+  m_Layer: 9
+  m_Name: Fingerprint Pieces
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9139,6 +9171,57 @@ MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 3582575072741177913, guid: 0de479de3b6fe7440bc96265a5ee5e2d, type: 3}
   m_PrefabInstance: {fileID: 3607267069352276360}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1360439805
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1360439807}
+  - component: {fileID: 1360439806}
+  m_Layer: 0
+  m_Name: Skull Puzzle Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1360439806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1360439805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a3c1447d0a7e064c9d204b624311ae1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameTransform: {fileID: 1866212793}
+  piecePrefab: {fileID: 2713345679934974991, guid: 33599a2c5f0d17d4ebee1bc8d7839a0d, type: 3}
+  puzzleLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  interactDistance: 5
+--- !u!4 &1360439807
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1360439805}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 17.05, y: 16.15, z: 31.11}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1866212793}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!1 &1360958594
 GameObject:
   m_ObjectHideFlags: 0
@@ -12920,6 +13003,37 @@ MonoBehaviour:
   renderer: {fileID: 0}
   outlineMaterial: {fileID: 2100000, guid: c04ccf9af89a092499b3be1ce389ec25, type: 2}
   highlight: 0
+--- !u!1 &1866212792
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1866212793}
+  m_Layer: 9
+  m_Name: Skull Pieces
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1866212793
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1866212792}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1360439807}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1871899789 stripped
 CapsuleCollider:
   m_CorrespondingSourceObject: {fileID: 5318659632208451959, guid: 56b1dce185b53dc46b335a31c22cbfa3, type: 3}
@@ -13404,7 +13518,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1966414644949506424, guid: 408ae2944a4fd6d4bb5f044161626b49, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2174271150788772078, guid: 408ae2944a4fd6d4bb5f044161626b49, type: 3}
       propertyPath: m_LocalPosition.x
@@ -13883,6 +13997,57 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 963001957570653385, guid: 99bae74f2b5133e4897ce12faa5401d0, type: 3}
   m_PrefabInstance: {fileID: 1519071383084944007}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2051134523
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2051134525}
+  - component: {fileID: 2051134524}
+  m_Layer: 0
+  m_Name: Wire Puzzle Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2051134524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2051134523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a3c1447d0a7e064c9d204b624311ae1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameTransform: {fileID: 13763137}
+  piecePrefab: {fileID: 2713345679934974991, guid: c8df78fce501af6418cc905f22060ca6, type: 3}
+  puzzleLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  interactDistance: 5
+--- !u!4 &2051134525
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2051134523}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 17.05, y: 16.15, z: 34.26}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 13763137}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!1 &2052188920
 GameObject:
   m_ObjectHideFlags: 0
@@ -18730,7 +18895,6 @@ SceneRoots:
   - {fileID: 1519071383084944007}
   - {fileID: 3656026372468744135}
   - {fileID: 8294539570767615934}
-  - {fileID: 913605007}
   - {fileID: 1638139319}
   - {fileID: 1316784648}
   - {fileID: 6742309224509906860}
@@ -18751,3 +18915,6 @@ SceneRoots:
   - {fileID: 1049709697}
   - {fileID: 371158447}
   - {fileID: 222697005}
+  - {fileID: 913605007}
+  - {fileID: 2051134525}
+  - {fileID: 1360439807}
