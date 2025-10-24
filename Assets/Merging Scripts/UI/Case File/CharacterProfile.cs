@@ -9,6 +9,11 @@ public class CharacterProfile : MonoBehaviour
     [Header("Profile")]
     [SerializeField] ProfileSO profile;
 
+    public bool solvedMotive;
+    public bool solvedMeans;
+    public bool solvedOpportunity;
+
+
     public ProfileSO ProfileSO => profile;
 
     private void Start()
@@ -19,6 +24,21 @@ public class CharacterProfile : MonoBehaviour
     public void ClickProfile()
     {
         file.SelectProfile(this);
+    }
+
+    public void SolveMotive()
+    {
+        solvedMotive = true;
+    }
+
+    public void SolveMeans()
+    {
+        solvedMeans = true;
+    }
+
+    public void SolveOpportunity()
+    {
+        solvedOpportunity = true;
     }
 }
 

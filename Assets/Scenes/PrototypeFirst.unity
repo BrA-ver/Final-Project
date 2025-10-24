@@ -3957,6 +3957,10 @@ PrefabInstance:
       propertyPath: m_Shadows.m_Type
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4274749163690594291, guid: 408ae2944a4fd6d4bb5f044161626b49, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4325335111244861483, guid: 408ae2944a4fd6d4bb5f044161626b49, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -4337,6 +4341,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
       objectReference: {fileID: 2100000, guid: 5a0bab5d200fe054296e5b10951b51f3, type: 2}
+    - target: {fileID: 7751654977278587191, guid: 408ae2944a4fd6d4bb5f044161626b49, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7962539402004848520, guid: 408ae2944a4fd6d4bb5f044161626b49, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -6079,6 +6087,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   amplitude: 0.1
   frequency: 1
+--- !u!224 &638689141 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6740753364678382645, guid: 99bae74f2b5133e4897ce12faa5401d0, type: 3}
+  m_PrefabInstance: {fileID: 1519071383084944007}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &649283514 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6698897978249692199, guid: 82a2914d8f86c62488456950c8330e38, type: 3}
@@ -15216,10 +15229,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Setting Present
       objectReference: {fileID: 0}
+    - target: {fileID: 4274749163690594291, guid: 408ae2944a4fd6d4bb5f044161626b49, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5794508726498906088, guid: 408ae2944a4fd6d4bb5f044161626b49, type: 3}
       propertyPath: 'm_CapsuleColliders.Array.data[0]'
       value: 
       objectReference: {fileID: 1871899789}
+    - target: {fileID: 7751654977278587191, guid: 408ae2944a4fd6d4bb5f044161626b49, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -17320,6 +17341,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3644107584699194683, guid: 99bae74f2b5133e4897ce12faa5401d0, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3644107584699194683, guid: 99bae74f2b5133e4897ce12faa5401d0, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3644107584699194683, guid: 99bae74f2b5133e4897ce12faa5401d0, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3644107584699194683, guid: 99bae74f2b5133e4897ce12faa5401d0, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3901163543446044350, guid: 99bae74f2b5133e4897ce12faa5401d0, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3901163543446044350, guid: 99bae74f2b5133e4897ce12faa5401d0, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3901163543446044350, guid: 99bae74f2b5133e4897ce12faa5401d0, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3901163543446044350, guid: 99bae74f2b5133e4897ce12faa5401d0, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4309491781398476856, guid: 99bae74f2b5133e4897ce12faa5401d0, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -17403,6 +17456,26 @@ PrefabInstance:
     - target: {fileID: 8178413716648582532, guid: 99bae74f2b5133e4897ce12faa5401d0, type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 8743597979620726093, guid: 99bae74f2b5133e4897ce12faa5401d0, type: 3}
+      propertyPath: buttonHolder
+      value: 
+      objectReference: {fileID: 638689141}
+    - target: {fileID: 9039767811177655340, guid: 99bae74f2b5133e4897ce12faa5401d0, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9039767811177655340, guid: 99bae74f2b5133e4897ce12faa5401d0, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9039767811177655340, guid: 99bae74f2b5133e4897ce12faa5401d0, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9039767811177655340, guid: 99bae74f2b5133e4897ce12faa5401d0, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -20297,6 +20370,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1642013539603472320, guid: 0d61309ce26cd5d4683342def8d80ca9, type: 3}
+      propertyPath: allEvidence.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1642013539603472320, guid: 0d61309ce26cd5d4683342def8d80ca9, type: 3}
+      propertyPath: 'allEvidence.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: d6448fd0a5163b943b299880bec5c62e, type: 2}
+    - target: {fileID: 1642013539603472320, guid: 0d61309ce26cd5d4683342def8d80ca9, type: 3}
+      propertyPath: 'allEvidence.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 3d167e7376c68f64b8acebf57585f5fe, type: 2}
+    - target: {fileID: 1642013539603472320, guid: 0d61309ce26cd5d4683342def8d80ca9, type: 3}
+      propertyPath: 'allEvidence.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 428b51ff7334a3644ab1ca255a1337fa, type: 2}
+    - target: {fileID: 1642013539603472320, guid: 0d61309ce26cd5d4683342def8d80ca9, type: 3}
+      propertyPath: 'allEvidence.Array.data[3]'
+      value: 
+      objectReference: {fileID: 11400000, guid: ec212a595cffa8c42b6aeb917a6634da, type: 2}
     - target: {fileID: 5368797530604331060, guid: 0d61309ce26cd5d4683342def8d80ca9, type: 3}
       propertyPath: m_Name
       value: Evidence Manager

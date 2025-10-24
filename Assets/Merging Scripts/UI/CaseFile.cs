@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using System.Collections.Generic;
 
 public class CaseFile : MonoBehaviour
 {
@@ -15,8 +16,8 @@ public class CaseFile : MonoBehaviour
     [SerializeField] TextMeshProUGUI nameText;
 
     [Header("Answers")]
-    [SerializeField] GameObject buttonHolder;
-    [SerializeField] FileButton[] fileButtons;
+    [SerializeField] Transform buttonHolder;
+    [SerializeField] List<FileButton> fileButtons = new List<FileButton>();
     [SerializeField] AnswerText[] answerTexts;
 
     [SerializeField] ProfileSO[] profileObjects;
@@ -30,15 +31,23 @@ public class CaseFile : MonoBehaviour
     [SerializeField] TextMeshProUGUI conclusion;
     [SerializeField] Color guiltyColour = Color.red;
     [SerializeField] Color notGuiltyColour = Color.green;
-
-    public FileButton[] FileButtons => fileButtons;
     public AnswerText[] AnswerTexts => answerTexts;
+
+    FileButton selectedButton;
+    Evidence correctAnswer;
 
     private void Awake()
     {
         instance = this;
-        fileButtons = GetComponentsInChildren<FileButton>(true);
         answerTexts = GetComponentsInChildren<AnswerText>(true);
+
+        foreach (Transform child in buttonHolder)
+        {
+            if (child.TryGetComponent<FileButton>(out FileButton button))
+            {
+                fileButtons.Add(button);
+            }
+        }
     }
 
     private void Start()
@@ -107,32 +116,57 @@ public class CaseFile : MonoBehaviour
         nameText.text = profile.ProfileSO._name; // Update the info screen
         ShowButtons();
 
-        onProfileSelect?.Invoke(selectedProfile);
+        foreach (FileButton fileButton in fileButtons)
+        {
+            fileButton.SetProfile(profile);
+        }
     }
 
     void HideQuestions()
     {
-        buttonHolder.SetActive(false);
+        buttonHolder.gameObject.SetActive(false);
     }
 
     void ShowButtons()
     {
-        buttonHolder.SetActive(true);
+        buttonHolder.gameObject.SetActive(true);
     }
 
-    public void PickAnswer()
+    public void AnswerQuestion(FileButton selectedButton, Evidence correctAnswer)
     {
         EvidenceDisplay.instance.OpenEvidenceBoard();
         GameManager.instance.SwitchState(InteractionState.EvidenceBoard);
         EvidenceDisplay.instance.onEvidenceClick += OnEvidenceClick;
 
         // Disable all the buttons
+        foreach (FileButton fileButton in fileButtons)
+        {
+            fileButton.GetComponent<Button>().enabled = false;
+        }
+
+        this.correctAnswer = correctAnswer;
+        this.selectedButton = selectedButton;
     }
 
     private void OnEvidenceClick(Evidence evidence)
     {
-        onAnswerSelect?.Invoke(evidence);
+        Debug.Log("Evidence Clicked From Case File");
+        EvidenceDisplay.instance.CloseEvidenceBoard();
+        GameManager.instance.SwitchState(InteractionState.CaseFile);
         EvidenceDisplay.instance.onEvidenceClick -= OnEvidenceClick;
+
+        foreach (FileButton fileButton in fileButtons)
+        {
+            fileButton.GetComponent<Button>().enabled = true;
+        }
+
+        if (evidence == selectedButton.Answer)
+        {
+            selectedButton.SolveAnswer();
+        }
+
+        correctAnswer = null;
+        selectedButton = null;
     }
     #endregion
 }
@@ -148,13 +182,13 @@ public class CaseFile : MonoBehaviour
  *     ### Pass the answers of the profile to the buttons so each knows what it's answer is
  * 
  * STEP 3: CLICK ON AN ANSWER BUTTON
- *     Click on the answer button
- *     Open the evidence board
- *     Select evidence in the case board
- *     Close the evidence board
- *     Check if the chosen evidence is the same as the button's answer
- *     if correct:
- *         Disable the button and activate the answer text 
+ *     ### Click on the answer button
+ *     ### Open the evidence board
+ *     ### Select evidence in the case board
+ *     ### Close the evidence board
+ *     ### Check if the chosen evidence is the same as the button's answer
+ *     ### if correct:
+ *         ### Disable the button and activate the answer text 
  *     else:
  *         Show a prompt that says the answer was wrong (maybe a hint depending on the profile?)
  *         

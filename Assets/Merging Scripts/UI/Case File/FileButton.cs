@@ -1,26 +1,91 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class FileButton : MonoBehaviour
 {
     CaseFile file;
     CharacterProfile profile;
+    Button button;
+
+    [SerializeField] AnswerType type;
+    [SerializeField] Evidence answer;
+    [SerializeField] TextMeshProUGUI answerText;
+    [SerializeField] TextMeshProUGUI buttonText;
+
+    public Evidence Answer => answer;
 
     private void Start()
     {
         file = CaseFile.instance;
-        file.onProfileSelect += OnProfileSelect;
+        button = GetComponent<Button>();
     }
 
-    private void OnDestroy()
-    {
-        file.onProfileSelect -= OnProfileSelect;
-    }
-
-    private void OnProfileSelect(CharacterProfile profile)
+    public void SetProfile(CharacterProfile profile)
     {
         this.profile = profile;
+
+
+        switch (type)
+        {
+            case AnswerType.Motive:
+                answer = profile.ProfileSO.motive;
+
+                // If the anser is solved, show the answer
+                ToggleAnserText(profile.solvedMotive, profile.ProfileSO.Motive);
+                break;
+            case AnswerType.Means:
+                answer = profile.ProfileSO.means;
+
+                ToggleAnserText(profile.solvedMeans, profile.ProfileSO.Means);
+                break;
+            case AnswerType.Opportunity:
+                answer = profile.ProfileSO.opportunity;
+
+                ToggleAnserText(profile.solvedOpportunity, profile.ProfileSO.Opportunity);
+                break;
+        }
+    }
+
+    private void ToggleAnserText(bool solved, string text)
+    {
+        if (!solved)
+        {
+            button.enabled = true;
+            return;
+        }
+
+        button.enabled = false;
+        buttonText.text = string.Empty;
+        answerText.text = text;
+    }
+
+    public void AnswerQuestion()
+    {
+        file.AnswerQuestion(this, answer);
+    }
+
+    public void SolveAnswer()
+    {
+        switch (type)
+        {
+            case AnswerType.Motive:
+                profile.SolveMotive();
+                ToggleAnserText(true, profile.ProfileSO.Motive);
+                break;
+            case AnswerType.Means:
+                profile.SolveMeans();
+                ToggleAnserText(true, profile.ProfileSO.Means);
+                break;
+            case AnswerType.Opportunity:
+                profile.SolveOpportunity();
+                ToggleAnserText(true, profile.ProfileSO.Opportunity);
+                break;
+        }
+
+        // Show button answer
+        Debug.Log("Correct Answer");
     }
 }
 public enum AnswerType { Motive, Means, Opportunity }
