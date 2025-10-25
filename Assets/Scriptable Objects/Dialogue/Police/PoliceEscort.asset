@@ -17,9 +17,8 @@ MonoBehaviour:
   lines:
   - Hello detective.
   - Glad you could make it.
-  - Take me to the body
   choices:
-  - text: Care to fill me in?
+  - text: Evening Dave, what's the situation?
     targetDialogue: {fileID: 11400000, guid: d220f6eb286af014da84d8c7153f2435, type: 2}
   - text: 'Let''s talk later. '
     targetDialogue: {fileID: 11400000, guid: 8dbf2cf2d47945d4abfab38631d7be0f, type: 2}
