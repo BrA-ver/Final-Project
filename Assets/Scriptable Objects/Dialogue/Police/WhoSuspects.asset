@@ -10,16 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7b59aca2b9aa96b4694ef68a6119afa9, type: 3}
-  m_Name: PoliceGreeting
+  m_Name: WhoSuspects
   m_EditorClassIdentifier: 
-  _name: Police Officer
+  _name: Who Suspects
   Speaker: Police Officer
   lines:
-  - Hello detective.
-  - Glad you could make it.
-  choices:
-  - text: Care to fill me in?
-    targetDialogue: {fileID: 11400000, guid: d220f6eb286af014da84d8c7153f2435, type: 2}
-  - text: 'Let''s talk later. '
-    targetDialogue: {fileID: 11400000, guid: 8dbf2cf2d47945d4abfab38631d7be0f, type: 2}
+  - We have 3 suspects, Antonio Romano the janitor, Samantha Hawks the backstage
+    manager, and Lisa Jones the Bartender.
+  - All 3 of them were present at the time of death.
+  choices: []
   evidence: {fileID: 0}

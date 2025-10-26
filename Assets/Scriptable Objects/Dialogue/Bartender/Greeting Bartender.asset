@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b59aca2b9aa96b4694ef68a6119afa9, type: 3}
+  m_Name: Greeting Bartender
+  m_EditorClassIdentifier: 
+  _name: Bartender
+  Speaker: Bartender
+  lines:
+  - Never in my life would I have imagined seeing something like this
+  choices:
+  - text: Tell me about yourself?
+    targetDialogue: {fileID: 11400000, guid: 791da7ac3e7a37041bc5c2b7213f9527, type: 2}
+  - text: How did you feel about James?
+    targetDialogue: {fileID: 11400000, guid: 5cfe92f6eade8b043a9d70c0de290e46, type: 2}
+  - text: What were you doing between 13:30 and 14:00?
+    targetDialogue: {fileID: 11400000, guid: 74ca0fbba8471a348b9715f2a88a363a, type: 2}
+  evidence: {fileID: 0}
