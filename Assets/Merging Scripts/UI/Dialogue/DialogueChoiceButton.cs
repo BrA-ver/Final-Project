@@ -1,24 +1,24 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 
-public class DialogueChoiceButton : MonoBehaviour
+public class DialogueChoiceButton : MonoBehaviour, IScrollHandler
 {
     [SerializeField] Button button;
     [SerializeField] private TextMeshProUGUI choiceText;
     [SerializeField] DialogueChoice choice;
     bool selected;
 
-    private void Start()
-    {
-        
-    }
+    [Header("Scrolling")]
+    [SerializeField] ScrollRect scrollRect;
 
-    public void SetChoice(DialogueChoice choice)
+    public void SetChoice(DialogueChoice choice, ScrollRect rect)
     {
         this.choice = choice;
         choiceText.text = choice.text;
+        scrollRect = rect;
     }
 
     public void Select()
@@ -48,5 +48,10 @@ public class DialogueChoiceButton : MonoBehaviour
             return;
         }
         DialogueManager.Instance.SelectChoice(choice);
+    }
+
+    public void OnScroll(PointerEventData eventData)
+    {
+        ExecuteEvents.Execute(scrollRect.gameObject, eventData, ExecuteEvents.scrollHandler);
     }
 }

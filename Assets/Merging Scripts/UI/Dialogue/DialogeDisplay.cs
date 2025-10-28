@@ -9,6 +9,8 @@ public class DialogeDisplay : MonoBehaviour
 
     [SerializeField] GameObject displayHolder;
     [SerializeField] TextMeshProUGUI dialogueText;
+
+    [SerializeField] DialogueChoiceButton choiceButton;
     List<DialogueChoiceButton> choiceButtons =  new List<DialogueChoiceButton>();
 
     [SerializeField] Transform buttonHolder;
@@ -17,6 +19,10 @@ public class DialogeDisplay : MonoBehaviour
     [SerializeField] GameObject profileHolder;
     [SerializeField] Image characterImage;
     [SerializeField] TextMeshProUGUI nameText;
+
+    [SerializeField] ScrollRect rect;
+
+    [SerializeField] Image mouseIcon;
 
     private void Awake()
     {
@@ -33,15 +39,6 @@ public class DialogeDisplay : MonoBehaviour
         DialogueManager.Instance.onDialogueFinished += StopDialogue;
         DialogueManager.Instance.onDisplayChoices += OnShowChoices;
         DialogueManager.Instance.onHodeChoices += OnHideChoices;
-
-        foreach (Transform button in buttonHolder)
-        {
-            if (button.TryGetComponent<DialogueChoiceButton>(out DialogueChoiceButton choiceButton))
-            {
-                choiceButtons.Add(choiceButton);
-            }
-            button.gameObject.SetActive(false);
-        }
     }
 
     private void OnDisable()
@@ -68,21 +65,38 @@ public class DialogeDisplay : MonoBehaviour
     {
         dialogueText.text = line;
 
-        
+        if (line == string.Empty)
+        {
+            mouseIcon.gameObject.SetActive(false);
+        }
+        else
+        {
+            mouseIcon.gameObject.SetActive(true);
+        }
     }
 
     public void OnShowChoices(DialogueChoice[] choices)
     {
        
-        Debug.Log("Showing Choices");
+        //Debug.Log("Showing Choices");
+        //if (choices.Length > 0)
+        //{
+        //    for (int i = 0; i < choices.Length; i++)
+        //    {
+        //        choiceButtons[i].gameObject.SetActive(true);
+        //        choiceButtons[i].SetChoice(choices[i]);
+        //    }
+        //    //DialogueManager.Instance.DeselectButton();
+        //}
+
         if (choices.Length > 0)
         {
-            for (int i = 0; i < choices.Length; i++)
+            foreach (DialogueChoice choice in choices)
             {
-                choiceButtons[i].gameObject.SetActive(true);
-                choiceButtons[i].SetChoice(choices[i]);
+                DialogueChoiceButton button = Instantiate(choiceButton, buttonHolder);
+                button.SetChoice(choice, rect);
+                choiceButtons.Add(button);
             }
-            //DialogueManager.Instance.DeselectButton();
         }
     }
 
@@ -90,8 +104,9 @@ public class DialogeDisplay : MonoBehaviour
     {
         foreach (DialogueChoiceButton button in choiceButtons)
         {
-            button.gameObject.SetActive(false);
+            Destroy(button.gameObject);
         }
+        choiceButtons.Clear();
     }
 
     public void ShowCharacterProfile(ProfileSO profile)

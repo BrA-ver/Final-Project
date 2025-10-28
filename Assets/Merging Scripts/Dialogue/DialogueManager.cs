@@ -24,9 +24,12 @@ public class DialogueManager : MonoBehaviour
     public event Action<DialogueChoice[]> onDisplayChoices;
     public event Action onHodeChoices;
 
+    bool showedButtons;
     //----- WERNER ADDED -----
     public static event Action<Dialogue> OnDialogueStarted;
     //----- WERNER ADDED -----
+
+    Dialogue lastChoice;
 
     private void Awake()
     {
@@ -72,28 +75,39 @@ public class DialogueManager : MonoBehaviour
 
     private void ContinueOrExitDialogue()
     {
-        //Debug.Log($"Display dailogue: {index < dialogue.lines.Length}");
-        if (index < dialogue.lines.Length)
+        if (!makingChoice)
         {
-            string dialogueLine = dialogue.lines[index];
-            //Debug.Log(dialogueLine);
-            onDisplayDialogue?.Invoke(dialogueLine);
-
-            if (dialogue.evidence != null)
+            //Debug.Log($"Display dailogue: {index < dialogue.lines.Length}");
+            if (index < dialogue.lines.Length)
             {
-                EvidenceManager.Instance.AddEvidence(dialogue.evidence);
-            }
+                string dialogueLine = dialogue.lines[index];
+                //Debug.Log(dialogueLine);
+                onDisplayDialogue?.Invoke(dialogueLine);
 
-            if (index == dialogue.lines.Length - 1 && dialogue.choices.Length > 0)
-            {
-                //Debug.Log("Choosing");
-                onDisplayChoices?.Invoke(dialogue.choices);
-                makingChoice = true;
+                if (dialogue.evidence != null)
+                {
+                    EvidenceManager.Instance.AddEvidence(dialogue.evidence);
+                }
+
+                if (index == dialogue.lines.Length - 1 && dialogue.choices.Length > 0)
+                {
+                    //Debug.Log("Choosing");
+                    
+                    makingChoice = true;
+                    lastChoice = dialogue;
+                }
+                index++;
             }
-            index++;
+            else
+                ExitDialogue();
         }
-        else if (!makingChoice)
-            ExitDialogue();
+        else
+        {
+            if (showedButtons) return;
+            showedButtons = true;
+            onDisplayDialogue?.Invoke(string.Empty);
+            onDisplayChoices?.Invoke(dialogue.choices);
+        }
     }
 
     private void ExitDialogue()
@@ -111,6 +125,8 @@ public class DialogueManager : MonoBehaviour
             GameEvents.OnInteractStop();
         }
 
+
+
         //GameManager.instance.HideMouse();
         // When the button is clicked, set the selected button to null
         //DeselectButton();
@@ -122,6 +138,7 @@ public class DialogueManager : MonoBehaviour
         {
             this.dialogue = choice.targetDialogue;
             makingChoice = false;
+            showedButtons = false;
             index = 0;
             onHodeChoices?.Invoke();
             //DeselectButton();

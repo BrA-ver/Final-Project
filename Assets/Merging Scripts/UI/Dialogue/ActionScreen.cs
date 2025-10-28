@@ -36,7 +36,7 @@ public class ActionScreen : MonoBehaviour
         //DeselectButton();
 
         HideActions();
-        interactedNPC.Talk();
+        //interactedNPC.Talk();
         EvidenceDisplay.instance.IsInterogating = false;
 
         showActions = true;
