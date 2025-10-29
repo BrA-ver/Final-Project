@@ -39,7 +39,7 @@ public class BackgroundMusicManager : MonoBehaviour
 
     public void MuteMusic(bool mute)
     {
-        targetVolume = mute ? 0f : 0.5f; // adjust base volume here if needed
+        targetVolume = mute ? 0f : 0.1f; // adjust base volume here if needed
     }
 
     public void SetVolume(float volume)

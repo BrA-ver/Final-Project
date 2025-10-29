@@ -47,6 +47,8 @@ public class WernerMovement : MonoBehaviour
     private Vector3 baseCamPos;
     private Vector3 currentCameraOffset;
 
+    private CollisionFlags collisionFlags; // ✅ added to track ceiling hits
+
     public bool OnGround => groundedPlayer;
     public Transform CameraTarget => cameraTarget;
 
@@ -156,7 +158,16 @@ public class WernerMovement : MonoBehaviour
 
         yVelocity.y += gravityValue * Time.deltaTime;
         Vector3 finalVelocity = moveVelocity + yVelocity;
-        controller.Move(finalVelocity * Time.deltaTime);
+
+        // ✅ Move controller and detect collisions
+        collisionFlags = controller.Move(finalVelocity * Time.deltaTime);
+
+        // ✅ Instantly cancel upward velocity if we hit a ceiling
+        if ((collisionFlags & CollisionFlags.Above) != 0 && yVelocity.y > 0f)
+        {
+            yVelocity.y = -2f; // small downward push to resume falling
+        }
+
         moveDirection = move;
     }
 
