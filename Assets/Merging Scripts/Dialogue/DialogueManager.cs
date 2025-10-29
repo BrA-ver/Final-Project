@@ -15,6 +15,7 @@ public class DialogueManager : MonoBehaviour
     int index = 0;
 
     bool isNpc;
+    NPC npc;
 
     bool openActionsAfterDialogue;
 
@@ -47,17 +48,15 @@ public class DialogueManager : MonoBehaviour
         input.onSumbit -= OnSubmit;
     }
 
-    public void SwitchDialogue(Dialogue dialogue)
-    {
-        ExitDialogue();
-        EnterDialogue(dialogue);
-    }
-
-    public void EnterDialogue(Dialogue dialogue, bool isNpc = false)
+    public void EnterDialogue(Dialogue dialogue, NPC npc = null)
     {
         if (dialogueStarted) return;
 
-         this.isNpc = isNpc;
+        if (npc != null)
+        {
+            isNpc = true;
+            this.npc = npc;
+        }
         //Debug.Log("Entering Dialogue");
 
         onDialogeStarted?.Invoke();
@@ -92,14 +91,23 @@ public class DialogueManager : MonoBehaviour
                 if (index == dialogue.lines.Length - 1 && dialogue.choices.Length > 0)
                 {
                     //Debug.Log("Choosing");
-                    
+
                     makingChoice = true;
                     lastChoice = dialogue;
                 }
                 index++;
             }
             else
-                ExitDialogue();
+            {
+                if (dialogue.isExit)
+                {
+                    ExitDialogue();
+                }
+                else
+                {
+                    ReturnToMainQuestions();
+                }
+            }
         }
         else
         {
@@ -110,12 +118,12 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    private void ExitDialogue()
+    private void ReturnToMainQuestions()
     {
         //Debug.Log("Exiting Dialogue");
-        dialogueStarted = false;
+        //dialogueStarted = false;
         makingChoice = false;
-        onDialogueFinished?.Invoke();
+        //onDialogueFinished?.Invoke();
         onHodeChoices?.Invoke();
         index = 0;
         dialogue = null;
@@ -125,11 +133,32 @@ public class DialogueManager : MonoBehaviour
             GameEvents.OnInteractStop();
         }
 
-
+        if (isNpc)
+        {
+            dialogue = npc.Profile.MainDialogue;
+            onDisplayDialogue?.Invoke(string.Empty);
+            onDisplayChoices?.Invoke(dialogue.choices);
+            makingChoice = true;
+            showedButtons = true;
+        }
 
         //GameManager.instance.HideMouse();
         // When the button is clicked, set the selected button to null
         //DeselectButton();
+    }
+
+    void ExitDialogue()
+    {
+        dialogueStarted = false;
+        onDialogueFinished?.Invoke();
+        makingChoice = false;
+
+        onHodeChoices?.Invoke();
+        index = 0;
+        dialogue = null;
+
+        GameManager.instance.SwitchState(InteractionState.None);
+        GameManager.instance.HideMouse();
     }
 
     public void SelectChoice(DialogueChoice choice)

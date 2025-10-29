@@ -2,17 +2,17 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NPC : DialogueHolder
+public class NPC : Interactable
 {
     [Header("Character Profile")]
     [SerializeField] ProfileSO profile;
 
-
+    public ProfileSO Profile => profile;
 
     public override void Interact()
     {
         base.Interact();
-        DialogueManager.Instance.EnterDialogue(dialogues[0]);
+        DialogueManager.Instance.EnterDialogue(profile.MainDialogue, this);
     }
 
     //[SerializeField] List<EvidenceResponce> evidenceResponses;

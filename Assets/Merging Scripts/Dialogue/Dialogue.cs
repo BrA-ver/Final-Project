@@ -9,6 +9,8 @@ public class Dialogue : ScriptableObject
 
     public DialogueChoice[] choices;
 
+    public bool isExit = false;
+
     [Header("Evidence")]
     public Evidence evidence;
 }

@@ -9,7 +9,7 @@ public class ProfileSO : ScriptableObject
     public Sprite picture;
 
     [Header("Dialogue")]
-    [SerializeField] Dialogue[] dialogues;
+    [field: SerializeField] public Dialogue MainDialogue { get; private set; }// The dialogue that will lead to all the other dialogues
 
     [Header("Evidence")]
     [SerializeField] EvidenceResponce[] evidenceResponces;
