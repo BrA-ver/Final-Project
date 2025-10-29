@@ -10,16 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7b59aca2b9aa96b4694ef68a6119afa9, type: 3}
-  m_Name: EscortPoliceGreeting
+  m_Name: Relationship Response
   m_EditorClassIdentifier: 
-  _name: Police Officer
-  Speaker: Police Officer
+  _name: Relationship Response
+  Speaker: Bartender
   lines:
-  - Hello detective.
-  - Glad you could make it.
-  choices:
-  - text: Care to fill me in?
-    targetDialogue: {fileID: 11400000, guid: d220f6eb286af014da84d8c7153f2435, type: 2}
-  - text: 'Let''s talk later. '
-    targetDialogue: {fileID: 11400000, guid: 8dbf2cf2d47945d4abfab38631d7be0f, type: 2}
+  - What do I look like, some kind of floozy?
+  - No, I have not dated any of the performers.
+  choices: []
   evidence: {fileID: 0}
