@@ -10,18 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7b59aca2b9aa96b4694ef68a6119afa9, type: 3}
-  m_Name: Main_Police
+  m_Name: Main PoliceGreeting
   m_EditorClassIdentifier: 
   _name: Police Officer
   Speaker: Police Officer
   lines:
-  - Hello detective.
-  - Glad you could make it.
+  - What do you need?
   choices:
-  - text: Evening Dave, what's the situation?
+  - text: Give me a recap.
     targetDialogue: {fileID: 11400000, guid: d220f6eb286af014da84d8c7153f2435, type: 2}
-  - text: Take me to the body
-    targetDialogue: {fileID: 11400000, guid: f7de79540d4001142872e627237a472f, type: 2}
+  - text: Who are the suspects?
+    targetDialogue: {fileID: 11400000, guid: bab5ea8cee949174995916012060a981, type: 2}
+  - text: Tell me more about the janitor, Antonio.
+    targetDialogue: {fileID: 11400000, guid: 30fe4435ab0d9e3499791901cfb83221, type: 2}
+  - text: Tell me more about the bartender, Lisa.
+    targetDialogue: {fileID: 11400000, guid: cfc606bca71c1fa4aab1ccef652ed273, type: 2}
+  - text: Tell me more about the backstage manager, Samantha.
+    targetDialogue: {fileID: 11400000, guid: 733c8bbfb307b1c4891807d5b3915527, type: 2}
   - text: 'Let''s talk later. '
     targetDialogue: {fileID: 11400000, guid: 8dbf2cf2d47945d4abfab38631d7be0f, type: 2}
   evidence: {fileID: 0}
