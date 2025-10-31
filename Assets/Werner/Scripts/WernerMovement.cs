@@ -231,4 +231,19 @@ public class WernerMovement : MonoBehaviour
             currentCameraOffset = standCameraOffset;
         }
     }
+
+    public void TeleportTo(Vector3 position, Quaternion rotation)
+    {
+        if (controller != null)
+            controller.enabled = false;
+
+        transform.position = position;
+        transform.rotation = rotation;
+
+        // Reset gravity / jump velocity
+        yVelocity = Vector3.zero;
+
+        if (controller != null)
+            controller.enabled = true;
+    }
 }
