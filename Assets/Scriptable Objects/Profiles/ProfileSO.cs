@@ -12,7 +12,8 @@ public class ProfileSO : ScriptableObject
     [field: SerializeField] public Dialogue MainDialogue { get; private set; }// The dialogue that will lead to all the other dialogues
 
     [Header("Evidence")]
-    [SerializeField] EvidenceResponce[] evidenceResponces;
+    [field: SerializeField] public EvidenceResponce[] evidenceResponces { get; private set; }
+    [field: SerializeField] public EvidenceResponce nullResponce { get; private set; }
 
     [Header("Case Data")]
     public Evidence motive;

@@ -115,5 +115,15 @@ public class DialogeDisplay : MonoBehaviour
         characterImage.sprite = profile.picture;
         nameText.text = profile._name;
     }
+
+    #region Interogation
+
+    public void Interogate()
+    {
+        EvidenceDisplay.instance.OpenEvidenceBoard();
+        EvidenceDisplay.instance.isIntergating = true;
+        GameManager.instance.SwitchState(InteractionState.EvidenceBoard);
+    }
+
+    #endregion
 }
- 

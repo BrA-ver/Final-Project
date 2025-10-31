@@ -15,7 +15,7 @@ public class DialogueManager : MonoBehaviour
     int index = 0;
 
     bool isNpc;
-    NPC npc;
+    public NPC npc;
 
     bool openActionsAfterDialogue;
 
@@ -140,6 +140,11 @@ public class DialogueManager : MonoBehaviour
             onDisplayChoices?.Invoke(dialogue.choices);
             makingChoice = true;
             showedButtons = true;
+
+            if (EvidenceDisplay.instance.isIntergating)
+            {
+                EvidenceDisplay.instance.OpenEvidenceBoard();
+            }
         }
 
         //GameManager.instance.HideMouse();
@@ -185,6 +190,22 @@ public class DialogueManager : MonoBehaviour
             Debug.LogWarning("WARNING: There is no dialogue following this choice");
         }
         
+    }
+
+    public void ResponceDialogue(Dialogue dialogue)
+    {
+        this.dialogue = dialogue;
+        makingChoice = false;
+        showedButtons = false;
+        index = 0;
+        onHodeChoices?.Invoke();
+        //DeselectButton();
+
+        //----- WERNER ADDED -----
+        OnDialogueStarted?.Invoke(dialogue);
+        //----- WERNER ADDED -----
+
+        ContinueOrExitDialogue();
     }
 
     void OnSubmit()

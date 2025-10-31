@@ -27,6 +27,6 @@ public class EvidenceSlot : MonoBehaviour
 
     public void OnClick()
     {
-        onSlotClick?.Invoke(evidence);
+        display.SelectSlot(this);
     }
 }

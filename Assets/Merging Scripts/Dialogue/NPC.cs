@@ -15,6 +15,22 @@ public class NPC : Interactable
         DialogueManager.Instance.EnterDialogue(profile.MainDialogue, this);
     }
 
+    public void PresentEvidence(Evidence evidence)
+    {
+        Debug.Log("Present Evidence");
+        Dialogue responseDialogue = null;
+        if (HasResponce(evidence, out responseDialogue))
+        {
+            Debug.Log("Has Responce");
+            DialogueManager.Instance.ResponceDialogue(responseDialogue);
+        }
+        else
+        {
+            Debug.Log("No Responce");
+            DialogueManager.Instance.ResponceDialogue(profile.nullResponce.response);
+        }
+    }
+
     //[SerializeField] List<EvidenceResponce> evidenceResponses;
     //[SerializeField] Dialogue nullResponse;
 
@@ -50,19 +66,7 @@ public class NPC : Interactable
     //    DialogeDisplay.instance.ShowCharacterProfile(profile);
     //}
 
-    //private void OnPresentEvidence(Evidence evidence)
-    //{
-    //    Debug.Log("Present Evidence");
-    //    Dialogue responseDialogue = null;
-    //    if (HasResponce(evidence, out responseDialogue))
-    //    {
-    //        RespondToEvidence(responseDialogue);
-    //    }
-    //    else
-    //    {
-    //        RespondToEvidence(nullResponse);
-    //    }
-    //}
+
 
     //void RespondToEvidence(Dialogue dialogue)
     //{
@@ -88,21 +92,21 @@ public class NPC : Interactable
     //    DialogueManager.Instance.onDialogueFinished -= OnDialogueFinished;
     //}
 
-    //bool HasResponce(Evidence evidence, out Dialogue responseDialogue)
-    //{
-    //    bool hasResponse = false;
-    //    responseDialogue = null;
-    //    foreach (EvidenceResponce responce in evidenceResponses)
-    //    {
-    //        if (responce.evidence == evidence) 
-    //        {
-    //            responseDialogue = responce.response;
-    //            hasResponse = true; 
-    //        }
-    //    }
+    bool HasResponce(Evidence evidence, out Dialogue responseDialogue)
+    {
+        bool hasResponse = false;
+        responseDialogue = null;
+        foreach (EvidenceResponce responce in profile.evidenceResponces)
+        {
+            if (responce.evidence == evidence)
+            {
+                responseDialogue = responce.response;
+                hasResponse = true;
+            }
+        }
 
-    //    return hasResponse;
-    //}
+        return hasResponse;
+    }
 }
 
 [System.Serializable]

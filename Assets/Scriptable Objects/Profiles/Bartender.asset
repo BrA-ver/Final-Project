@@ -16,7 +16,12 @@ MonoBehaviour:
   occupation: Janitor
   picture: {fileID: 21300000, guid: a9704e4c37ea3614aae004cbe45e088d, type: 3}
   <MainDialogue>k__BackingField: {fileID: 11400000, guid: 18fa0f19f7d268842a3418d41d275c76, type: 2}
-  evidenceResponces: []
+  <evidenceResponces>k__BackingField:
+  - evidence: {fileID: 11400000, guid: 3d167e7376c68f64b8acebf57585f5fe, type: 2}
+    response: {fileID: 11400000, guid: 2e1ba8be99cee944aafc6d60f2114155, type: 2}
+  <nullResponce>k__BackingField:
+    evidence: {fileID: 0}
+    response: {fileID: 0}
   motive: {fileID: 11400000, guid: d6448fd0a5163b943b299880bec5c62e, type: 2}
   means: {fileID: 11400000, guid: 3d167e7376c68f64b8acebf57585f5fe, type: 2}
   opportunity: {fileID: 11400000, guid: 428b51ff7334a3644ab1ca255a1337fa, type: 2}

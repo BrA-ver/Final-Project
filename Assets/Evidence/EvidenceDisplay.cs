@@ -32,6 +32,11 @@ public class EvidenceDisplay : MonoBehaviour
 
     public event Action<Evidence> onEvidenceClick;
 
+    [Header("Interogation")]
+    [SerializeField] GameObject interogatePoppup;
+    public bool isIntergating;
+    EvidenceSlot selectedSlot;
+
     private void Awake()
     {
         instance = this;
@@ -159,17 +164,29 @@ public class EvidenceDisplay : MonoBehaviour
 
             // Add the slot to the active slots list
             activeSlots.Add(slot);
-
-            slot.onSlotClick += OnSlotClick;
         }
     }
 
-    private void OnSlotClick(Evidence evidence)
+    public void SelectSlot(EvidenceSlot slot)
     {
-        ShowDescription(evidence);
+        ShowDescription(slot.Evidence);
+        selectedSlot = slot;
 
-        // When in the case file, do something
-        onEvidenceClick?.Invoke(evidence);
+        if (isIntergating)
+        {
+            interogatePoppup.SetActive(true);
+        }
+    }
+
+    public void ClickYes()
+    {
+        DialogueManager.Instance.npc.PresentEvidence(selectedSlot.Evidence);
+        CloseEvidenceBoard();
+    }
+
+    public void ClickNo()
+    {
+        interogatePoppup.SetActive(false);
     }
 
     public void ShowDescription(Evidence evidence)
