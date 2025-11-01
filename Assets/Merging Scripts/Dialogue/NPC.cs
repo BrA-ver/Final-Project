@@ -23,11 +23,15 @@ public class NPC : Interactable
         {
             Debug.Log("Has Responce");
             DialogueManager.Instance.ResponceDialogue(responseDialogue);
+
+            GameManager.instance.SwitchState(InteractionState.Dialogue);
         }
         else
         {
             Debug.Log("No Responce");
             DialogueManager.Instance.ResponceDialogue(profile.nullResponce.response);
+
+            GameManager.instance.SwitchState(InteractionState.Dialogue);
         }
     }
 

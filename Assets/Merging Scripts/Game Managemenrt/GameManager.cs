@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] GameObject selected;
 
+    public bool IgnoreMouseInput = false;
+
     private void Awake()
     {
         if (instance == null)

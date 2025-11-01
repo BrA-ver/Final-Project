@@ -118,8 +118,10 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    private void ReturnToMainQuestions()
+    public void ReturnToMainQuestions()
     {
+        GameManager.instance.SwitchState(InteractionState.Dialogue);
+
         //Debug.Log("Exiting Dialogue");
         //dialogueStarted = false;
         makingChoice = false;
@@ -136,14 +138,18 @@ public class DialogueManager : MonoBehaviour
         if (isNpc)
         {
             dialogue = npc.Profile.MainDialogue;
+            onDialogeStarted?.Invoke();
             onDisplayDialogue?.Invoke(string.Empty);
             onDisplayChoices?.Invoke(dialogue.choices);
+            
             makingChoice = true;
             showedButtons = true;
 
             if (EvidenceDisplay.instance.isIntergating)
             {
                 EvidenceDisplay.instance.OpenEvidenceBoard();
+                GameManager.instance.SwitchState(InteractionState.EvidenceBoard);
+                DialogeDisplay.instance.StopDialogue();
             }
         }
 
@@ -211,7 +217,9 @@ public class DialogueManager : MonoBehaviour
     void OnSubmit()
     {
         //Debug.Log("submit recieved");
-        if (!dialogueStarted) return;
+        if (!dialogueStarted || GameManager.instance.IgnoreMouseInput) return;
+
+        if (GameManager.instance.CurrentState != InteractionState.Dialogue) return;
 
         ContinueOrExitDialogue();
     }

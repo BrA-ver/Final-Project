@@ -76,6 +76,7 @@ public class EvidenceDisplay : MonoBehaviour
         }
         else
         {
+            
             // CLOSE THE BOARD
             CloseEvidenceBoard();
 
@@ -90,6 +91,17 @@ public class EvidenceDisplay : MonoBehaviour
             {
                 //CaseFile.instance.OpenCaseFile();
                 GameManager.instance.SwitchState(InteractionState.CaseFile);
+            }
+
+            if (previousState == InteractionState.Dialogue)
+            {
+                Debug.Log("Else");
+                if (isIntergating)
+                {
+                    isIntergating = false;
+                    DialogueManager.Instance.ReturnToMainQuestions();
+                    
+                }
             }
         }
 
@@ -182,6 +194,8 @@ public class EvidenceDisplay : MonoBehaviour
     {
         DialogueManager.Instance.npc.PresentEvidence(selectedSlot.Evidence);
         CloseEvidenceBoard();
+        DialogeDisplay.instance.StartDialogue();
+        GameManager.instance.IgnoreMouseInput = false; // So we can go through the following dialogue
     }
 
     public void ClickNo()

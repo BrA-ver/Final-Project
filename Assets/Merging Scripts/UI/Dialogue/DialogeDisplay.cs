@@ -50,12 +50,12 @@ public class DialogeDisplay : MonoBehaviour
         DialogueManager.Instance.onHodeChoices -= OnHideChoices;
     }
 
-    void StartDialogue()
+    public void StartDialogue()
     {
         displayHolder.gameObject.SetActive(true);
     }
 
-    void StopDialogue()
+    public void StopDialogue()
     {
         displayHolder.gameObject.SetActive(false);
         dialogueText.text = string.Empty;
@@ -121,8 +121,15 @@ public class DialogeDisplay : MonoBehaviour
     public void Interogate()
     {
         EvidenceDisplay.instance.OpenEvidenceBoard();
+        StopDialogue();
         EvidenceDisplay.instance.isIntergating = true;
         GameManager.instance.SwitchState(InteractionState.EvidenceBoard);
+
+    }
+
+    public void IgnoreMouseInput(bool ignore) // Called by the interact button when the mouse enters it
+    {
+        GameManager.instance.IgnoreMouseInput = ignore;
     }
 
     #endregion
