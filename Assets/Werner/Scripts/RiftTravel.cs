@@ -13,6 +13,10 @@ public class RiftTravel : MonoBehaviour
     [Header("Input Settings")]
     [SerializeField] private KeyCode teleportKey = KeyCode.Q;
 
+    [Header("Portal Unlock System")]
+    [SerializeField] private bool unlockedAtStart = false; // for testing in editor
+    public bool PortalsUnlocked { get; private set; } = false; // runtime state
+
     [Header("Video Settings")]
     [SerializeField] private VideoClip enterRiftVideo;
     [SerializeField] private VideoClip exitRiftVideo;
@@ -78,6 +82,10 @@ public class RiftTravel : MonoBehaviour
         if (interactLabel != null) interactLabel.gameObject.SetActive(false);
 
         InitializeVideoSystem();
+
+        // ✅ Initialize portal lock state
+        if (unlockedAtStart) UnlockPortals();
+        else LockPortals();
     }
 
     void InitializeVideoSystem()
@@ -134,6 +142,14 @@ public class RiftTravel : MonoBehaviour
 
     void Update()
     {
+        // ✅ Hard gate: when locked, no UI, no highlight, no teleport logic
+        if (!PortalsUnlocked)
+        {
+            if (activeCrystal != null) ClearHighlight();
+            if (interactLabel != null) interactLabel.gameObject.SetActive(false);
+            return;
+        }
+
         if (popupActive)
         {
             if (Input.GetKeyDown(KeyCode.Escape))
@@ -166,14 +182,36 @@ public class RiftTravel : MonoBehaviour
         }
     }
 
+    // ✅ Public API to control portal availability
+    public void UnlockPortals()
+    {
+        PortalsUnlocked = true;
+        // ensure UI is clean then will be shown next Update when in range
+        if (interactLabel != null) interactLabel.gameObject.SetActive(false);
+        Debug.Log("✅ Portals unlocked.");
+    }
+
+    public void LockPortals()
+    {
+        PortalsUnlocked = false;
+        if (activeCrystal != null) ClearHighlight();
+        if (interactLabel != null) interactLabel.gameObject.SetActive(false);
+        popupActive = false;
+        if (teleportPopup != null) teleportPopup.SetActive(false);
+        Debug.Log("🔒 Portals locked.");
+    }
+
     MeshRenderer GetNearestCrystal()
     {
         MeshRenderer nearest = null;
         float minDist = Mathf.Infinity;
 
+        // ✅ Check crystals in Map 1 and ignore disabled ones
         foreach (var c in map1Crystals)
         {
             if (c == null) continue;
+            if (!c.gameObject.activeInHierarchy) continue; // ✅ ignore disabled portal
+
             float dist = Vector3.Distance(transform.position, c.transform.position);
             if (dist < triggerDistance && dist < minDist)
             {
@@ -182,9 +220,12 @@ public class RiftTravel : MonoBehaviour
             }
         }
 
+        // ✅ Check crystals in Map 2 and ignore disabled ones
         foreach (var c in map2Crystals)
         {
             if (c == null) continue;
+            if (!c.gameObject.activeInHierarchy) continue; // ✅ ignore disabled portal
+
             float dist = Vector3.Distance(transform.position, c.transform.position);
             if (dist < triggerDistance && dist < minDist)
             {
@@ -200,6 +241,8 @@ public class RiftTravel : MonoBehaviour
     {
         if (interactLabel != null)
         {
+            // extra safety: never show when locked
+            if (!PortalsUnlocked) state = false;
             interactLabel.text = "Press Q";
             interactLabel.gameObject.SetActive(state);
         }

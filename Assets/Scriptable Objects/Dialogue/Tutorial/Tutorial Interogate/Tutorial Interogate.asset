@@ -10,12 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7b59aca2b9aa96b4694ef68a6119afa9, type: 3}
-  m_Name: Continue 1
+  m_Name: Tutorial Interogate
   m_EditorClassIdentifier: 
   _name: Tutorial
   Speaker: Tutorial
   lines:
-  - Lets continue
-  choices: []
+  - You found my clue
+  - You can press Tab to open the list of clues you've found
+  - Now go ahead and interogate me
+  choices:
+  - text: Interogate
+    targetDialogue: {fileID: 11400000, guid: 3584d6013ccc83740b63a6f0d32d4f20, type: 2}
   isExit: 1
   evidence: {fileID: 0}

@@ -10,15 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 888b21d72f466564b972276f6c1ebc8d, type: 3}
-  m_Name: Tutorial NPC Start
+  m_Name: Tutorial NPC Interogate
   m_EditorClassIdentifier: 
   _name: Some Guy
   occupation: Tutorial
   picture: {fileID: 21300000, guid: a9704e4c37ea3614aae004cbe45e088d, type: 3}
-  <MainDialogue>k__BackingField: {fileID: 11400000, guid: b6bdd46510a0c204fbbeadaa84e9b9fc, type: 2}
+  <MainDialogue>k__BackingField: {fileID: 11400000, guid: d8f8519a9aea4de459e8a8e241d41787, type: 2}
   <evidenceResponces>k__BackingField:
   - evidence: {fileID: 11400000, guid: 3c50f50051c479545a3b0dfdd3589cf2, type: 2}
-    response: {fileID: 11400000, guid: 805822dcb0f46fd438e7fdc2a29b131d, type: 2}
+    response: {fileID: 11400000, guid: 5eb9a8ba2fa120d4f9ab2bafda8982c1, type: 2}
+  - evidence: {fileID: 11400000, guid: 912935e8ac1bac641a1d6001132068ab, type: 2}
+    response: {fileID: 11400000, guid: d2bb6d72aafc1694e84bedcbd46b2811, type: 2}
   <nullResponce>k__BackingField:
     evidence: {fileID: 0}
     response: {fileID: 0}

@@ -15,8 +15,9 @@ MonoBehaviour:
   _name: Tutorial
   Speaker: Tutorial
   lines:
-  - Its very simple, find clues, look inside Rifts for more information, and accuse
-    a suspect of being guilty based on your findings.
+  - Its very simple, find clues, look inside Rifts to gain some information, interogate
+    suspects, and finally accuse someone of being guilty based on your findings.
+  - Walk through the door to continue
   choices: []
-  isExit: 0
+  isExit: 1
   evidence: {fileID: 0}
