@@ -15,11 +15,11 @@ MonoBehaviour:
   _name: Tutorial
   Speaker: Tutorial
   lines:
-  - You found my clue
+  - Well done, you found the clue
   - You can press Tab to open the list of clues you've found
-  - Now go ahead and interogate me
+  - Now you should interogate me about the clue you found
   choices:
-  - text: Interogate
-    targetDialogue: {fileID: 11400000, guid: 3584d6013ccc83740b63a6f0d32d4f20, type: 2}
+  - text: Where is the Interogate button?
+    targetDialogue: {fileID: 11400000, guid: 541f4db93462fb145a0c0b05cab2f2cb, type: 2}
   isExit: 1
   evidence: {fileID: 0}
