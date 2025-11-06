@@ -1750,7 +1750,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 218d5e2e914164d4ba3befa33a302162, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxDistance: 200
+  maxDistance: 600
   delayBeforeReturn: 1
   mapOffsetZ: 400
   player: {fileID: 1374344514450882144}
@@ -6693,7 +6693,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 218d5e2e914164d4ba3befa33a302162, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxDistance: 200
+  maxDistance: 600
   delayBeforeReturn: 1
   mapOffsetZ: 400
   player: {fileID: 1374344514450882144}
@@ -20982,7 +20982,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 218d5e2e914164d4ba3befa33a302162, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxDistance: 200
+  maxDistance: 600
   delayBeforeReturn: 1
   mapOffsetZ: 400
   player: {fileID: 1374344514450882144}
@@ -22791,7 +22791,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 218d5e2e914164d4ba3befa33a302162, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxDistance: 200
+  maxDistance: 600
   delayBeforeReturn: 1
   mapOffsetZ: 400
   player: {fileID: 1374344514450882144}
@@ -23483,7 +23483,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 218d5e2e914164d4ba3befa33a302162, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxDistance: 200
+  maxDistance: 600
   delayBeforeReturn: 1
   mapOffsetZ: 400
   player: {fileID: 1374344514450882144}
@@ -25335,7 +25335,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 218d5e2e914164d4ba3befa33a302162, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxDistance: 200
+  maxDistance: 600
   delayBeforeReturn: 1
   mapOffsetZ: 400
   player: {fileID: 1374344514450882144}
@@ -35714,7 +35714,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 218d5e2e914164d4ba3befa33a302162, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxDistance: 200
+  maxDistance: 600
   delayBeforeReturn: 1
   mapOffsetZ: 400
   player: {fileID: 1374344514450882144}
@@ -39878,9 +39878,7 @@ MonoBehaviour:
   globalVolume2: {fileID: 2081186884}
   switchRadius: 100
   objectsToDisable:
-  - {fileID: 246796324}
   - {fileID: 622698169}
-  - {fileID: 1577885071}
   - {fileID: 1639795116}
 --- !u!4 &1740967982
 Transform:
@@ -44734,7 +44732,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1966414644949506424, guid: 408ae2944a4fd6d4bb5f044161626b49, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2174271150788772078, guid: 408ae2944a4fd6d4bb5f044161626b49, type: 3}
       propertyPath: m_LocalPosition.x
@@ -44794,12 +44792,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5770614362340090814, guid: 408ae2944a4fd6d4bb5f044161626b49, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5794508726498906088, guid: 408ae2944a4fd6d4bb5f044161626b49, type: 3}
       propertyPath: 'm_CapsuleColliders.Array.data[0]'
       value: 
       objectReference: {fileID: 1871899789}
+    - target: {fileID: 6430635646846262319, guid: 408ae2944a4fd6d4bb5f044161626b49, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 7.59
+      objectReference: {fileID: 0}
+    - target: {fileID: 6430635646846262319, guid: 408ae2944a4fd6d4bb5f044161626b49, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.37
+      objectReference: {fileID: 0}
+    - target: {fileID: 6430635646846262319, guid: 408ae2944a4fd6d4bb5f044161626b49, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 6.89
+      objectReference: {fileID: 0}
     - target: {fileID: 6778164149132496432, guid: 408ae2944a4fd6d4bb5f044161626b49, type: 3}
       propertyPath: m_LocalPosition.z
       value: 5.645
@@ -45277,7 +45287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 218d5e2e914164d4ba3befa33a302162, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxDistance: 200
+  maxDistance: 600
   delayBeforeReturn: 1
   mapOffsetZ: 400
   player: {fileID: 1374344514450882144}
@@ -48490,7 +48500,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 218d5e2e914164d4ba3befa33a302162, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxDistance: 200
+  maxDistance: 600
   delayBeforeReturn: 1
   mapOffsetZ: 400
   player: {fileID: 1374344514450882144}

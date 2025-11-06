@@ -7,71 +7,61 @@ public class PostProcessingZoneSwitcher : MonoBehaviour
     [SerializeField] private Transform player;
     [SerializeField] private Transform realityProcessing;
     [SerializeField] private Transform riftProcessing;
-    [SerializeField] private Volume globalVolume1;
-    [SerializeField] private Volume globalVolume2;
+    [SerializeField] private Volume globalVolume1;  // Reality Post-Processing
+    [SerializeField] private Volume globalVolume2;  // Rift Post-Processing
 
     [Header("Settings")]
     [SerializeField] private float switchRadius = 100f;
 
-    [Header("Objects To Disable After Leaving Zone")]
-    [SerializeField] private GameObject[] objectsToDisable;
+    [Header("Objects To Disable / Enable")]
+    [SerializeField] private GameObject[] objectsToDisable; // Portals or other objects
 
-    // ✅ State Tracking
-    private bool clueCollected = false; // only after clue is picked up
-    private bool playerWasInside = false; // becomes true after entering zone once
+    // ✅ Only enable this logic after clue is collected
+    private bool clueCollected = false;
 
-    // 🟢 This gets called by EnableOnClueInteract script
+    // ✅ Called from EnableOnClueInteract
     public void SetClueCollected(bool value)
     {
         clueCollected = value;
-        Debug.Log("✅ Clue collected. Zone logic now active.");
+        Debug.Log("✅ Clue collected — PostProcessing + Portal logic now active.");
     }
 
     void Update()
     {
-        if (!clueCollected || player == null) 
-            return; // ❌ Do nothing until portals are unlocked by clue
+        if (!clueCollected || player == null) return;
 
         float distToReality = Vector3.Distance(player.position, realityProcessing.position);
         float distToRift = Vector3.Distance(player.position, riftProcessing.position);
 
-        bool isInZone = distToReality <= switchRadius || distToRift <= switchRadius;
+        bool isInReality = distToReality <= switchRadius;
+        bool isInRift = distToRift <= switchRadius;
 
-        // ✅ Player is inside zone
-        if (isInZone)
+        // ✅ Player in Reality Zone (Map 1) → Disable portals
+        if (isInReality)
         {
-            playerWasInside = true; // Now we can detect exit later
-
-            // Enable portals if disabled
-            SetObjectsActive(true);
-
-            // Apply correct post-processing
-            if (distToReality < distToRift)
-            {
-                globalVolume1.enabled = true;
-                globalVolume2.enabled = false;
-            }
-            else
-            {
-                globalVolume1.enabled = false;
-                globalVolume2.enabled = true;
-            }
-        }
-        // ✅ Player leaves zone after having been inside
-        else if (playerWasInside)
-        {
-            Debug.Log("❌ Player left zone — disabling portals!");
-            playerWasInside = false;
-
-            // Turn off post-processing
-            globalVolume1.enabled = false;
+            globalVolume1.enabled = true;   // Enable Reality Post-Processing
             globalVolume2.enabled = false;
 
-            // Disable portals
-            SetObjectsActive(false);
+            SetObjectsActive(false);        // Disable portals/objects
+            return;
         }
+
+        // ✅ Player in Rift Zone (Map 2) → Enable portals
+        if (isInRift)
+        {
+            globalVolume1.enabled = false;
+            globalVolume2.enabled = true;
+
+            SetObjectsActive(true);         // Enable portals
+            return;
+        }
+
+        // ✅ Outside both → Turn off effects, keep objects as they were
+        globalVolume1.enabled = false;
+        globalVolume2.enabled = false;
     }
 
+    // ✅ Helper: enable/disable portals or objects
     private void SetObjectsActive(bool state)
     {
         if (objectsToDisable == null) return;
