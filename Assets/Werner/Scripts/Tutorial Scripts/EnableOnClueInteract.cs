@@ -6,14 +6,16 @@ public class EnableOnClueInteract : EvidenceObject
     [SerializeField] private GameObject[] objectsToEnable;
 
     [Header("Unlock Rift Travel")]
-    [SerializeField] private RiftTravel riftTravelScript; // ✅ Drag your Player object here in Inspector
+    [SerializeField] private RiftTravel riftTravelScript;
+
+    [Header("Post Processing Zone (Optional)")]
+    [SerializeField] private PostProcessingZoneSwitcher zoneSwitcher; // ✅ Drag the zone switcher object here
 
     public override void Interact()
     {
-        // ✅ Collect the clue and hide item if necessary
         base.Interact();
 
-        // ✅ Enable any objects you want to appear after clue pickup
+        // ✅ Enable assigned objects when clue is collected
         foreach (GameObject obj in objectsToEnable)
         {
             if (obj != null)
@@ -23,7 +25,7 @@ public class EnableOnClueInteract : EvidenceObject
             }
         }
 
-        // ✅ Unlock Rift Travel system (player can now use portal)
+        // ✅ Unlock rift travel
         if (riftTravelScript != null)
         {
             riftTravelScript.UnlockPortals();
@@ -31,7 +33,13 @@ public class EnableOnClueInteract : EvidenceObject
         }
         else
         {
-            Debug.LogWarning("⚠️ No RiftTravel reference assigned on EnableOnClueInteract!");
+            Debug.LogWarning("⚠️ No RiftTravel reference assigned!");
+        }
+
+        // ✅ Tell post-process script that clue is collected
+        if (zoneSwitcher != null)
+        {
+            zoneSwitcher.SetClueCollected(true);
         }
     }
 }
