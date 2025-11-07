@@ -3,8 +3,8 @@ using System.Collections;
 
 public class Door : Interactable
 {
-    [SerializeField] float closedAngle = 0f;
-    [SerializeField] float openAngle = 90f;
+    [SerializeField] float angle1 = 0f;
+    [SerializeField] float angle2 = 90f;
     [SerializeField] float turnTime = 2f;
     bool isOpen;
     bool turning;
@@ -12,7 +12,7 @@ public class Door : Interactable
 
     private void Start()
     {
-        closedAngle = transform.localRotation.eulerAngles.y;
+        angle1 = transform.localRotation.eulerAngles.y;
     }
 
     public override void Interact()
@@ -37,12 +37,12 @@ public class Door : Interactable
 
     void Open()
     {
-        StartCoroutine(TurnDoorRoutine(openAngle));
+        StartCoroutine(TurnDoorRoutine(angle2));
     }
 
     void Close()
     {
-        StartCoroutine(TurnDoorRoutine(closedAngle));
+        StartCoroutine(TurnDoorRoutine(angle1));
     }
 
     IEnumerator TurnDoorRoutine(float targetAngle)
@@ -53,7 +53,7 @@ public class Door : Interactable
         {
             timePassed += Time.deltaTime;
 
-            Quaternion targetRotation = Quaternion.Euler(0f, targetAngle, transform.localRotation.eulerAngles.z);
+            Quaternion targetRotation = Quaternion.Euler(0f, targetAngle, transform.localEulerAngles.z);
             transform.localRotation = Quaternion.Slerp(currentAngle, targetRotation, timePassed / turnTime);
             yield return null;
         }

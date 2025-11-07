@@ -35,6 +35,7 @@ public class EvidenceDisplay : MonoBehaviour
     [Header("Interogation")]
     [SerializeField] GameObject interogatePoppup;
     public bool isIntergating;
+    public bool inCaseFile;
     EvidenceSlot selectedSlot;
 
     private void Awake()
@@ -57,7 +58,7 @@ public class EvidenceDisplay : MonoBehaviour
 
         // OPEN THE EVIDENCE BOARD
         // - if we are in the free sate
-        if (currentState == InteractionState.None || previousState == InteractionState.None)
+        if (currentState == InteractionState.None || (previousState == InteractionState.None && currentState == InteractionState.EvidenceBoard))
         {
             // If the board is closed - Open the evidence board and free the mouse
             if (!IsOpen)
@@ -91,6 +92,7 @@ public class EvidenceDisplay : MonoBehaviour
             {
                 //CaseFile.instance.OpenCaseFile();
                 GameManager.instance.SwitchState(InteractionState.CaseFile);
+                inCaseFile = false;
             }
 
             if (previousState == InteractionState.Dialogue)
@@ -152,6 +154,8 @@ public class EvidenceDisplay : MonoBehaviour
 
     public void CloseEvidenceBoard()
     {
+        if (!IsOpen) return;
+
         //Debug.Log("Closing Evidence Board");
         IsOpen = false;
         Display.SetActive(false);
@@ -184,7 +188,7 @@ public class EvidenceDisplay : MonoBehaviour
         ShowDescription(slot.Evidence);
         selectedSlot = slot;
 
-        if (isIntergating)
+        if (isIntergating || inCaseFile)
         {
             interogatePoppup.SetActive(true);
         }
@@ -192,10 +196,17 @@ public class EvidenceDisplay : MonoBehaviour
 
     public void ClickYes()
     {
-        DialogueManager.Instance.npc.PresentEvidence(selectedSlot.Evidence);
-        CloseEvidenceBoard();
-        DialogeDisplay.instance.StartDialogue();
-        GameManager.instance.IgnoreMouseInput = false; // So we can go through the following dialogue
+        if (isIntergating)
+        {
+            DialogueManager.Instance.npc.PresentEvidence(selectedSlot.Evidence);
+            CloseEvidenceBoard();
+            DialogeDisplay.instance.StartDialogue();
+            GameManager.instance.IgnoreMouseInput = false; // So we can go through the following dialogue
+        }
+        else if (inCaseFile)
+        {
+            onEvidenceClick?.Invoke(CaseFile.instance.selectedButton.Answer);
+        }
     }
 
     public void ClickNo()

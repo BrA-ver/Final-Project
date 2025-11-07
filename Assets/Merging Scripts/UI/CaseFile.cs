@@ -33,7 +33,7 @@ public class CaseFile : MonoBehaviour
     [SerializeField] Color notGuiltyColour = Color.green;
     public AnswerText[] AnswerTexts => answerTexts;
 
-    FileButton selectedButton;
+    public FileButton selectedButton;
     Evidence correctAnswer;
 
     private void Awake()
@@ -135,6 +135,7 @@ public class CaseFile : MonoBehaviour
     public void AnswerQuestion(FileButton selectedButton, Evidence correctAnswer)
     {
         EvidenceDisplay.instance.OpenEvidenceBoard();
+        EvidenceDisplay.instance.inCaseFile = true;
         GameManager.instance.SwitchState(InteractionState.EvidenceBoard);
         EvidenceDisplay.instance.onEvidenceClick += OnEvidenceClick;
 
@@ -152,6 +153,7 @@ public class CaseFile : MonoBehaviour
     {
         Debug.Log("Evidence Clicked From Case File");
         EvidenceDisplay.instance.CloseEvidenceBoard();
+        EvidenceDisplay.instance.inCaseFile = false;
         GameManager.instance.SwitchState(InteractionState.CaseFile);
         EvidenceDisplay.instance.onEvidenceClick -= OnEvidenceClick;
 

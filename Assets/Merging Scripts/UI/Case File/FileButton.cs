@@ -7,7 +7,7 @@ public class FileButton : MonoBehaviour
 {
     CaseFile file;
     CharacterProfile profile;
-    Button button;
+    [SerializeField] Button button;
 
     [SerializeField] AnswerType type;
     [SerializeField] Evidence answer;
@@ -19,7 +19,6 @@ public class FileButton : MonoBehaviour
     private void Start()
     {
         file = CaseFile.instance;
-        button = GetComponent<Button>();
     }
 
     public void SetProfile(CharacterProfile profile)
@@ -53,6 +52,8 @@ public class FileButton : MonoBehaviour
         if (!solved)
         {
             button.enabled = true;
+            buttonText.text = "Motive";
+            answerText.text = string.Empty;
             return;
         }
 
@@ -73,14 +74,17 @@ public class FileButton : MonoBehaviour
             case AnswerType.Motive:
                 profile.SolveMotive();
                 ToggleAnserText(true, profile.ProfileSO.Motive);
+                button.enabled = false;
                 break;
             case AnswerType.Means:
                 profile.SolveMeans();
                 ToggleAnserText(true, profile.ProfileSO.Means);
+                button.enabled = false;
                 break;
             case AnswerType.Opportunity:
                 profile.SolveOpportunity();
                 ToggleAnserText(true, profile.ProfileSO.Opportunity);
+                button.enabled = false;
                 break;
         }
 

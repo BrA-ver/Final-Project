@@ -6,13 +6,15 @@ public class Interactable: MonoBehaviour
 
     public void Highlight()
     {
+        if (targets.Length <= 0) return;
         foreach (HighlightTarget target in targets)
             target.HighlightObject();
     }
 
     public void StopHighlight()
     {
-        foreach(HighlightTarget target in targets)
+        if (targets.Length <= 0 || targets == null) return;
+        foreach (HighlightTarget target in targets)
             target.ClearHighlight();
     }
 
