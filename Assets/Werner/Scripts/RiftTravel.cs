@@ -299,13 +299,22 @@ public class RiftTravel : MonoBehaviour
 
         if (videoPlayer != null && targetClip != null)
         {
-            // suction runs based on toggle + direction
-            if ((fromMap1 && playSuctionOnEnter) || (!fromMap1 && playSuctionOnExit))
+            if (fromMap1 && playSuctionOnEnter)
             {
-                yield return StartCoroutine(PlayPortalSuctionEffect());
+                // For entering: play suction and video together
+                yield return StartCoroutine(PlaySuctionAndVideoTogether(targetClip));
             }
-
-            yield return StartCoroutine(PlayVideoFullDuration(targetClip));
+            else if (!fromMap1 && playSuctionOnExit)
+            {
+                // For exiting: play suction first, then video
+                yield return StartCoroutine(PlayPortalSuctionEffect());
+                yield return StartCoroutine(PlayVideoFullDuration(targetClip, fromMap1));
+            }
+            else
+            {
+                // No suction, just play video
+                yield return StartCoroutine(PlayVideoFullDuration(targetClip, fromMap1));
+            }
         }
         else
         {
@@ -327,7 +336,7 @@ public class RiftTravel : MonoBehaviour
             transform.position = pos;
         }
 
-        // REFRESH CAMERA right after teleport
+        
         var move = GetComponent<WernerMovement>();
         if (move != null)
         {
@@ -344,6 +353,13 @@ public class RiftTravel : MonoBehaviour
         }
 
         isTeleporting = false;
+    }
+
+    IEnumerator PlaySuctionAndVideoTogether(VideoClip clip)
+    {
+        // Start both suction and video at the same time
+        StartCoroutine(PlayPortalSuctionEffect());
+        yield return StartCoroutine(PlayVideoFullDuration(clip, true));
     }
 
     IEnumerator PlayPortalSuctionEffect()
@@ -363,18 +379,21 @@ public class RiftTravel : MonoBehaviour
 
             if (cameraLook != null)
             {
+                
+                float zoomFactor = suctionCurve.Evaluate(progress) * 0.5f;
+
                 Vector3 shake = new Vector3(
                     Random.Range(-intensity, intensity),
                     Random.Range(-intensity, intensity),
-                    Random.Range(-intensity * 0.5f, intensity * 0.5f)
+                    Random.Range(-intensity * 0.5f, intensity * 0.5f) - zoomFactor
                 );
 
                 cameraLook.transform.localPosition = originalCameraPosition + shake;
 
                 Vector3 rotationShake = new Vector3(
-                    Random.Range(-intensity * 10f, intensity * 10f),
-                    Random.Range(-intensity * 10f, intensity * 10f),
-                    Random.Range(-intensity * 5f, intensity * 5f)
+                    Random.Range(-intensity * 20f, intensity * 20f),
+                    Random.Range(-intensity * 20f, intensity * 20f),
+                    Random.Range(-intensity * 10f, intensity * 10f)
                 );
                 cameraLook.transform.localRotation = Quaternion.Euler(rotationShake) * originalCameraRotation;
             }
@@ -384,7 +403,7 @@ public class RiftTravel : MonoBehaviour
         }
     }
 
-    IEnumerator PlayVideoFullDuration(VideoClip clip)
+    IEnumerator PlayVideoFullDuration(VideoClip clip, bool isEntering)
     {
         if (cameraLook != null)
         {
@@ -393,8 +412,8 @@ public class RiftTravel : MonoBehaviour
         }
 
         videoPlayer.clip = clip;
-        videoCanvas.SetActive(true);
 
+        
         yield return StartCoroutine(FadeVideoIn());
 
         Cursor.visible = true;
@@ -413,6 +432,9 @@ public class RiftTravel : MonoBehaviour
     IEnumerator FadeVideoIn()
     {
         if (videoCanvasGroup == null) yield break;
+
+        videoCanvasGroup.alpha = 0f;
+        videoCanvas.SetActive(true);
 
         float elapsed = 0f;
         while (elapsed < fadeDuration)

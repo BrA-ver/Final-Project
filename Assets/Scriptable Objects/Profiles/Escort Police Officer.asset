@@ -14,9 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: David Hannigan
   occupation: Escort Police Officer
-  picture: {fileID: 21300000, guid: 15b64cf9fc5e7c04cab8484858c20d7b, type: 3}
+  picture: {fileID: 21300000, guid: 2bac078caeb68d3458496d596e2af210, type: 3}
   <MainDialogue>k__BackingField: {fileID: 11400000, guid: b764dc0c3e576a24b8a63245bda5db90, type: 2}
-  evidenceResponces: []
+  <evidenceResponces>k__BackingField: []
+  <nullResponce>k__BackingField:
+    evidence: {fileID: 0}
+    response: {fileID: 0}
   motive: {fileID: 11400000, guid: d6448fd0a5163b943b299880bec5c62e, type: 2}
   means: {fileID: 11400000, guid: 3d167e7376c68f64b8acebf57585f5fe, type: 2}
   opportunity: {fileID: 11400000, guid: 428b51ff7334a3644ab1ca255a1337fa, type: 2}

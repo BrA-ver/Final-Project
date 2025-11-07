@@ -53208,9 +53208,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1896860181}
     - target: {fileID: 7095503202170662954, guid: 56b1dce185b53dc46b335a31c22cbfa3, type: 3}
+      propertyPath: fadeDuration
+      value: 0.84
+      objectReference: {fileID: 0}
+    - target: {fileID: 7095503202170662954, guid: 56b1dce185b53dc46b335a31c22cbfa3, type: 3}
       propertyPath: videoDisplay
       value: 
       objectReference: {fileID: 1264521579}
+    - target: {fileID: 7095503202170662954, guid: 56b1dce185b53dc46b335a31c22cbfa3, type: 3}
+      propertyPath: exitRiftVideo
+      value: 
+      objectReference: {fileID: 32900000, guid: d8ecc27753f16ab43acdb9dffaf941d8, type: 3}
     - target: {fileID: 7095503202170662954, guid: 56b1dce185b53dc46b335a31c22cbfa3, type: 3}
       propertyPath: interactLabel
       value: 
@@ -53219,6 +53227,18 @@ PrefabInstance:
       propertyPath: teleportPopup
       value: 
       objectReference: {fileID: 2038056209}
+    - target: {fileID: 7095503202170662954, guid: 56b1dce185b53dc46b335a31c22cbfa3, type: 3}
+      propertyPath: enterRiftVideo
+      value: 
+      objectReference: {fileID: 32900000, guid: 6373c1196dd5e9141aa5057e33b6de23, type: 3}
+    - target: {fileID: 7095503202170662954, guid: 56b1dce185b53dc46b335a31c22cbfa3, type: 3}
+      propertyPath: suctionDuration
+      value: 0.49
+      objectReference: {fileID: 0}
+    - target: {fileID: 7095503202170662954, guid: 56b1dce185b53dc46b335a31c22cbfa3, type: 3}
+      propertyPath: maxSuctionIntensity
+      value: 0.14
+      objectReference: {fileID: 0}
     - target: {fileID: 7095503202170662954, guid: 56b1dce185b53dc46b335a31c22cbfa3, type: 3}
       propertyPath: map1Crystals.Array.size
       value: 9
@@ -53302,6 +53322,14 @@ PrefabInstance:
     - target: {fileID: 7095503202170662954, guid: 56b1dce185b53dc46b335a31c22cbfa3, type: 3}
       propertyPath: 'map2Crystals.Array.data[9]'
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7095503202170662954, guid: 56b1dce185b53dc46b335a31c22cbfa3, type: 3}
+      propertyPath: suctionCurve.m_Curve.Array.data[1].time
+      value: 1.0021973
+      objectReference: {fileID: 0}
+    - target: {fileID: 7095503202170662954, guid: 56b1dce185b53dc46b335a31c22cbfa3, type: 3}
+      propertyPath: suctionCurve.m_Curve.Array.data[1].value
+      value: 0.6707306
       objectReference: {fileID: 0}
     - target: {fileID: 8931995773935372730, guid: 56b1dce185b53dc46b335a31c22cbfa3, type: 3}
       propertyPath: m_LocalPosition.x
