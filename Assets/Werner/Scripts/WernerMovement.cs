@@ -47,7 +47,9 @@ public class WernerMovement : MonoBehaviour
     private Vector3 baseCamPos;
     private Vector3 currentCameraOffset;
 
-    private CollisionFlags collisionFlags; // ✅ added to track ceiling hits
+    private bool needsBobReset = false;
+
+    private CollisionFlags collisionFlags;
 
     public bool OnGround => groundedPlayer;
     public Transform CameraTarget => cameraTarget;
@@ -68,7 +70,6 @@ public class WernerMovement : MonoBehaviour
         {
             cameraTarget.localPosition = standCameraOffset;
             baseCamPos = standCameraOffset;
-            currentCameraOffset = standCameraOffset;
         }
     }
 
@@ -76,7 +77,6 @@ public class WernerMovement : MonoBehaviour
     {
         groundedPlayer = controller.isGrounded || (groundCheck != null && groundCheck.OnGround());
 
-        // ✅ If interacting, still apply gravity but stop other inputs
         if (GameManager.instance != null && GameManager.instance.CurrentState != InteractionState.None)
         {
             ApplyGravityOnly();
@@ -95,7 +95,6 @@ public class WernerMovement : MonoBehaviour
         {
             yVelocity.y = -2f;
         }
-
         yVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(yVelocity * Time.deltaTime);
     }
@@ -118,8 +117,7 @@ public class WernerMovement : MonoBehaviour
         if (playerCam == null)
         {
             playerCam = Camera.main ?? GetComponentInChildren<Camera>();
-            if (playerCam == null)
-                return;
+            if (playerCam == null) return;
         }
 
         Vector3 camForward = playerCam.transform.forward;
@@ -159,13 +157,11 @@ public class WernerMovement : MonoBehaviour
         yVelocity.y += gravityValue * Time.deltaTime;
         Vector3 finalVelocity = moveVelocity + yVelocity;
 
-        // ✅ Move controller and detect collisions
         collisionFlags = controller.Move(finalVelocity * Time.deltaTime);
 
-        // ✅ Instantly cancel upward velocity if we hit a ceiling
         if ((collisionFlags & CollisionFlags.Above) != 0 && yVelocity.y > 0f)
         {
-            yVelocity.y = -2f; // small downward push to resume falling
+            yVelocity.y = -2f;
         }
 
         moveDirection = move;
@@ -177,6 +173,22 @@ public class WernerMovement : MonoBehaviour
 
         float moveInput = Mathf.Abs(Input.GetAxisRaw("Horizontal")) + Mathf.Abs(Input.GetAxisRaw("Vertical"));
         bool isMoving = moveInput > 0.1f;
+
+        // ✅ If we just teleported, reset bob only when player walks again
+        if (needsBobReset)
+        {
+            if (isMoving)
+            {
+                needsBobReset = false;
+                bobTimer = 0f;
+                cameraTarget.localPosition = standCameraOffset;
+                baseCamPos = standCameraOffset;
+            }
+            else
+            {
+                return; // Don't bob until movement starts again
+            }
+        }
 
         if (!isMoving)
         {
@@ -190,13 +202,12 @@ public class WernerMovement : MonoBehaviour
         float swayAmp = Input.GetKey(KeyCode.LeftShift) ? sprintSwayAmplitude : walkSwayAmplitude;
 
         bobTimer += Time.deltaTime * frequency;
-
         float offsetY = Mathf.Sin(bobTimer) * amplitude;
         float offsetX = Mathf.Sin(bobTimer * swayFrequencyMultiplier + Mathf.PI / 2f) * swayAmp;
 
         cameraTarget.localPosition = baseCamPos + new Vector3(offsetX, offsetY, 0);
     }
-
+    
     private void HandleAnimations()
     {
         if (animator == null) return;
@@ -208,29 +219,43 @@ public class WernerMovement : MonoBehaviour
         float inputMagnitude = Mathf.Clamp01(inputVector.magnitude);
 
         bool isSprinting = Input.GetKey(KeyCode.LeftShift) && inputMagnitude > 0.1f;
-
         float targetSpeed = isSprinting ? sprintSpeed : moveSpeed;
         float normalizedSpeed = Mathf.InverseLerp(0f, sprintSpeed, inputMagnitude * targetSpeed);
 
         animator.SetFloat("Speed", normalizedSpeed, 0.1f, Time.deltaTime);
     }
 
-    public void RefreshCamera()
+    public void OnTeleportedSnap()
     {
-        playerCam = Camera.main ?? GetComponentInChildren<Camera>();
+        StartCoroutine(TeleportFixRoutine());
+    }
 
-        if (playerCam == null)
+    private IEnumerator TeleportFixRoutine()
+    {
+        // ✅ Wait 1 frame so CharacterController + position update properly
+        yield return null;
+
+        // ✅ Reset controller and re-ground
+        if (controller != null)
         {
-            return;
+            controller.enabled = false;
+            yVelocity = Vector3.zero;
+            controller.enabled = true;
+            controller.Move(Vector3.down * 0.2f);
         }
 
+        // ✅ Reset camera target but don’t start bobbing yet
         if (cameraTarget != null)
         {
             cameraTarget.localPosition = standCameraOffset;
             baseCamPos = standCameraOffset;
-            currentCameraOffset = standCameraOffset;
+            bobTimer = 0f;
         }
+
+        // ✅ Wait for player to move before bob returns
+        needsBobReset = true;
     }
+
 
     public void TeleportTo(Vector3 position, Quaternion rotation)
     {
@@ -240,10 +265,38 @@ public class WernerMovement : MonoBehaviour
         transform.position = position;
         transform.rotation = rotation;
 
-        // Reset gravity / jump velocity
+        // Reset gravity / jump velocity so teleport doesn't cause weird floating
         yVelocity = Vector3.zero;
 
         if (controller != null)
             controller.enabled = true;
+
+        // Ensure head bob is reset
+        needsBobReset = true;
+        bobTimer = 0;
+    }
+
+    // ✅ Keeps compatibility with RiftTravel scripts that still call RefreshCamera()
+    public void RefreshCamera()
+    {
+        if (cameraTarget != null)
+        {
+            cameraTarget.localPosition = standCameraOffset;
+            baseCamPos = standCameraOffset;
+            bobTimer = 0f;
+        }
+    }
+    
+    public void ForceHeadBobReset()
+    {
+        // Kept for backward compatibility
+        needsBobReset = true;
+        bobTimer = 0f;
+
+        if (cameraTarget != null)
+        {
+            cameraTarget.localPosition = standCameraOffset;
+            baseCamPos = standCameraOffset;
+        }
     }
 }

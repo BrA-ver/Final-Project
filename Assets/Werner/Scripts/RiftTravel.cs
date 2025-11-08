@@ -292,38 +292,36 @@ public class RiftTravel : MonoBehaviour
     {
         isTeleporting = true;
 
+        // Disable movement & camera look during teleport
         if (cachedMovement != null) cachedMovement.enabled = false;
         if (cameraLook != null) cameraLook.enabled = false;
 
+        // Select video (enter or exit)
         VideoClip targetClip = fromMap1 ? enterRiftVideo : exitRiftVideo;
 
+        // --- Play animations / suction / videos ---
         if (videoPlayer != null && targetClip != null)
         {
             if (fromMap1 && playSuctionOnEnter)
-            {
-                // For entering: play suction and video together
                 yield return StartCoroutine(PlaySuctionAndVideoTogether(targetClip));
-            }
             else if (!fromMap1 && playSuctionOnExit)
             {
-                // For exiting: play suction first, then video
                 yield return StartCoroutine(PlayPortalSuctionEffect());
                 yield return StartCoroutine(PlayVideoFullDuration(targetClip, fromMap1));
             }
             else
-            {
-                // No suction, just play video
                 yield return StartCoroutine(PlayVideoFullDuration(targetClip, fromMap1));
-            }
         }
         else
         {
             yield return new WaitForSeconds(delayBeforeTeleport);
         }
 
+        // --- Apply position change (actual teleport) ---
         Vector3 pos = transform.position;
-        pos = fromMap1 ? new Vector3(pos.x, pos.y, pos.z + mapOffsetZ)
-                       : new Vector3(pos.x, pos.y, pos.z - mapOffsetZ);
+        pos = fromMap1
+            ? new Vector3(pos.x, pos.y, pos.z + mapOffsetZ)
+            : new Vector3(pos.x, pos.y, pos.z - mapOffsetZ);
 
         if (controller != null)
         {
@@ -336,15 +334,17 @@ public class RiftTravel : MonoBehaviour
             transform.position = pos;
         }
 
-        
+        // IMPORTANT: wait a frame, then snap-recover movement/camera
+        yield return null;
+
         var move = GetComponent<WernerMovement>();
         if (move != null)
         {
-            move.RefreshCamera();
+            move.OnTeleportedSnap();   // resets grounded, bobbing state, animator flags
         }
 
         if (cachedMovement != null) cachedMovement.enabled = true;
-        if (cameraLook != null) cameraLook.enabled = true;
+        if (cameraLook != null)      cameraLook.enabled = true;
 
         if (returnScript != null)
         {
@@ -352,19 +352,27 @@ public class RiftTravel : MonoBehaviour
             if (!fromMap1) returnScript.ForceExitRift();
         }
 
-        if (!fromMap1) // meaning this teleport was from Map 2 → Map 1
+        // Arm the Map-2 rift disabler only after we’re back on Map 1
+        if (!fromMap1)
         {
             var disabler = FindObjectOfType<DisableMap2RiftsInRadius>();
             if (disabler != null)
             {
                 disabler.cameFromRiftZone = true;
-                StartCoroutine(WaitAndAllowDisable(disabler));
+                StartCoroutine(WaitAndAllowDisable(disabler)); // keep this if you already had it
                 Debug.Log("✅ Player returned to Map 1 — rifts can now be disabled when entering zone.");
             }
         }
 
         isTeleporting = false;
     }
+
+    private IEnumerator EnableRiftDisableAfterDelay(DisableMap2RiftsInRadius disabler, float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        disabler.cameFromRiftZone = true;
+    }
+
 
     private IEnumerator WaitAndAllowDisable(DisableMap2RiftsInRadius disabler)
     {

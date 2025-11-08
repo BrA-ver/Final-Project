@@ -2,22 +2,23 @@ using UnityEngine;
 
 public class GroundCheck : MonoBehaviour
 {
-    [SerializeField] float checkRadius = .5f;
-    [SerializeField] bool drawGizmos = false;
-    [SerializeField] LayerMask groundLayer;
+    [Header("Ground Check Settings")]
+    [SerializeField] private float groundCheckRadius = 0.3f;
+    [SerializeField] private LayerMask groundLayer;
 
+    [Header("Debug Info (Read Only)")]
+    [SerializeField] private bool isGroundedInspector = false; // <-- shows in inspector
 
-    public bool OnGround()
+    public bool OnGround() => isGroundedInspector;
+
+    private void Update()
     {
-        bool onGround = Physics.CheckSphere(transform.position, checkRadius, groundLayer);
-        return onGround;
+        isGroundedInspector = Physics.CheckSphere(transform.position, groundCheckRadius, groundLayer);
     }
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
-        if (!drawGizmos) return;
-
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, checkRadius);
+        Gizmos.color = isGroundedInspector ? Color.green : Color.red;
+        Gizmos.DrawWireSphere(transform.position, groundCheckRadius);
     }
 }
