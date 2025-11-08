@@ -1507,6 +1507,71 @@ Transform:
   - {fileID: 156862810}
   m_Father: {fileID: 1624495897}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &76558156
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 76558158}
+  - component: {fileID: 76558160}
+  m_Layer: 0
+  m_Name: RiftPair_Clue1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &76558158
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 76558156}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 20.9, y: 13.529584, z: 32.2887}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &76558160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 76558156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9d342ee8fadc9e458a2a92ef9d958d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 100
+  player: {fileID: 1374344514450882144}
+  map2Rifts:
+  - {fileID: 622698169}
+  - {fileID: 246796324}
+  - {fileID: 1925943332}
+  - {fileID: 334012156}
+  - {fileID: 478504820}
+  - {fileID: 807206816}
+  - {fileID: 652776286}
+  - {fileID: 956755196}
+  - {fileID: 1928254987}
+  - {fileID: 1577885071}
+  - {fileID: 1639795116}
+  - {fileID: 1542956290}
+  - {fileID: 1134885850}
+  - {fileID: 1513402791}
+  - {fileID: 635468347}
+  - {fileID: 1384509594}
+  - {fileID: 2095089313}
+  cameFromRiftZone: 0
 --- !u!1 &78209767
 GameObject:
   m_ObjectHideFlags: 0
@@ -6822,7 +6887,6 @@ MonoBehaviour:
   - {fileID: 1577885071}
   - {fileID: 1639795116}
   riftTravelScript: {fileID: 1374344514450882145}
-  zoneSwitcher: {fileID: 0}
 --- !u!1 &249731820
 GameObject:
   m_ObjectHideFlags: 0
@@ -13531,7 +13595,6 @@ MonoBehaviour:
   - {fileID: 1925943332}
   - {fileID: 909618725}
   riftTravelScript: {fileID: 1374344514450882145}
-  zoneSwitcher: {fileID: 0}
 --- !u!1 &541379549
 GameObject:
   m_ObjectHideFlags: 0
@@ -15614,7 +15677,6 @@ MonoBehaviour:
   - {fileID: 334012156}
   - {fileID: 478504820}
   riftTravelScript: {fileID: 1374344514450882145}
-  zoneSwitcher: {fileID: 0}
 --- !u!1 &578011147 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3506471902779639649, guid: 408ae2944a4fd6d4bb5f044161626b49, type: 3}
@@ -19276,7 +19338,6 @@ MonoBehaviour:
   - {fileID: 1542956290}
   - {fileID: 1134885850}
   riftTravelScript: {fileID: 1374344514450882145}
-  zoneSwitcher: {fileID: 0}
 --- !u!1 &758082169
 GameObject:
   m_ObjectHideFlags: 0
@@ -23078,6 +23139,25 @@ MonoBehaviour:
   renderer: {fileID: 0}
   outlineMaterial: {fileID: 2100000, guid: c04ccf9af89a092499b3be1ce389ec25, type: 2}
   highlight: 0
+--- !u!1 &915967988 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 929422487690748665, guid: 003defd67b3a06e45892b078432c981f, type: 3}
+  m_PrefabInstance: {fileID: 1031145757}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &915967994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 915967988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e03fbf45683c8e439ed720cc2ebb1db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  riftPairController: {fileID: 0}
+  goesToRiftZone: 1
 --- !u!1 &918493401
 GameObject:
   m_ObjectHideFlags: 0
@@ -24262,6 +24342,9 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8864092748912466846, guid: 003defd67b3a06e45892b078432c981f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1639795118}
     - targetCorrespondingSourceObject: {fileID: 2976599056265537024, guid: 003defd67b3a06e45892b078432c981f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 87121044}
@@ -25617,6 +25700,9 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 929422487690748665, guid: 003defd67b3a06e45892b078432c981f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2015011673}
     - targetCorrespondingSourceObject: {fileID: 2976599056265537024, guid: 003defd67b3a06e45892b078432c981f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1102420092}
@@ -25692,6 +25778,9 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 929422487690748665, guid: 003defd67b3a06e45892b078432c981f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 915967994}
     - targetCorrespondingSourceObject: {fileID: 2976599056265537024, guid: 003defd67b3a06e45892b078432c981f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 906934239}
@@ -32026,7 +32115,6 @@ MonoBehaviour:
   - {fileID: 1513402791}
   - {fileID: 635468347}
   riftTravelScript: {fileID: 1374344514450882145}
-  zoneSwitcher: {fileID: 0}
 --- !u!1 &1363948411
 GameObject:
   m_ObjectHideFlags: 0
@@ -35903,7 +35991,6 @@ MonoBehaviour:
   - {fileID: 1384509594}
   - {fileID: 2095089313}
   riftTravelScript: {fileID: 1374344514450882145}
-  zoneSwitcher: {fileID: 0}
 --- !u!1 &1539896889
 GameObject:
   m_ObjectHideFlags: 0
@@ -36586,6 +36673,20 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2350090519008601573, guid: 003defd67b3a06e45892b078432c981f, type: 3}
   m_PrefabInstance: {fileID: 1868972097}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1577885073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1577885071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e03fbf45683c8e439ed720cc2ebb1db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  riftPairController: {fileID: 0}
+  goesToRiftZone: 1
 --- !u!1 &1587893866
 GameObject:
   m_ObjectHideFlags: 0
@@ -38257,6 +38358,20 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2350090519008601573, guid: 003defd67b3a06e45892b078432c981f, type: 3}
   m_PrefabInstance: {fileID: 964046573}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1639795118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1639795116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e03fbf45683c8e439ed720cc2ebb1db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  riftPairController: {fileID: 0}
+  goesToRiftZone: 1
 --- !u!1 &1640318844
 GameObject:
   m_ObjectHideFlags: 0
@@ -42380,7 +42495,6 @@ MonoBehaviour:
   - {fileID: 246796324}
   - {fileID: 622698169}
   riftTravelScript: {fileID: 1374344514450882145}
-  zoneSwitcher: {fileID: 0}
 --- !u!1 &1823015335
 GameObject:
   m_ObjectHideFlags: 0
@@ -43180,6 +43294,9 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8864092748912466846, guid: 003defd67b3a06e45892b078432c981f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1577885073}
     - targetCorrespondingSourceObject: {fileID: 2976599056265537024, guid: 003defd67b3a06e45892b078432c981f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 572208013}
@@ -45824,7 +45941,6 @@ MonoBehaviour:
   - {fileID: 807206816}
   - {fileID: 652776286}
   riftTravelScript: {fileID: 1374344514450882145}
-  zoneSwitcher: {fileID: 0}
 --- !u!1 &1996556294
 GameObject:
   m_ObjectHideFlags: 0
@@ -46233,7 +46349,6 @@ MonoBehaviour:
   objectsToEnable:
   - {fileID: 1069586900}
   riftTravelScript: {fileID: 1374344514450882145}
-  zoneSwitcher: {fileID: 0}
 --- !u!1 &2013662866
 GameObject:
   m_ObjectHideFlags: 0
@@ -46329,6 +46444,25 @@ Transform:
   - {fileID: 883030617}
   m_Father: {fileID: 1232249376}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2015011667 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 929422487690748665, guid: 003defd67b3a06e45892b078432c981f, type: 3}
+  m_PrefabInstance: {fileID: 1027557378}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2015011673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2015011667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e03fbf45683c8e439ed720cc2ebb1db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  riftPairController: {fileID: 0}
+  goesToRiftZone: 1
 --- !u!1 &2016198137
 GameObject:
   m_ObjectHideFlags: 0
@@ -47037,7 +47171,6 @@ MonoBehaviour:
   - {fileID: 956755196}
   - {fileID: 1928254987}
   riftTravelScript: {fileID: 1374344514450882145}
-  zoneSwitcher: {fileID: 0}
 --- !u!1 &2051134523
 GameObject:
   m_ObjectHideFlags: 0
@@ -54909,3 +55042,4 @@ SceneRoots:
   - {fileID: 1173337441}
   - {fileID: 2025467969}
   - {fileID: 123418930}
+  - {fileID: 76558158}

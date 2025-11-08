@@ -352,8 +352,25 @@ public class RiftTravel : MonoBehaviour
             if (!fromMap1) returnScript.ForceExitRift();
         }
 
+        if (!fromMap1) // meaning this teleport was from Map 2 → Map 1
+        {
+            var disabler = FindObjectOfType<DisableMap2RiftsInRadius>();
+            if (disabler != null)
+            {
+                disabler.cameFromRiftZone = true;
+                StartCoroutine(WaitAndAllowDisable(disabler));
+                Debug.Log("✅ Player returned to Map 1 — rifts can now be disabled when entering zone.");
+            }
+        }
+
         isTeleporting = false;
     }
+
+    private IEnumerator WaitAndAllowDisable(DisableMap2RiftsInRadius disabler)
+    {
+        yield return new WaitForSeconds(0.5f); // adjust if needed
+        disabler.cameFromRiftZone = true;
+    }   
 
     IEnumerator PlaySuctionAndVideoTogether(VideoClip clip)
     {

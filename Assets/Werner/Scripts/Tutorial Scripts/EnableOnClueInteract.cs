@@ -2,44 +2,35 @@ using UnityEngine;
 
 public class EnableOnClueInteract : EvidenceObject
 {
-    [Header("Objects to Enable (Optional)")]
+    [Header("Objects to Enable (Rifts / Crystals / etc.)")]
     [SerializeField] private GameObject[] objectsToEnable;
 
-    [Header("Unlock Rift Travel")]
+    [Header("Unlock Rift Travel for this clue")]
     [SerializeField] private RiftTravel riftTravelScript;
-
-    [Header("Post Processing Zone (Optional)")]
-    [SerializeField] private PostProcessingZoneSwitcher zoneSwitcher; // ✅ Drag the zone switcher object here
 
     public override void Interact()
     {
-        base.Interact();
+        base.Interact(); // Plays clue collection logic (sound, UI, etc.)
 
-        // ✅ Enable assigned objects when clue is collected
+        // ✅ Enable assigned rifts or objects (Map1 + Map2 rifts)
         foreach (GameObject obj in objectsToEnable)
         {
-            if (obj != null)
+            if (obj != null && !obj.activeSelf)
             {
                 obj.SetActive(true);
-                Debug.Log($"Enabled object: {obj.name}");
+                Debug.Log($"Enabled: {obj.name}");
             }
         }
 
-        // ✅ Unlock rift travel
+        // ✅ Allow teleporting once clue is collected
         if (riftTravelScript != null)
         {
             riftTravelScript.UnlockPortals();
-            Debug.Log("✅ Rift portals unlocked from clue interaction!");
+            Debug.Log("✅ Rift travel unlocked for this clue.");
         }
         else
         {
-            Debug.LogWarning("⚠️ No RiftTravel reference assigned!");
-        }
-
-        // ✅ Tell post-process script that clue is collected
-        if (zoneSwitcher != null)
-        {
-            zoneSwitcher.SetClueCollected(true);
+            Debug.LogWarning("⚠️ No RiftTravel script assigned!");
         }
     }
 }
