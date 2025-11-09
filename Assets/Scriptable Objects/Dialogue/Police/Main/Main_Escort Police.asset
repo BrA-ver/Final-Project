@@ -15,12 +15,14 @@ MonoBehaviour:
   _name: Main Police
   Speaker: Escort Police Officer
   lines:
-  - Hello detective.
-  - Glad you could make it.
+  - Hello Detective. Glad You could make it.
+  - This is an interesting one.
   choices:
-  - text: Evening Dave, what's the situation?
+  - text: Evening Officer Dave, what's the situation?
     targetDialogue: {fileID: 11400000, guid: d220f6eb286af014da84d8c7153f2435, type: 2}
-  - text: Take me to the body
+  - text: Do we have any suspects.
+    targetDialogue: {fileID: 11400000, guid: 8a04e0af6df33e14f98c1d21a22e0c62, type: 2}
+  - text: "If you don\u2019t mind, can you take me to the body, Dave."
     targetDialogue: {fileID: 11400000, guid: f7de79540d4001142872e627237a472f, type: 2}
   - text: 'Let''s talk later. '
     targetDialogue: {fileID: 11400000, guid: 8dbf2cf2d47945d4abfab38631d7be0f, type: 2}

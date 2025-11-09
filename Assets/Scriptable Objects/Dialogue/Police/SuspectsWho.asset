@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7b59aca2b9aa96b4694ef68a6119afa9, type: 3}
-  m_Name: WhoSuspects
+  m_Name: SuspectsWho
   m_EditorClassIdentifier: 
-  _name: Who Suspects
+  _name: Who are Suspects
   Speaker: Police Officer
   lines:
-  - We have 3 suspects, Antonio Romano the janitor, Samantha Hawks the backstage
-    manager, and Lisa Jones the Bartender.
-  - All 3 of them were present at the time of death.
+  - Yes we do. They are Mister Antonio Romano the janitor, Miss Samantha Hawks the
+    stage manager, and lastly Miss Lisa Jones the bartender.
   choices: []
+  isExit: 0
   evidence: {fileID: 0}

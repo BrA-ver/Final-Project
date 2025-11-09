@@ -15,18 +15,17 @@ MonoBehaviour:
   _name: Police Officer
   Speaker: Police Officer
   lines:
-  - What do you need?
+  - Hello again Detective. What do you need?
   choices:
-  - text: Give me a recap.
-    targetDialogue: {fileID: 11400000, guid: d220f6eb286af014da84d8c7153f2435, type: 2}
-  - text: Who are the suspects?
-    targetDialogue: {fileID: 11400000, guid: bab5ea8cee949174995916012060a981, type: 2}
   - text: Tell me more about the janitor, Antonio.
     targetDialogue: {fileID: 11400000, guid: 30fe4435ab0d9e3499791901cfb83221, type: 2}
   - text: Tell me more about the bartender, Lisa.
     targetDialogue: {fileID: 11400000, guid: cfc606bca71c1fa4aab1ccef652ed273, type: 2}
   - text: Tell me more about the backstage manager, Samantha.
     targetDialogue: {fileID: 11400000, guid: 733c8bbfb307b1c4891807d5b3915527, type: 2}
-  - text: 'Let''s talk later. '
+  - text: Give me a recap.
+    targetDialogue: {fileID: 11400000, guid: d220f6eb286af014da84d8c7153f2435, type: 2}
+  - text: Let's talk later.
     targetDialogue: {fileID: 11400000, guid: 8dbf2cf2d47945d4abfab38631d7be0f, type: 2}
+  isExit: 0
   evidence: {fileID: 0}
