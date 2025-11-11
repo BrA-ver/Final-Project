@@ -4,7 +4,7 @@ public class BackgroundMusicManager : MonoBehaviour
 {
     private static BackgroundMusicManager instance;
     private AudioSource audioSource;
-    private float targetVolume = 0.1f; // default base volume
+    private float targetVolume = 0.01f; // default base volume
     private float fadeSpeed = 2f;      // how quickly to fade
 
     private void Awake()
@@ -39,7 +39,7 @@ public class BackgroundMusicManager : MonoBehaviour
 
     public void MuteMusic(bool mute)
     {
-        targetVolume = mute ? 0f : 0.1f; // adjust base volume here if needed
+        targetVolume = mute ? 0f : 0.01f; // adjust base volume here if needed
     }
 
     public void SetVolume(float volume)
