@@ -13,6 +13,7 @@ public class NPC : Interactable
     {
         base.Interact();
         DialogueManager.Instance.EnterDialogue(profile.MainDialogue, this);
+        DialogeDisplay.instance.ShowCharacterProfile(profile);
     }
 
     public void PresentEvidence(Evidence evidence)

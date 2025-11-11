@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections.Generic;
 
 public class FileButton : MonoBehaviour
 {
@@ -16,9 +17,18 @@ public class FileButton : MonoBehaviour
 
     public Evidence Answer => answer;
 
+    Dictionary<AnswerType, string> typeText;
+
     private void Start()
     {
         file = CaseFile.instance;
+
+        typeText = new Dictionary<AnswerType, string>
+        {
+            {AnswerType.Motive, "Motive?" },
+            {AnswerType.Means, "Means?" },
+            {AnswerType.Opportunity, "Opportunity?" }
+        };
     }
 
     public void SetProfile(CharacterProfile profile)
@@ -52,8 +62,9 @@ public class FileButton : MonoBehaviour
         if (!solved)
         {
             button.enabled = true;
-            buttonText.text = "Motive";
             answerText.text = string.Empty;
+
+            buttonText.text = typeText[type];
             return;
         }
 

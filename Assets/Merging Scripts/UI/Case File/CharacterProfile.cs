@@ -13,12 +13,18 @@ public class CharacterProfile : MonoBehaviour
     public bool solvedMeans;
     public bool solvedOpportunity;
 
+    [Header("UI")]
+    [SerializeField] Image picture;
+
 
     public ProfileSO ProfileSO => profile;
 
     private void Start()
     {
         file = CaseFile.instance;
+
+        picture.color = Color.white;
+        picture.sprite = profile.picture;
     }
 
     public void ClickProfile()

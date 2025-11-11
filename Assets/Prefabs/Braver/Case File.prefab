@@ -1721,6 +1721,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3d5886f70f83254ea8f353a07252041, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  button: {fileID: 0}
   type: 0
   answer: {fileID: 0}
   answerText: {fileID: 5651378177569741971}
@@ -2413,6 +2414,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3d5886f70f83254ea8f353a07252041, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  button: {fileID: 0}
   type: 1
   answer: {fileID: 0}
   answerText: {fileID: 9152709742194559365}
@@ -2533,6 +2535,7 @@ MonoBehaviour:
   solvedMotive: 0
   solvedMeans: 0
   solvedOpportunity: 0
+  picture: {fileID: 336084014728724245}
 --- !u!114 &2778686622056608698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2657,6 +2660,7 @@ MonoBehaviour:
   conclusion: {fileID: 1942370134967181916}
   guiltyColour: {r: 1, g: 0, b: 0, a: 0.8}
   notGuiltyColour: {r: 0, g: 1, b: 0, a: 0.8}
+  selectedButton: {fileID: 0}
 --- !u!1 &3712589889701745043
 GameObject:
   m_ObjectHideFlags: 0
@@ -3538,6 +3542,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3d5886f70f83254ea8f353a07252041, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  button: {fileID: 0}
   type: 2
   answer: {fileID: 0}
   answerText: {fileID: 187904277683311778}
@@ -3944,6 +3949,7 @@ MonoBehaviour:
   solvedMotive: 0
   solvedMeans: 0
   solvedOpportunity: 0
+  picture: {fileID: 4301904101025472552}
 --- !u!114 &1312992927990253105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4724,6 +4730,7 @@ MonoBehaviour:
   solvedMotive: 0
   solvedMeans: 0
   solvedOpportunity: 0
+  picture: {fileID: 6160921902442049842}
 --- !u!114 &2647137064504231117
 MonoBehaviour:
   m_ObjectHideFlags: 0
