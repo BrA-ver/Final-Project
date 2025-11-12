@@ -1,0 +1,103 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: M_PortalParallax 4
+  m_Shader: {fileID: -6465566751694194690, guid: f674234b852bd704b8b8202b779eec7e, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses:
+  - MOTIONVECTORS
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _FlameNoiseTex:
+        m_Texture: {fileID: 2800000, guid: 0f3630ec1c5325f47ace0929b45ca08c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NebulaTex:
+        m_Texture: {fileID: 2800000, guid: 43e06b152ad18b54aabf36c094e0241e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _RimNoiseTex:
+        m_Texture: {fileID: 2800000, guid: 420dc5ceeb0fa9041b122fc02e0f4470, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _StarsTex:
+        m_Texture: {fileID: 2800000, guid: cebbccf2e045c0448991306a7d506893, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _EdgeRadius: 0.44
+    - _EmissionStrength: 2.2
+    - _FlameCutHigh: -1.32
+    - _FlameCutLow: 0.37
+    - _FlameFeather: 0.05
+    - _FlameFlickerAmp: 0.25
+    - _FlameFlickerSpeed: 3.3
+    - _FlameIntensity: 5.45
+    - _FlameMaskPower: 1
+    - _FlameWarp: 0.25
+    - _FlameWidth: 0.06
+    - _NebulaParallax: 0.2
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    - _RimFeather: 0.02
+    - _RimIntensity: 3
+    - _RimNoiseAmp: 0.05
+    - _RimWidth: -0.12
+    - _StarsParallax: 0.4
+    m_Colors:
+    - _FlameColor: {r: 0.25348186, g: 1, b: 0, a: 0}
+    - _FlameFlow: {r: 0.08, g: 0.03, b: 0, a: 0}
+    - _FlameTiling: {r: 1, g: 1, b: 0, a: 0}
+    - _NebulaFlow: {r: 0.05, g: 0, b: 0, a: 0}
+    - _NebulaTiling: {r: 1.5, g: 1.5, b: 0, a: 0}
+    - _PlayerPos: {r: 0, g: 0, b: 0, a: 0}
+    - _PortalPos: {r: 0, g: 0, b: 0, a: 0}
+    - _RimColor: {r: 0.82484245, g: 0, b: 1, a: 0}
+    - _RimFlow: {r: 0.4, g: 0.2, b: 0, a: 0}
+    - _RimNoiseTiling: {r: 1, g: 1, b: 0, a: 0}
+    - _StarsFlow: {r: -0.1, g: 0, b: 0, a: 0}
+    - _StarsTiling: {r: 3, g: 3, b: 0, a: 0}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
+--- !u!114 &7434682705043514273
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 9
