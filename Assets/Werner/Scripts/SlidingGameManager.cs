@@ -10,13 +10,17 @@ public class SlidingGameManager : MonoBehaviour
     [SerializeField] private LayerMask puzzleLayer;
     [SerializeField] private float interactDistance = 5f;
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip puzzleCompleteSFX;
+
     private List<Transform> pieces;
     private int emptyLocation;
     private int width = 3;
     private int height = 3;
     private bool shuffling = false;
     private bool puzzleCompleted = false;
-    private bool puzzleInitialized = false;      // ✅ new flag
+    private bool puzzleInitialized = false;      
 
     private Camera mainCam;
 
@@ -36,9 +40,9 @@ public class SlidingGameManager : MonoBehaviour
 
     private IEnumerator InitializePuzzle()
     {
-        yield return new WaitForSeconds(0.3f); // small delay so meshes/colliders exist
-        Shuffle();                              // ✅ shuffle first
-        puzzleInitialized = true;               // ✅ allow completion checks afterwards
+        yield return new WaitForSeconds(0.3f);
+        Shuffle();                          
+        puzzleInitialized = true;             
     }
 
     private void Update()
@@ -50,6 +54,11 @@ public class SlidingGameManager : MonoBehaviour
         {
             Debug.Log("✅ Puzzle Completed!");
             puzzleCompleted = true;
+
+            // 🔊 Play the completion sound
+            if (audioSource != null && puzzleCompleteSFX != null)
+                audioSource.PlayOneShot(puzzleCompleteSFX);
+
             return;
         }
 
@@ -81,8 +90,8 @@ public class SlidingGameManager : MonoBehaviour
     {
         if (SwapIfValid(index, -width)) return;      // up
         if (SwapIfValid(index, +width)) return;      // down
-        if (index % width != 0 && SwapIfValid(index, -1)) return;          // left
-        if (index % width != width - 1 && SwapIfValid(index, +1)) return;  // right
+        if (index % width != 0 && SwapIfValid(index, -1)) return;          
+        if (index % width != width - 1 && SwapIfValid(index, +1)) return;  
     }
 
     private bool SwapIfValid(int i, int offset)
@@ -130,9 +139,12 @@ public class SlidingGameManager : MonoBehaviour
                     0
                 );
 
-                piece.localScale = new Vector3((2 * tileWidth) - gapThickness,
-                                               (2 * tileHeight) - gapThickness,
-                                               1f);
+                piece.localScale = new Vector3(
+                    (2 * tileWidth) - gapThickness,
+                    (2 * tileHeight) - gapThickness,
+                    1f
+                );
+
                 piece.name = $"{(row * width) + col}";
 
                 if (row == height - 1 && col == width - 1)
