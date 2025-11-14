@@ -10,6 +10,9 @@ public class SlidingGameManager : MonoBehaviour
     [SerializeField] private LayerMask puzzleLayer;
     [SerializeField] private float interactDistance = 5f;
 
+    [Header("Auto Complete Settings")]
+    [SerializeField] private int movesBeforeAutoComplete = 10;   // ⭐ NEW (Editable in Inspector)
+
     [Header("Audio")]
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip puzzleCompleteSFX;
@@ -20,9 +23,11 @@ public class SlidingGameManager : MonoBehaviour
     private int height = 3;
     private bool shuffling = false;
     private bool puzzleCompleted = false;
-    private bool puzzleInitialized = false;      
+    private bool puzzleInitialized = false;
 
     private Camera mainCam;
+
+    private int moveCount = 0;
 
     private void Awake()
     {
@@ -41,8 +46,8 @@ public class SlidingGameManager : MonoBehaviour
     private IEnumerator InitializePuzzle()
     {
         yield return new WaitForSeconds(0.3f);
-        Shuffle();                          
-        puzzleInitialized = true;             
+        Shuffle();
+        puzzleInitialized = true;
     }
 
     private void Update()
@@ -52,13 +57,7 @@ public class SlidingGameManager : MonoBehaviour
 
         if (!shuffling && CheckCompletion())
         {
-            Debug.Log("✅ Puzzle Completed!");
-            puzzleCompleted = true;
-
-            // 🔊 Play the completion sound
-            if (audioSource != null && puzzleCompleteSFX != null)
-                audioSource.PlayOneShot(puzzleCompleteSFX);
-
+            CompletePuzzle();
             return;
         }
 
@@ -67,31 +66,36 @@ public class SlidingGameManager : MonoBehaviour
             Ray ray = mainCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
             if (Physics.Raycast(ray, out RaycastHit hit, interactDistance, puzzleLayer))
             {
-                Debug.DrawRay(ray.origin, ray.direction * interactDistance, Color.green, 0.25f);
                 for (int i = 0; i < pieces.Count; i++)
                 {
                     if (pieces[i] == hit.transform)
                     {
-                        TryMovePiece(i);
+                        if (TryMovePiece(i))
+                        {
+                            moveCount++;
+
+                            if (moveCount >= movesBeforeAutoComplete)   // ⭐ NEW
+                            {
+                                AutoCompletePuzzle();
+                            }
+                        }
                         break;
                     }
                 }
-            }
-            else
-            {
-                Debug.DrawRay(ray.origin, ray.direction * interactDistance, Color.red, 0.25f);
             }
         }
     }
 
     // ---------- core logic ----------
 
-    private void TryMovePiece(int index)
+    private bool TryMovePiece(int index)
     {
-        if (SwapIfValid(index, -width)) return;      // up
-        if (SwapIfValid(index, +width)) return;      // down
-        if (index % width != 0 && SwapIfValid(index, -1)) return;          
-        if (index % width != width - 1 && SwapIfValid(index, +1)) return;  
+        if (SwapIfValid(index, -width)) return true;
+        if (SwapIfValid(index, +width)) return true;
+        if (index % width != 0 && SwapIfValid(index, -1)) return true;
+        if (index % width != width - 1 && SwapIfValid(index, +1)) return true;
+
+        return false;
     }
 
     private bool SwapIfValid(int i, int offset)
@@ -117,6 +121,61 @@ public class SlidingGameManager : MonoBehaviour
                 return false;
         }
         return true;
+    }
+
+    // ⭐ NEW: Auto complete puzzle fully (correct UVs + correct positions)
+    private void AutoCompletePuzzle()
+    {
+        Debug.Log("⏩ Auto-completing puzzle after move limit!");
+
+        float tileWidth = 1f / width;
+        float tileHeight = 1f / height;
+
+        for (int i = 0; i < pieces.Count; i++)
+        {
+            int row = i / width;
+            int col = i % width;
+
+            // Snap positions
+            pieces[i].localPosition = new Vector3(
+                -1 + (2f * tileWidth * col) + tileWidth,
+                +1 - (2f * tileHeight * row) - tileHeight,
+                0
+            );
+
+            pieces[i].name = "" + i;
+
+            // ⭐ NEW — Recalculate correct UV coordinates
+            if (pieces[i].gameObject.activeSelf)
+            {
+                Mesh mesh = pieces[i].GetComponent<MeshFilter>().mesh;
+                Vector2[] uv = new Vector2[4];
+
+                float gap = 0.005f;
+
+                uv[0] = new Vector2((tileWidth * col) + gap,     1 - ((tileHeight * (row + 1)) - gap));
+                uv[1] = new Vector2((tileWidth * (col + 1)) - gap, 1 - ((tileHeight * (row + 1)) - gap));
+                uv[2] = new Vector2((tileWidth * col) + gap,     1 - ((tileHeight * row) + gap));
+                uv[3] = new Vector2((tileWidth * (col + 1)) - gap, 1 - ((tileHeight * row) + gap));
+
+                mesh.uv = uv;
+            }
+        }
+
+        emptyLocation = width * height - 1;
+        CompletePuzzle();
+    }
+
+    // Shared completion logic
+    private void CompletePuzzle()
+    {
+        if (puzzleCompleted) return;
+
+        puzzleCompleted = true;
+        Debug.Log("🎉 Puzzle Completed!");
+
+        if (audioSource != null && puzzleCompleteSFX != null)
+            audioSource.PlayOneShot(puzzleCompleteSFX);
     }
 
     // ---------- generation & shuffle ----------
@@ -157,10 +216,12 @@ public class SlidingGameManager : MonoBehaviour
                     float gap = gapThickness / 2;
                     Mesh mesh = piece.GetComponent<MeshFilter>().mesh;
                     Vector2[] uv = new Vector2[4];
+
                     uv[0] = new Vector2((tileWidth * col) + gap, 1 - ((tileHeight * (row + 1)) - gap));
                     uv[1] = new Vector2((tileWidth * (col + 1)) - gap, 1 - ((tileHeight * (row + 1)) - gap));
                     uv[2] = new Vector2((tileWidth * col) + gap, 1 - ((tileHeight * row) + gap));
                     uv[3] = new Vector2((tileWidth * (col + 1)) - gap, 1 - ((tileHeight * row) + gap));
+
                     mesh.uv = uv;
                 }
             }
