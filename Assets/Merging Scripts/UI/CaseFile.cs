@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 using System.Collections.Generic;
+using System.Collections;
 
 public class CaseFile : MonoBehaviour
 {
@@ -20,7 +21,11 @@ public class CaseFile : MonoBehaviour
     [SerializeField] List<FileButton> fileButtons = new List<FileButton>();
     [SerializeField] AnswerText[] answerTexts;
 
+    [Header("Character Profiles")]
+    [SerializeField] CharacterProfile profilePrefab;
+    [SerializeField] NPC[] suspects;
     [SerializeField] ProfileSO[] profileObjects;
+    [SerializeField] GameObject profileHolder;
 
     CharacterProfile[] profiles;
     CharacterProfile selectedProfile;
@@ -28,9 +33,14 @@ public class CaseFile : MonoBehaviour
     public event Action<Evidence> onAnswerSelect;
 
     [Header("Verdict")]
-    [SerializeField] TextMeshProUGUI conclusion;
+    [SerializeField] TextMeshProUGUI verdictText;
+    [SerializeField] Image verdictCircle;
+    [SerializeField] float fillTime = .5f;
     [SerializeField] Color guiltyColour = Color.red;
     [SerializeField] Color notGuiltyColour = Color.green;
+    [SerializeField] Button guiltyButton, notGuiltyButton;
+    public event Action onVerdictMade;
+
     public AnswerText[] AnswerTexts => answerTexts;
 
     public FileButton selectedButton;
@@ -53,8 +63,23 @@ public class CaseFile : MonoBehaviour
     private void Start()
     {
         CloseCaseFile();
-        conclusion.gameObject.SetActive(false);
+        verdictText.gameObject.SetActive(false);
         HideQuestions();
+
+        guiltyButton.onClick.AddListener(() => {
+            DeclareVerdict(true);
+        });
+        notGuiltyButton.onClick.AddListener(() => {
+            DeclareVerdict(false);
+        });
+
+        NPC[] allNpcs = FindObjectsByType<NPC>(FindObjectsInactive.Exclude, FindObjectsSortMode.InstanceID);
+        suspects = Array.FindAll(allNpcs, i => i.isSuspect);
+        profileObjects = new ProfileSO[suspects.Length];
+        for (int i = 0; i < suspects.Length; i++)
+        {
+            profileObjects[i] = suspects[i].Profile;
+        }
     }
 
     #region Toggle
@@ -67,6 +92,12 @@ public class CaseFile : MonoBehaviour
         bg.SetActive(true);
 
         profiles = GetComponentsInChildren<CharacterProfile>();
+        // Spawn the character profiles
+        for (int i = 0; i < suspects.Length; i++)
+        {
+            CharacterProfile newProfile = Instantiate(profilePrefab, profileHolder.transform);
+            newProfile.SetProfile(profileObjects[i]);
+        }
     }
 
     public void CloseCaseFile()
@@ -92,21 +123,40 @@ public class CaseFile : MonoBehaviour
 
     #endregion
 
-    #region Conclusion
-    public void DeclareGuilty(bool isGuilty)
+    #region Verdict
+
+    public void DeclareVerdict(bool isGuilty)
     {
-        conclusion.gameObject.SetActive(true);
+        verdictText.gameObject.SetActive(true);
         if (isGuilty)
         {
-            conclusion.text = "Guilty";
-            conclusion.color = guiltyColour;
+            verdictText.text = "Guilty";
+            verdictText.color = guiltyColour;
+            verdictCircle.color = guiltyColour;
         }
         else
         {
-            conclusion.text = "Not Guilty";
-            conclusion.color = notGuiltyColour;
+            verdictText.text = "Not Guilty";
+            verdictText.color = notGuiltyColour;
+            verdictCircle.color = notGuiltyColour;
+        }
+        StartCoroutine(FillCircleRoutine(fillTime));
+        onVerdictMade?.Invoke();
+    }
+
+    IEnumerator FillCircleRoutine(float fillTIme)
+    {
+        float timePassed = 0f;
+        while (timePassed < fillTIme)
+        {
+            timePassed += Time.deltaTime;
+
+            float fill = Mathf.Lerp(0f, 1f, timePassed / fillTIme);
+            verdictCircle.fillAmount = fill;
+            yield return null;
         }
     }
+
     #endregion
 
     #region Profile Functions
@@ -118,6 +168,7 @@ public class CaseFile : MonoBehaviour
 
         foreach (FileButton fileButton in fileButtons)
         {
+            fileButton.Initialize();
             fileButton.SetProfile(profile);
         }
     }
@@ -162,9 +213,11 @@ public class CaseFile : MonoBehaviour
             fileButton.GetComponent<Button>().enabled = true;
         }
 
-        if (evidence == selectedButton.Answer)
+        if (evidence.Name == selectedButton.Answer.Name)
         {
+            Debug.Log($"{evidence.Name} is the same as {selectedButton.Answer.Name}");
             selectedButton.SolveAnswer();
+            Debug.Log("go");
         }
 
         correctAnswer = null;

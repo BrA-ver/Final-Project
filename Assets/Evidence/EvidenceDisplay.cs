@@ -34,6 +34,7 @@ public class EvidenceDisplay : MonoBehaviour
 
     [Header("Interogation")]
     [SerializeField] GameObject interogatePoppup;
+    [SerializeField] TextMeshProUGUI interogatePoppupText;
     public bool isIntergating;
     public bool inCaseFile;
     EvidenceSlot selectedSlot;
@@ -191,6 +192,8 @@ public class EvidenceDisplay : MonoBehaviour
         if (isIntergating || inCaseFile)
         {
             interogatePoppup.SetActive(true);
+            interogatePoppup.transform.position = new Vector3(interogatePoppup.transform.position.x, slot.transform.position.y, 0f);
+            interogatePoppupText.text = $"Select {slot.Evidence.Name}?";
         }
     }
 
@@ -205,7 +208,7 @@ public class EvidenceDisplay : MonoBehaviour
         }
         else if (inCaseFile)
         {
-            onEvidenceClick?.Invoke(CaseFile.instance.selectedButton.Answer);
+            onEvidenceClick?.Invoke(selectedSlot.Evidence);
         }
     }
 

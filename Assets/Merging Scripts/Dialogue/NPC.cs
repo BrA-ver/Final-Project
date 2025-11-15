@@ -9,6 +9,8 @@ public class NPC : Interactable
 
     public ProfileSO Profile => profile;
 
+    public bool isSuspect = true;
+
     public override void Interact()
     {
         base.Interact();

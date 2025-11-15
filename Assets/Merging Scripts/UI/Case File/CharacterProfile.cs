@@ -27,6 +27,11 @@ public class CharacterProfile : MonoBehaviour
         picture.sprite = profile.picture;
     }
 
+    public void SetProfile(ProfileSO profile)
+    {
+        this.profile = profile;
+    }
+
     public void ClickProfile()
     {
         file.SelectProfile(this);

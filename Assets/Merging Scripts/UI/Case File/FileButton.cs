@@ -19,7 +19,9 @@ public class FileButton : MonoBehaviour
 
     Dictionary<AnswerType, string> typeText;
 
-    private void Start()
+    
+
+    public void Initialize()
     {
         file = CaseFile.instance;
 
@@ -59,12 +61,15 @@ public class FileButton : MonoBehaviour
 
     private void ToggleAnserText(bool solved, string text)
     {
+        Debug.Log($"Solved: {text}");
         if (!solved)
         {
             button.enabled = true;
             answerText.text = string.Empty;
 
+            Debug.Log($"Type text is null: {typeText == null}");
             buttonText.text = typeText[type];
+            
             return;
         }
 
