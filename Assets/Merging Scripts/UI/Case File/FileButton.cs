@@ -19,7 +19,10 @@ public class FileButton : MonoBehaviour
 
     Dictionary<AnswerType, string> typeText;
 
-    
+    private void Start()
+    {
+        button = GetComponent<Button>();
+    }
 
     public void Initialize()
     {
@@ -32,6 +35,12 @@ public class FileButton : MonoBehaviour
             {AnswerType.Opportunity, "Opportunity?" }
         };
     }
+
+    public void SetButtonEnabled(bool enabled)
+    {
+        button.enabled = enabled;
+    }
+
 
     public void SetProfile(CharacterProfile profile)
     {
@@ -64,7 +73,7 @@ public class FileButton : MonoBehaviour
         Debug.Log($"Solved: {text}");
         if (!solved)
         {
-            button.enabled = true;
+            SetButtonEnabled(true);
             answerText.text = string.Empty;
 
             Debug.Log($"Type text is null: {typeText == null}");
@@ -73,7 +82,7 @@ public class FileButton : MonoBehaviour
             return;
         }
 
-        button.enabled = false;
+        SetButtonEnabled(false);
         buttonText.text = string.Empty;
         answerText.text = text;
     }

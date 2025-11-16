@@ -102,6 +102,7 @@ public class DialogueManager : MonoBehaviour
                 if (dialogue.isExit)
                 {
                     ExitDialogue();
+                    EvidenceDisplay.instance.StopInteracting();
                 }
                 else
                 {

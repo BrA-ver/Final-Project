@@ -27,6 +27,8 @@ public class CaseFile : MonoBehaviour
     [SerializeField] ProfileSO[] profileObjects;
     [SerializeField] GameObject profileHolder;
 
+    List<CharacterProfile> activeProfiles = new List<CharacterProfile>();
+
     CharacterProfile[] profiles;
     CharacterProfile selectedProfile;
     public event Action<CharacterProfile> onProfileSelect; // Subscribbers: FileButton
@@ -92,11 +94,18 @@ public class CaseFile : MonoBehaviour
         bg.SetActive(true);
 
         profiles = GetComponentsInChildren<CharacterProfile>();
-        // Spawn the character profiles
-        for (int i = 0; i < suspects.Length; i++)
+
+        bool isListEmpty = activeProfiles.Count <= 0;
+        if (isListEmpty)
         {
-            CharacterProfile newProfile = Instantiate(profilePrefab, profileHolder.transform);
-            newProfile.SetProfile(profileObjects[i]);
+            // Spawn the character profiles, if they are not spawned
+            for (int i = 0; i < suspects.Length; i++)
+            {
+                CharacterProfile newProfile = Instantiate(profilePrefab, profileHolder.transform);
+                newProfile.SetProfile(profileObjects[i]);
+
+                activeProfiles.Add(newProfile);
+            }
         }
     }
 
@@ -191,10 +200,10 @@ public class CaseFile : MonoBehaviour
         EvidenceDisplay.instance.onEvidenceClick += OnEvidenceClick;
 
         // Disable all the buttons
-        foreach (FileButton fileButton in fileButtons)
-        {
-            fileButton.GetComponent<Button>().enabled = false;
-        }
+        //foreach (FileButton fileButton in fileButtons)
+        //{
+        //    fileButton.GetComponent<Button>().enabled = false;
+        //}
 
         this.correctAnswer = correctAnswer;
         this.selectedButton = selectedButton;
@@ -208,10 +217,10 @@ public class CaseFile : MonoBehaviour
         GameManager.instance.SwitchState(InteractionState.CaseFile);
         EvidenceDisplay.instance.onEvidenceClick -= OnEvidenceClick;
 
-        foreach (FileButton fileButton in fileButtons)
-        {
-            fileButton.GetComponent<Button>().enabled = true;
-        }
+        //foreach (FileButton fileButton in fileButtons)
+        //{
+        //    fileButton.GetComponent<Button>().enabled = true;
+        //}
 
         if (evidence.Name == selectedButton.Answer.Name)
         {

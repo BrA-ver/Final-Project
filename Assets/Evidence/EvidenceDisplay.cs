@@ -101,13 +101,14 @@ public class EvidenceDisplay : MonoBehaviour
                 Debug.Log("Else");
                 if (isIntergating)
                 {
-                    isIntergating = false;
+                    StopInteracting();
                     DialogueManager.Instance.ReturnToMainQuestions();
                     
                 }
             }
         }
 
+        
 
         //if (currentState != InteractionState.None && currentState != InteractionState.EvidenceBoard)
         //{
@@ -135,6 +136,11 @@ public class EvidenceDisplay : MonoBehaviour
         //}
 
         
+    }
+
+    public void StopInteracting()
+    {
+        isIntergating = false;
     }
 
     public void OpenEvidenceBoard()
