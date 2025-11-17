@@ -15,9 +15,16 @@ MonoBehaviour:
   _name: Tutorial
   Speaker: Tutorial
   lines:
-  - I'm suspected of drinking, search for a clue in this area
-  - When you find it, a Rift will appear
-  - Look inside this Rift to gain some information about the clue
+  - The police suspected me of drinking, but they've got no evidence. Can you try
+    searching for a clue to help them?
+  - When you find a clue, a Rift will appear, these Rifts allow you to look into
+    the past.
+  - Traveling through these Rifts helps you gain more information about the clues.
+    Once you're back, move to the next room.
+  voiceLines:
+  - {fileID: 8300000, guid: a1ebb326efcb7c449a0584a505e57bf2, type: 3}
+  - {fileID: 8300000, guid: 6e28af5b5c7a17c42b2b2ae85688dc69, type: 3}
+  - {fileID: 8300000, guid: 7ac0d80fe445c064fb2a889f96780497, type: 3}
   choices: []
   isExit: 1
   evidence: {fileID: 0}

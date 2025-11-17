@@ -17,7 +17,10 @@ MonoBehaviour:
   lines:
   - Its very simple, find clues, look inside Rifts to gain some information, interogate
     suspects, and finally accuse someone of being guilty based on your findings.
-  - Walk through the door to continue
+  - Try walking through the door behind me to continue
+  voiceLines:
+  - {fileID: 8300000, guid: 00b3f98f118dbbb49bcac1fa7d9ad7ee, type: 3}
+  - {fileID: 8300000, guid: 3615c0bc2e2b13149af9002a71c6e050, type: 3}
   choices: []
   isExit: 1
   evidence: {fileID: 0}

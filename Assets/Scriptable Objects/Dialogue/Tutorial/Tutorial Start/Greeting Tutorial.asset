@@ -15,7 +15,9 @@ MonoBehaviour:
   _name: Tutorial
   Speaker: Tutorial
   lines:
-  - Hello, I'm here to teach you how to play
+  - Hello there I'm here to teach you how to play
+  voiceLines:
+  - {fileID: 8300000, guid: c757d96db9b0123459e4c040a8f1e419, type: 3}
   choices:
   - text: How to play the game?
     targetDialogue: {fileID: 11400000, guid: 545fb56485e80be46b640390fb1f4cd4, type: 2}
