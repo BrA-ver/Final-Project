@@ -1,13 +1,14 @@
 using UnityEngine;
-using System.Collections;
 
 public class DialogueTriggerAction : MonoBehaviour
 {
-    [Header("Target Dialogue Name")]
+    [Header("Trigger Dialogue Name")]
     [SerializeField] private string triggerDialogueName = "Escort to Body";
 
-    [Header("Optional: Reference to AI Script")]
+    [Header("AI Reference")]
     [SerializeField] private PoliceNavMesh policeNavMesh;
+
+    private bool waitingForFinalLine = false;
 
     private void Awake()
     {
@@ -17,54 +18,60 @@ public class DialogueTriggerAction : MonoBehaviour
 
     private void OnEnable()
     {
-        DialogueManager.OnDialogueStarted += HandleDialogueStart;
+        DialogueManager.OnDialogueStarted += OnDialogueStarted;
+        DialogueManager.OnDialogueLineDisplayed += OnLineDisplayed;
     }
 
     private void OnDisable()
     {
-        DialogueManager.OnDialogueStarted -= HandleDialogueStart;
+        DialogueManager.OnDialogueStarted -= OnDialogueStarted;
+        DialogueManager.OnDialogueLineDisplayed -= OnLineDisplayed;
     }
 
-    private void HandleDialogueStart(Dialogue dialogue)
+    private void OnDialogueStarted(Dialogue dialogue)
     {
-        if (dialogue == null || policeNavMesh == null) return;
+        if (dialogue == null) return;
 
+        // Mark that THIS dialogue's final line should trigger the escort
         if (dialogue.name.Equals(triggerDialogueName, System.StringComparison.OrdinalIgnoreCase))
         {
-            policeNavMesh.StartPatrol();
-
-            // Close dialogue & re-enable player
-            StartCoroutine(CloseDialogueAndActions());
+            waitingForFinalLine = true;
         }
     }
 
-    private IEnumerator CloseDialogueAndActions()
+    private void OnLineDisplayed(Dialogue dialogue, int lineIndex)
     {
-        // Wait one frame to avoid timing issues
-        yield return null;
+        if (!waitingForFinalLine) return;
+        if (dialogue == null) return;
 
-        // Close the Dialogue (same as pressing Exit)
-        var exitMethod = typeof(DialogueManager).GetMethod(
-            "ExitDialogue",
-            System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance
-        );
+        // Ensure this is the correct dialogue
+        if (!dialogue.name.Equals(triggerDialogueName, System.StringComparison.OrdinalIgnoreCase))
+            return;
 
-        if (exitMethod != null && DialogueManager.Instance != null)
+        // Check if this is the LAST line of this dialogue
+        if (lineIndex == dialogue.lines.Length - 1)
         {
-            exitMethod.Invoke(DialogueManager.Instance, null);
-        }
+            waitingForFinalLine = false;
 
-        // Close the ActionScreen (Talk / Interrogate menu)
+            // Execute the escort action
+            StartEscortSequence();
+        }
+    }
+
+    private void StartEscortSequence()
+    {
+        // Start escort movement
+        policeNavMesh.StartPatrol();
+
+        // Close Dialogue UI
+        DialogueManager.Instance.SendMessage("ExitDialogue", SendMessageOptions.DontRequireReceiver);
+
+        // Hide action buttons too
         if (ActionScreen.instance != null)
-        {
             ActionScreen.instance.HideActions();
-        }
 
-        // Re-enable player movement
-        if (GameManager.instance != null)
-        {
-            GameManager.instance.HideMouse();
-            GameManager.instance.SwitchState(InteractionState.None);
-        }
+        // Return player control
+        GameManager.instance.HideMouse();
+        GameManager.instance.SwitchState(InteractionState.None);
     }
 }

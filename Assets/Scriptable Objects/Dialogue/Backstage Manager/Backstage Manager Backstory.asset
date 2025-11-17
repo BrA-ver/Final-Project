@@ -15,11 +15,18 @@ MonoBehaviour:
   _name: Backstage Manager Backstory
   Speaker: Backstage Manager
   lines:
-  - Okay that should be fine. What is the information you are looking for?
-  - 'Detective: I need your full name and surname, plus your age and occupation.'
-  - Okay I am Samantha Hawks, age 35 and I work as the backstage manager. Basically,
-    my job is to make sure everything is working and going smoothly before and during
-    a performance.
+  - 'Detective: I need to confirm some information about you for my report.'
+  - 'Samantha: Okay that should be fine. What exactly are you looking for?'
+  - 'Detective: How about we start with your name, your age, and what you do around
+    here?'
+  - 'Samantha: Name is Samantha Hawks, I''m 35, and I work as the backstage manager.
+    Basically, my job is to make sure everything is working and going smoothly before
+    and during the performances.'
+  voiceLines:
+  - {fileID: 8300000, guid: 034876a732b4475499f90468c7c48356, type: 3}
+  - {fileID: 8300000, guid: 5d23960e2796e2045a7b96633fd85006, type: 3}
+  - {fileID: 8300000, guid: 657371e35c1f9354890a00d29db1c980, type: 3}
+  - {fileID: 8300000, guid: 1f3d15a266c5d024cb58a33845777906, type: 3}
   choices: []
   isExit: 0
   evidence: {fileID: 11400000, guid: ec212a595cffa8c42b6aeb917a6634da, type: 2}

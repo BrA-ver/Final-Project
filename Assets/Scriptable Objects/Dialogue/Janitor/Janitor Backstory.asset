@@ -15,10 +15,17 @@ MonoBehaviour:
   _name: Janitor Backstory
   Speaker: Janitor
   lines:
-  - What kind of information do you need?
-  - 'Detective: Things like your name, Age, Occupation'
-  - Okay I am Antonio Romano, age 40. I have been working here at the Smoke & Strings
-    Bar as the janitor for the last 10 or so years.
+  - 'Detective: I need to confirm some information about you for my report.'
+  - 'Antonio: What kind of information do you need?'
+  - 'Detective: How about we start with your name, your age, and what you do around
+    here.'
+  - 'Antonio: Allright, I am Antonio Romano, age 40. I have been working here at
+    the Smoke & Strings Bar as the janitor for the last 10 or so years.'
+  voiceLines:
+  - {fileID: 8300000, guid: 034876a732b4475499f90468c7c48356, type: 3}
+  - {fileID: 8300000, guid: 2ca5011a2dc720046bb93005b9cdc2b6, type: 3}
+  - {fileID: 8300000, guid: 657371e35c1f9354890a00d29db1c980, type: 3}
+  - {fileID: 8300000, guid: fe2901d2af5032542972e056903d9fe0, type: 3}
   choices: []
   isExit: 0
   evidence: {fileID: 0}

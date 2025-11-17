@@ -15,8 +15,12 @@ MonoBehaviour:
   _name: Who are Suspects
   Speaker: Police Officer
   lines:
-  - Yes we do. They are Mister Antonio Romano the janitor, Miss Samantha Hawks the
-    stage manager, and lastly Miss Lisa Jones the bartender.
+  - 'Detective: Do we have any suspects.'
+  - 'Dave: Yes we do. They are Mister Antonio Romano the janitor, Miss Samantha Hawks
+    the stage manager, and lastly Miss Lisa Jones the bartender.'
+  voiceLines:
+  - {fileID: 8300000, guid: 9072475216c27ab4ba27aa67009d6aee, type: 3}
+  - {fileID: 8300000, guid: f9e18bd4635ad3e45aa86194c648ac50, type: 3}
   choices: []
   isExit: 0
   evidence: {fileID: 0}

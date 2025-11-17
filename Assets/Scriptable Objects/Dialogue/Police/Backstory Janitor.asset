@@ -15,10 +15,15 @@ MonoBehaviour:
   _name: Backstory Janitor
   Speaker: Police Officer
   lines:
-  - 'Well about Mister Antonio, he has been working here for over a decade, and he
-    is well liked by most of his colleagues. '
-  - "What else\u2026 Aa yes, it is believed that he has contacts with some of the
-    criminal underworld but there is no prove of this."
+  - 'Detective: Tell me more about the janitor, Antonio.'
+  - 'Dave: Well about Mister Antonio, he has been working here for over a decade,
+    and he is well liked by most of his colleagues. '
+  - "Dave: What else\u2026 Aah yes, it is believed that he has ties with some of
+    the criminal underworld, but there is no proof of this."
+  voiceLines:
+  - {fileID: 8300000, guid: 68f5fdee4eb058c48a182129596606d0, type: 3}
+  - {fileID: 8300000, guid: de5d001ea6eb8d24ca821f3cb4e9cbc2, type: 3}
+  - {fileID: 8300000, guid: c0e7011d4734c5f45a9b688cbd021323, type: 3}
   choices: []
   isExit: 0
   evidence: {fileID: 0}

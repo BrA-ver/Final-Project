@@ -15,7 +15,11 @@ MonoBehaviour:
   _name: Talk Later
   Speaker: Bartender
   lines:
-  - Okay see you then detective.
+  - 'Detective: That''s all for now, I''ll come by again if I have any more questions.'
+  - 'Lisa: Okay, I''ll be here if you need anything.'
+  voiceLines:
+  - {fileID: 8300000, guid: b4ac883c941f11a45ac31220e038a86a, type: 3}
+  - {fileID: 8300000, guid: 1715efea0d637d94e8aa90e06a939139, type: 3}
   choices: []
   isExit: 1
   evidence: {fileID: 0}

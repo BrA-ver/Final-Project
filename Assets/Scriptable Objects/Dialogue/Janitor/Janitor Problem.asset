@@ -15,8 +15,12 @@ MonoBehaviour:
   _name: Janitor Problem
   Speaker: Janitor
   lines:
-  - I know of a lot of people that did not like Mister James but none that would
-    have attempted this
+  - 'Detective: Do you know of anyone who might of had a problem with James?'
+  - 'Antonio: I know of a lot of people that didn''t like him, but none of them would
+    have attempted something like this.'
+  voiceLines:
+  - {fileID: 8300000, guid: 46caa5faa7a826b4eaf3f18d85ecb562, type: 3}
+  - {fileID: 8300000, guid: d60cf9cba13c6504995ac5394b835164, type: 3}
   choices: []
   isExit: 0
   evidence: {fileID: 0}

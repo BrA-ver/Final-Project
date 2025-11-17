@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-//using UnityEngine.EventSystems;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -20,18 +19,27 @@ public class DialogueManager : MonoBehaviour
     bool openActionsAfterDialogue;
     bool ignoreClick;
 
-    public event Action onDialogeStarted; // Activates the dialoge box whenever dialogue is started
-    public event Action onDialogueFinished; 
+    public event Action onDialogeStarted;
+    public event Action onDialogueFinished;
     public event Action<string> onDisplayDialogue;
     public event Action<DialogueChoice[]> onDisplayChoices;
     public event Action onHodeChoices;
 
     bool showedButtons;
-    //----- WERNER ADDED -----
+
     public static event Action<Dialogue> OnDialogueStarted;
-    //----- WERNER ADDED -----
+
+    // ⭐ NEW EVENT: Fired for EVERY line displayed (includes dialogue + index)
+    public static event Action<Dialogue, int> OnDialogueLineDisplayed;
 
     Dialogue lastChoice;
+
+    // 🔊 AUDIO
+    [Header("Voice Acting")]
+    public AudioSource voiceSource;
+    public bool autoAdvanceWhenVoiceEnds = false;
+    private bool waitingForVoiceToFinish = false;
+
 
     private void Awake()
     {
@@ -49,6 +57,23 @@ public class DialogueManager : MonoBehaviour
         input.onSumbit -= OnSubmit;
     }
 
+    void Update()
+    {
+        // 👄 Auto-advance when voice clip finishes
+        if (autoAdvanceWhenVoiceEnds && waitingForVoiceToFinish)
+        {
+            if (!voiceSource.isPlaying)
+            {
+                waitingForVoiceToFinish = false;
+                ContinueOrExitDialogue();
+            }
+        }
+    }
+
+
+    // -----------------------------
+    // MAIN DIALOGUE ENTRY
+    // -----------------------------
     public void EnterDialogue(Dialogue dialogue, NPC npc = null)
     {
         if (dialogueStarted) return;
@@ -58,45 +83,54 @@ public class DialogueManager : MonoBehaviour
             isNpc = true;
             this.npc = npc;
         }
-        //Debug.Log("Entering Dialogue");
 
         onDialogeStarted?.Invoke();
         dialogueStarted = true;
         ignoreClick = true;
         this.dialogue = dialogue;
 
-        //----- WERNER ADDED -----
         OnDialogueStarted?.Invoke(dialogue);
-        //----- WERNER ADDED -----
 
         ContinueOrExitDialogue();
         GameManager.instance.SwitchState(InteractionState.Dialogue);
         GameManager.instance.ShowMouse();
     }
 
+
+    // -----------------------------
+    // MAIN DIALOGUE LOGIC
+    // -----------------------------
     private void ContinueOrExitDialogue()
     {
         if (!makingChoice)
         {
-            //Debug.Log($"Display dailogue: {index < dialogue.lines.Length}");
             if (index < dialogue.lines.Length)
             {
                 string dialogueLine = dialogue.lines[index];
                 Debug.Log(dialogueLine);
+
+                // Display text on UI
                 onDisplayDialogue?.Invoke(dialogueLine);
 
+                // 🔊 Play audio for this line
+                PlayVoiceLine(dialogue, index);
+
+                // ⭐ NEW: Fire line-displayed event
+                OnDialogueLineDisplayed?.Invoke(dialogue, index);
+
+                // evidence unlock
                 if (dialogue.evidence != null)
                 {
                     EvidenceManager.Instance.AddEvidence(dialogue.evidence);
                 }
 
+                // Check if last text line AND choices exist
                 if (index == dialogue.lines.Length - 1 && dialogue.choices.Length > 0)
                 {
-                    //Debug.Log("Choosing");
-
                     makingChoice = true;
                     lastChoice = dialogue;
                 }
+
                 index++;
             }
             else
@@ -116,19 +150,46 @@ public class DialogueManager : MonoBehaviour
         {
             if (showedButtons) return;
             showedButtons = true;
+
             onDisplayDialogue?.Invoke(string.Empty);
             onDisplayChoices?.Invoke(dialogue.choices);
         }
     }
 
+
+    // -----------------------------
+    // AUDIO PLAYBACK
+    // -----------------------------
+    private void PlayVoiceLine(Dialogue dialogue, int lineIndex)
+    {
+        if (voiceSource == null) return;
+        if (dialogue.voiceLines == null) return;
+
+        if (lineIndex < dialogue.voiceLines.Length &&
+            dialogue.voiceLines[lineIndex] != null)
+        {
+            voiceSource.Stop();
+            voiceSource.clip = dialogue.voiceLines[lineIndex];
+            voiceSource.Play();
+
+            if (autoAdvanceWhenVoiceEnds)
+                waitingForVoiceToFinish = true;
+        }
+        else
+        {
+            waitingForVoiceToFinish = false;
+        }
+    }
+
+
+    // -----------------------------
+    // RETURN TO MAIN QUESTIONS
+    // -----------------------------
     public void ReturnToMainQuestions()
     {
         GameManager.instance.SwitchState(InteractionState.Dialogue);
 
-        //Debug.Log("Exiting Dialogue");
-        //dialogueStarted = false;
         makingChoice = false;
-        //onDialogueFinished?.Invoke();
         onHodeChoices?.Invoke();
         index = 0;
         dialogue = null;
@@ -141,10 +202,11 @@ public class DialogueManager : MonoBehaviour
         if (isNpc)
         {
             dialogue = npc.Profile.MainDialogue;
+
             onDialogeStarted?.Invoke();
             onDisplayDialogue?.Invoke(string.Empty);
             onDisplayChoices?.Invoke(dialogue.choices);
-            
+
             makingChoice = true;
             showedButtons = true;
 
@@ -155,12 +217,12 @@ public class DialogueManager : MonoBehaviour
                 DialogeDisplay.instance.StopDialogue();
             }
         }
-
-        //GameManager.instance.HideMouse();
-        // When the button is clicked, set the selected button to null
-        //DeselectButton();
     }
 
+
+    // -----------------------------
+    // EXIT DIALOGUE
+    // -----------------------------
     void ExitDialogue()
     {
         dialogueStarted = false;
@@ -175,6 +237,10 @@ public class DialogueManager : MonoBehaviour
         GameManager.instance.HideMouse();
     }
 
+
+    // -----------------------------
+    // CHOICE SELECTION
+    // -----------------------------
     public void SelectChoice(DialogueChoice choice)
     {
         if (choice.targetDialogue != null)
@@ -184,22 +250,17 @@ public class DialogueManager : MonoBehaviour
             showedButtons = false;
             index = 0;
             onHodeChoices?.Invoke();
-            //DeselectButton();
 
-            //----- WERNER ADDED -----
             OnDialogueStarted?.Invoke(choice.targetDialogue);
-            //----- WERNER ADDED -----
 
             ContinueOrExitDialogue();
-
-            // When the button is clicked, set the selected button to null
         }
         else
         {
             Debug.LogWarning("WARNING: There is no dialogue following this choice");
         }
-        
     }
+
 
     public void ResponceDialogue(Dialogue dialogue)
     {
@@ -208,15 +269,16 @@ public class DialogueManager : MonoBehaviour
         showedButtons = false;
         index = 0;
         onHodeChoices?.Invoke();
-        //DeselectButton();
 
-        //----- WERNER ADDED -----
         OnDialogueStarted?.Invoke(dialogue);
-        //----- WERNER ADDED -----
 
         ContinueOrExitDialogue();
     }
 
+
+    // -----------------------------
+    // USER INPUT
+    // -----------------------------
     void OnSubmit()
     {
         if (ignoreClick)
@@ -224,28 +286,23 @@ public class DialogueManager : MonoBehaviour
             ignoreClick = false;
             return;
         }
-        Debug.Log("submit recieved");
-        if (!dialogueStarted || GameManager.instance.IgnoreMouseInput) return;
 
+        if (!dialogueStarted || GameManager.instance.IgnoreMouseInput) return;
         if (GameManager.instance.CurrentState != InteractionState.Dialogue) return;
 
+        // ⏩ Skip voice if it's playing
+        if (voiceSource != null && voiceSource.isPlaying)
+        {
+            voiceSource.Stop();
+        }
+
+        waitingForVoiceToFinish = false;
         ContinueOrExitDialogue();
     }
+
 
     public void ShowActionsAfterDialogue()
     {
         openActionsAfterDialogue = true;
     }
-
-    //public void DeselectButton()
-    //{
-    //    // Get the currently selected button
-    //    var selected = EventSystem.current.currentSelectedGameObject;
-
-    //    // Trigger its OnDeselect (fires EventTrigger or IDeslectHandler)
-    //    UIHelper.TriggerOnDeselect(selected);
-
-    //    // Then clear selection
-    //    EventSystem.current.SetSelectedGameObject(null);
-    //}
 }

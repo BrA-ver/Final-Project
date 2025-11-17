@@ -15,7 +15,12 @@ MonoBehaviour:
   _name: Janitor Lie
   Speaker: Janitor
   lines:
-  - I believe I was busy cleaning the rooms in the back around that time.
+  - "Detective: What were you doing between one thirty (13:30) and three o\u2019clock
+    (15:00)?"
+  - 'Antonio: I was busy cleaning the rooms in the back.'
+  voiceLines:
+  - {fileID: 8300000, guid: 46fe3774ae3bb4048bf76cefcc9f74fb, type: 3}
+  - {fileID: 8300000, guid: f53b0f57d7cfa5c4f8c3a4d3722309f9, type: 3}
   choices: []
   isExit: 0
   evidence: {fileID: 0}

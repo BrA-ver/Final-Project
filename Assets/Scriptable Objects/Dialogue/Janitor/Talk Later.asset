@@ -15,7 +15,11 @@ MonoBehaviour:
   _name: Talk Later
   Speaker: Janitor
   lines:
-  - Okay see you then Detective.
+  - 'Detective: That''s all for now, I''ll come by again if I have any more questions.'
+  - 'Antonio: You got it Detective.'
+  voiceLines:
+  - {fileID: 8300000, guid: b4ac883c941f11a45ac31220e038a86a, type: 3}
+  - {fileID: 8300000, guid: 8d7319072e1709b418b9c73f56b01e81, type: 3}
   choices: []
   isExit: 1
   evidence: {fileID: 0}

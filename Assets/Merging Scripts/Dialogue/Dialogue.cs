@@ -5,10 +5,14 @@ public class Dialogue : ScriptableObject
 {
     public string _name;
     public string Speaker = string.Empty;
+
+    [Header("Text")]
     public string[] lines;
 
-    public DialogueChoice[] choices;
+    [Header("Voice Acting")]
+    public AudioClip[] voiceLines;
 
+    public DialogueChoice[] choices;
     public bool isExit = false;
 
     [Header("Evidence")]

@@ -15,13 +15,21 @@ MonoBehaviour:
   _name: Janitor Victim
   Speaker: Janitor
   lines:
-  - He was okay, but I personally did not like the way he acted around people.
-  - 'Detective: Ooo, why is that?'
-  - 'When he was in front of a big group of people, he made sure everyone liked him.
-    But when he was alone with a small group of people he acted like a real jackass,
-    he started hitting on every girl he saw, and he also drank a lot. '
-  - I had to clear out his garbage bin three times in like three to four hours when
-    he is here.
+  - 'Detective: What did you think about Mister James?'
+  - 'Antonio: He was okay, but I personally did not like the way he acted around
+    people.'
+  - 'Detective: Oh, why is that?'
+  - 'Antonio: Well, when he was in front people, he made sure everyone liked him.
+    But when he thought no one was watching, he kind of acted like a schmuck, always
+    sweet talking the ladies and drinking like it was going out of style.'
+  - 'Antonio: Not saying he''s got a problem, but i''ve cleared out the bottles in
+    his room more times than I can count.'
+  voiceLines:
+  - {fileID: 8300000, guid: ff0ec8c18ec5060449d66aa634cc5828, type: 3}
+  - {fileID: 8300000, guid: df1111532f35f3644bd8a104d2935736, type: 3}
+  - {fileID: 8300000, guid: a57dec5a6812f544d9cf8273930117ba, type: 3}
+  - {fileID: 8300000, guid: b81ca6b841ee17f41a43e1efb6c53166, type: 3}
+  - {fileID: 8300000, guid: e48f9ab6b1ee6964790f7a8da8b78495, type: 3}
   choices: []
   isExit: 0
   evidence: {fileID: 0}

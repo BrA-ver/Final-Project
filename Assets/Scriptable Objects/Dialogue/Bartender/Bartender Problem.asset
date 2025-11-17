@@ -15,9 +15,13 @@ MonoBehaviour:
   _name: Bartender Problem
   Speaker: Bartender
   lines:
-  - "I don\u2019t know anyone that would have had a problem with him to the point
-    of killing him but there were a lot of people that did not like him all that
-    much."
+  - 'Detective: Do you know of anyone who might of had a problem with James?'
+  - "Lisa: I don\u2019t know anyone that would have had a problem with him to the
+    point of killing him, but there were a lot of people that did not like him all
+    that much."
+  voiceLines:
+  - {fileID: 8300000, guid: 46caa5faa7a826b4eaf3f18d85ecb562, type: 3}
+  - {fileID: 8300000, guid: 29d01de83872a4c40a284f3489701238, type: 3}
   choices: []
   isExit: 0
   evidence: {fileID: 11400000, guid: ec212a595cffa8c42b6aeb917a6634da, type: 2}

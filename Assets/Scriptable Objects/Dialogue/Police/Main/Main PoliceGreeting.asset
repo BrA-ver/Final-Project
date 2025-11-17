@@ -16,6 +16,8 @@ MonoBehaviour:
   Speaker: Police Officer
   lines:
   - Hello again Detective. What do you need?
+  voiceLines:
+  - {fileID: 8300000, guid: bbb46334f86dc874294c84d086386bc5, type: 3}
   choices:
   - text: Tell me more about the janitor, Antonio.
     targetDialogue: {fileID: 11400000, guid: 30fe4435ab0d9e3499791901cfb83221, type: 2}
@@ -24,7 +26,7 @@ MonoBehaviour:
   - text: Tell me more about the backstage manager, Samantha.
     targetDialogue: {fileID: 11400000, guid: 733c8bbfb307b1c4891807d5b3915527, type: 2}
   - text: Give me a recap.
-    targetDialogue: {fileID: 11400000, guid: d220f6eb286af014da84d8c7153f2435, type: 2}
+    targetDialogue: {fileID: 11400000, guid: 18881b84825486f42895d00cbc51c651, type: 2}
   - text: Let's talk later.
     targetDialogue: {fileID: 11400000, guid: 8dbf2cf2d47945d4abfab38631d7be0f, type: 2}
   isExit: 0

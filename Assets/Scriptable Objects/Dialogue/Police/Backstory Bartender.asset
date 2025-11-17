@@ -15,8 +15,12 @@ MonoBehaviour:
   _name: Backstory Bartender
   Speaker: Police Officer
   lines:
-  - Well from what we know she has been working here part time for the last 4 months.
-    She is also a medical student at the University.
+  - 'Detective: Tell me more about the bartender, Lisa.'
+  - 'Dave: Well from what we know she has been working here part time for the last
+    4 months. She is also a medical student at the University.'
+  voiceLines:
+  - {fileID: 8300000, guid: 60f2b69ed49a17947aa9f51750323eb2, type: 3}
+  - {fileID: 8300000, guid: b5a477ede2eca9249907d626e6ce0063, type: 3}
   choices: []
   isExit: 0
   evidence: {fileID: 0}

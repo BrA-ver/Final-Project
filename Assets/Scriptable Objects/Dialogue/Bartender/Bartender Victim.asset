@@ -15,8 +15,12 @@ MonoBehaviour:
   _name: Bartender Victim
   Speaker: Bartender
   lines:
-  - He was not a nice man. And I do mean that in all the sense. One time that he
-    came to preform he asked for a dink and slapped my ass after I gave it to him.
+  - 'Detective: What did you think about Mister James?'
+  - 'Lisa: I really don''t like him. One time he came to perform, he ordered a drink,
+    and touched me inappropriately.'
+  voiceLines:
+  - {fileID: 8300000, guid: ff0ec8c18ec5060449d66aa634cc5828, type: 3}
+  - {fileID: 8300000, guid: d6c007c3bad35e84dbd2e9004f75c7b4, type: 3}
   choices: []
   isExit: 0
   evidence: {fileID: 11400000, guid: ec212a595cffa8c42b6aeb917a6634da, type: 2}

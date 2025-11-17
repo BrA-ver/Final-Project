@@ -15,10 +15,17 @@ MonoBehaviour:
   _name: Bartender Backstory
   Speaker: Bartender
   lines:
-  - What kind of information do you need?
-  - 'Detective: Things like your name, Age, Occupation'
-  - ' Okay I am Lisa Jones, age 27. I am a parttime bartender her at the Smoke &
-    Strings Bar, but I am a medical student at the university.'
+  - 'Detective: I need to confirm some information about you for my report.'
+  - 'Lisa: Sure, what kind of information do you need?'
+  - 'Detective: How about we start with your name, your age, and what you do around
+    here?'
+  - 'Lisa: Okay, I am Lisa Jones, age 27. I am a parttime bartender here trying to
+    pay for my medical studies at the university.'
+  voiceLines:
+  - {fileID: 8300000, guid: 034876a732b4475499f90468c7c48356, type: 3}
+  - {fileID: 8300000, guid: bb60d444e56ffba4b912f8da3ddbdb9c, type: 3}
+  - {fileID: 8300000, guid: 657371e35c1f9354890a00d29db1c980, type: 3}
+  - {fileID: 8300000, guid: e1e3528fde0639149a1421d0f9e4107d, type: 3}
   choices: []
   isExit: 0
   evidence: {fileID: 11400000, guid: ec212a595cffa8c42b6aeb917a6634da, type: 2}

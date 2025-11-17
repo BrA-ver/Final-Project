@@ -15,8 +15,13 @@ MonoBehaviour:
   _name: Bartender Lie
   Speaker: Bartender
   lines:
-  - I was busy cleaning glasses at the bar counter and making sure that we were stalked
-    up on all the drinks for tonight.
+  - "Detective: What were you doing between one thirty (13:30) and three o\u2019clock
+    (15:00)?"
+  - 'Lisa: I was busy cleaning glasses at the bar, and making sure that we were stocked
+    up on all the drinks for tonight.'
+  voiceLines:
+  - {fileID: 8300000, guid: 46fe3774ae3bb4048bf76cefcc9f74fb, type: 3}
+  - {fileID: 8300000, guid: 477c7479402fc4e47b1fde796a88d46f, type: 3}
   choices: []
   isExit: 0
   evidence: {fileID: 11400000, guid: ec212a595cffa8c42b6aeb917a6634da, type: 2}

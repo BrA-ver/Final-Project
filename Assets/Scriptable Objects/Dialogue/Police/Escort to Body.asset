@@ -15,7 +15,9 @@ MonoBehaviour:
   _name: Escort
   Speaker: Police Officer
   lines:
-  - "Sure thing sir it\u2019s this way"
+  - "Detective: If you don\u2019t mind, can you take me to the body, Dave."
+  voiceLines:
+  - {fileID: 8300000, guid: 4e87dfd1a5638e64ea18baa1b2a60b3c, type: 3}
   choices: []
   isExit: 0
   evidence: {fileID: 0}

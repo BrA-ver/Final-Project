@@ -15,19 +15,20 @@ MonoBehaviour:
   _name: Bartender
   Speaker: Bartender
   lines:
-  - Hello, Detective how can I help?
-  - 'Detective: Hello Miss Lisa. I have some questions for you.'
+  - 'Lisa: Hello, Detective how can I help?'
+  voiceLines:
+  - {fileID: 8300000, guid: 83f2daf0f2d8b5144bed912611402bdd, type: 3}
   choices:
   - text: I need to confirm some information about you for my report.
     targetDialogue: {fileID: 11400000, guid: 791da7ac3e7a37041bc5c2b7213f9527, type: 2}
   - text: "What were you doing between one thirty (13:30) and three o\u2019clock
       (15:00)?"
     targetDialogue: {fileID: 11400000, guid: 74ca0fbba8471a348b9715f2a88a363a, type: 2}
-  - text: What did you think about Mister James, the performer that died?
+  - text: What did you think about Mister James?
     targetDialogue: {fileID: 11400000, guid: 5cfe92f6eade8b043a9d70c0de290e46, type: 2}
-  - text: Do you know of anyone who had a problem with James?
+  - text: Do you know of anyone who might of had a problem with James?
     targetDialogue: {fileID: 11400000, guid: 1a02d175f73b1ae4f852e56b0b0e963d, type: 2}
-  - text: That everything for now I will come by again if I have any more questions.
+  - text: That's all for now, I'll come by again if I have any more questions.
     targetDialogue: {fileID: 11400000, guid: f7324ede1f03acb42b6ed0831116180e, type: 2}
   isExit: 0
   evidence: {fileID: 0}

@@ -17,6 +17,9 @@ MonoBehaviour:
   lines:
   - Hello Detective. Glad You could make it.
   - This is an interesting one.
+  voiceLines:
+  - {fileID: 8300000, guid: 5a9a33061def07247a9f27618ed08e92, type: 3}
+  - {fileID: 8300000, guid: ad626cba22545494d860d114b048fe8e, type: 3}
   choices:
   - text: Evening Officer Dave, what's the situation?
     targetDialogue: {fileID: 11400000, guid: d220f6eb286af014da84d8c7153f2435, type: 2}

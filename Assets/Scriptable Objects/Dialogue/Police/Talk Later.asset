@@ -15,7 +15,11 @@ MonoBehaviour:
   _name: Talk Later
   Speaker: Police Officer
   lines:
-  - Alright then. I'll be here if you need anything.
+  - 'Detective: Let''s talk later. '
+  - 'Dave: Alright then. I''ll be here if you need anything.'
+  voiceLines:
+  - {fileID: 8300000, guid: 76105a4f0f1c6204ca4e8ed5b1e40941, type: 3}
+  - {fileID: 8300000, guid: b3eb261ef3460b940a15159544822b57, type: 3}
   choices: []
   isExit: 1
   evidence: {fileID: 0}

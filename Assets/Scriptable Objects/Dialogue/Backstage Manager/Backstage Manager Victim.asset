@@ -15,8 +15,12 @@ MonoBehaviour:
   _name: Backstage Manager Victim
   Speaker: Backstage Manager
   lines:
-  - No, I don't think there was anyone like that. But if I had to assume the Lisa
-    did have a problem with him last month.
+  - 'Detective: Do you know of anyone who might of had a problem with James?'
+  - 'Samantha: I wouldn''t say anyone had a problem with him, but I do believe him
+    and Lisa had a falling out last month.'
+  voiceLines:
+  - {fileID: 8300000, guid: 46caa5faa7a826b4eaf3f18d85ecb562, type: 3}
+  - {fileID: 8300000, guid: 245b85a8fe01f114b8bf960385aa018d, type: 3}
   choices: []
   isExit: 0
   evidence: {fileID: 11400000, guid: ec212a595cffa8c42b6aeb917a6634da, type: 2}

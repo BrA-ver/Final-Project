@@ -15,19 +15,20 @@ MonoBehaviour:
   _name: Backstage Manager
   Speaker: Backstage Manager
   lines:
-  - Hello detective what can I do for you.
-  - 'Detective: Hello Miss Samantha, I have a few questions for you.'
+  - 'Samantha: Hi detective, what can I do for you.'
+  voiceLines:
+  - {fileID: 8300000, guid: ec55fc8c3e7e25f42a7fd1ecbd21027b, type: 3}
   choices:
   - text: I need to confirm some information about you for my report.
     targetDialogue: {fileID: 11400000, guid: 06d9db49d23566b4dae9d2e0cb72fc5f, type: 2}
   - text: "What were you doing between one thirty (13:30) and three o\u2019clock
       (15:00)?"
     targetDialogue: {fileID: 11400000, guid: 814564748a7f1124b80c402609f6cdbe, type: 2}
-  - text: What did you think about Mister James, the performer that died?
+  - text: What did you think about Mister James?
     targetDialogue: {fileID: 11400000, guid: ff6681e9a891eb2469ff2138f8e7552f, type: 2}
-  - text: Do you know of anyone who had a problem with James?
+  - text: Do you know of anyone who might of had a problem with James?
     targetDialogue: {fileID: 11400000, guid: 2026033ad08322e4e9d79384a75f03c1, type: 2}
-  - text: That everything for now I will come by again if I have any more questions.
+  - text: That's all for now, I'll come by again if I have any more questions.
     targetDialogue: {fileID: 11400000, guid: 321222f421752284f9e9db94765cd794, type: 2}
   isExit: 0
   evidence: {fileID: 0}

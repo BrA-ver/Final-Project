@@ -15,8 +15,12 @@ MonoBehaviour:
   _name: Backstory Backstage Manager
   Speaker: Police Officer
   lines:
-  - From the information that we have it seems she was recently promoted to the position
-    of manager.
+  - 'Detective: Tell me more about the backstage manager, Samantha.'
+  - 'Dave: From the information that we have it seems she was recently promoted to
+    the position of manager.'
+  voiceLines:
+  - {fileID: 8300000, guid: 219335bd31bd59c44811cd32b6165260, type: 3}
+  - {fileID: 8300000, guid: 092ae842e0ff4c442ae0b02142001383, type: 3}
   choices: []
   isExit: 0
   evidence: {fileID: 0}
