@@ -15,6 +15,8 @@ public class FileButton : MonoBehaviour
     [SerializeField] TextMeshProUGUI answerText;
     [SerializeField] TextMeshProUGUI buttonText;
 
+    public event Action onProfileComplete;
+
     public Evidence Answer => answer;
 
     Dictionary<AnswerType, string> typeText;
@@ -115,6 +117,11 @@ public class FileButton : MonoBehaviour
 
         // Show button answer
         Debug.Log("Correct Answer");
+    }
+
+    void IsProfileComplete()
+    {
+        
     }
 }
 public enum AnswerType { Motive, Means, Opportunity }

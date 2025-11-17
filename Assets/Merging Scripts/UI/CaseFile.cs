@@ -35,6 +35,7 @@ public class CaseFile : MonoBehaviour
     public event Action<Evidence> onAnswerSelect;
 
     [Header("Verdict")]
+    [SerializeField] GameObject verdictHolder;
     [SerializeField] TextMeshProUGUI verdictText;
     [SerializeField] Image verdictCircle;
     [SerializeField] float fillTime = .5f;
@@ -134,9 +135,23 @@ public class CaseFile : MonoBehaviour
 
     #region Verdict
 
+    void ShowVerdictBlock()
+    {
+        verdictHolder.SetActive(true);
+    }
+
+    void HideVerdict()
+    {
+        verdictHolder.SetActive(false);
+
+        verdictText.text = "";
+        verdictCircle.fillAmount = 0f;
+    }
+
     public void DeclareVerdict(bool isGuilty)
     {
         verdictText.gameObject.SetActive(true);
+        selectedProfile.SetGuilty(isGuilty);
         if (isGuilty)
         {
             verdictText.text = "Guilty";
@@ -171,7 +186,33 @@ public class CaseFile : MonoBehaviour
     #region Profile Functions
     public void SelectProfile(CharacterProfile profile)
     {
+        if (selectedProfile != null)
+            selectedProfile.OnProfileSolved.RemoveListener(ShowVerdictBlock);
+
         selectedProfile = profile; // Set the selected profile
+        selectedProfile.OnProfileSolved.AddListener(ShowVerdictBlock);
+        if (!selectedProfile.Complete)
+        {
+            HideVerdict();
+        }
+        else
+        {
+            if (selectedProfile.IsGuity)
+            {
+                verdictText.text = "Guilty";
+                verdictText.color = guiltyColour;
+                verdictCircle.color = guiltyColour;
+                verdictCircle.fillAmount = 1f;
+            }
+            else
+            {
+                verdictText.text = "Not Guilty";
+                verdictText.color = notGuiltyColour;
+                verdictCircle.color = notGuiltyColour;
+                verdictCircle.fillAmount = 0f;
+            }
+        }
+
         nameText.text = profile.ProfileSO._name; // Update the info screen
         ShowButtons();
 

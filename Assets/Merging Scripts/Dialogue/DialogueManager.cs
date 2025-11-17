@@ -18,6 +18,7 @@ public class DialogueManager : MonoBehaviour
     public NPC npc;
 
     bool openActionsAfterDialogue;
+    bool ignoreClick;
 
     public event Action onDialogeStarted; // Activates the dialoge box whenever dialogue is started
     public event Action onDialogueFinished; 
@@ -61,6 +62,7 @@ public class DialogueManager : MonoBehaviour
 
         onDialogeStarted?.Invoke();
         dialogueStarted = true;
+        ignoreClick = true;
         this.dialogue = dialogue;
 
         //----- WERNER ADDED -----
@@ -80,7 +82,7 @@ public class DialogueManager : MonoBehaviour
             if (index < dialogue.lines.Length)
             {
                 string dialogueLine = dialogue.lines[index];
-                //Debug.Log(dialogueLine);
+                Debug.Log(dialogueLine);
                 onDisplayDialogue?.Invoke(dialogueLine);
 
                 if (dialogue.evidence != null)
@@ -217,7 +219,12 @@ public class DialogueManager : MonoBehaviour
 
     void OnSubmit()
     {
-        //Debug.Log("submit recieved");
+        if (ignoreClick)
+        {
+            ignoreClick = false;
+            return;
+        }
+        Debug.Log("submit recieved");
         if (!dialogueStarted || GameManager.instance.IgnoreMouseInput) return;
 
         if (GameManager.instance.CurrentState != InteractionState.Dialogue) return;

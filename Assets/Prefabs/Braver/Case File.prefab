@@ -258,7 +258,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8687784381875760171}
   m_Layer: 5
-  m_Name: Ptofile Info
+  m_Name: Profile Info
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -277,8 +277,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2774752216457352191}
-  - {fileID: 2257457231555170427}
   - {fileID: 5571944044158609608}
+  - {fileID: 2257457231555170427}
   m_Father: {fileID: 640106441160045679}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -2285,6 +2285,7 @@ MonoBehaviour:
   suspects: []
   profileObjects: []
   profileHolder: {fileID: 6995726623342053297}
+  verdictHolder: {fileID: 7505798636849195600}
   verdictText: {fileID: 1942370134967181916}
   verdictCircle: {fileID: 8086948706226838928}
   fillTime: 1
@@ -3615,7 +3616,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2257457231555170427
 RectTransform:
   m_ObjectHideFlags: 0

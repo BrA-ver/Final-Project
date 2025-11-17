@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class CharacterProfile : MonoBehaviour
 {
@@ -13,10 +14,16 @@ public class CharacterProfile : MonoBehaviour
     public bool solvedMeans;
     public bool solvedOpportunity;
 
+    bool isGuilty;
+
     [Header("UI")]
     [SerializeField] Image picture;
 
+    public UnityEvent OnProfileSolved;
 
+
+    public bool Complete => solvedMotive && solvedMeans && solvedOpportunity;
+    public bool IsGuity => isGuilty;
     public ProfileSO ProfileSO => profile;
 
     private void Start()
@@ -40,16 +47,30 @@ public class CharacterProfile : MonoBehaviour
     public void SolveMotive()
     {
         solvedMotive = true;
+        CheckCompletion();
     }
 
     public void SolveMeans()
     {
         solvedMeans = true;
+        CheckCompletion();
     }
 
     public void SolveOpportunity()
     {
         solvedOpportunity = true;
+        CheckCompletion();
+    }
+
+    public void CheckCompletion()
+    {
+        if (solvedMeans && solvedMotive && solvedOpportunity)
+            OnProfileSolved?.Invoke();
+    }
+
+    public void SetGuilty(bool isGuilty)
+    {
+        this.isGuilty = isGuilty;
     }
 }
 
