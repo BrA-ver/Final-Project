@@ -13,10 +13,30 @@ MonoBehaviour:
   m_Name: Backstage Manager
   m_EditorClassIdentifier: 
   _name: Samantha Hawks
-  occupation: Janitor
+  occupation: Backstage manager
   picture: {fileID: 21300000, guid: 331b7c533ce1b78439799daf2e9930c0, type: 3}
   <MainDialogue>k__BackingField: {fileID: 11400000, guid: 210a7a42e23e1214d92f876194677b05, type: 2}
-  <evidenceResponces>k__BackingField: []
+  <evidenceResponces>k__BackingField:
+  - evidence: {fileID: 11400000, guid: 7385b256639958548b05cc779e24d1dd, type: 2}
+    response: {fileID: 11400000, guid: 3511dac58df4590469985f21291ca602, type: 2}
+  - evidence: {fileID: 11400000, guid: de0f0efe09489e944a5308a8cf2e7b3a, type: 2}
+    response: {fileID: 11400000, guid: 6a851ee35005fd1429a7889b88f19371, type: 2}
+  - evidence: {fileID: 11400000, guid: 67659e9a54aae8545988481734a6e161, type: 2}
+    response: {fileID: 11400000, guid: 4f2083bcab2b0aa4dbf33cdeea6ac275, type: 2}
+  - evidence: {fileID: 11400000, guid: ed744334eca450b45957ac687f34199d, type: 2}
+    response: {fileID: 11400000, guid: 72ac370590aec2545b5f5373e2ced83d, type: 2}
+  - evidence: {fileID: 11400000, guid: 3297e87af1b9be847b55ee07e4694840, type: 2}
+    response: {fileID: 11400000, guid: 2bd35b0ca771fd74490b5927857a776f, type: 2}
+  - evidence: {fileID: 11400000, guid: 1293bb95c48616b458b537f08304fbb4, type: 2}
+    response: {fileID: 11400000, guid: 2bd35b0ca771fd74490b5927857a776f, type: 2}
+  - evidence: {fileID: 11400000, guid: 58538d5e7b63b214f91a6f5be1597820, type: 2}
+    response: {fileID: 11400000, guid: 2bd35b0ca771fd74490b5927857a776f, type: 2}
+  - evidence: {fileID: 11400000, guid: 45e8386f2c032d540a73e81095d3415a, type: 2}
+    response: {fileID: 11400000, guid: 2bd35b0ca771fd74490b5927857a776f, type: 2}
+  - evidence: {fileID: 11400000, guid: ca11adc5c7180db48bb614210b516822, type: 2}
+    response: {fileID: 11400000, guid: 2bd35b0ca771fd74490b5927857a776f, type: 2}
+  - evidence: {fileID: 11400000, guid: 09a1df4e281e4864cb0d3e2dae4a37c4, type: 2}
+    response: {fileID: 11400000, guid: 2bd35b0ca771fd74490b5927857a776f, type: 2}
   <nullResponce>k__BackingField:
     evidence: {fileID: 0}
     response: {fileID: 0}
