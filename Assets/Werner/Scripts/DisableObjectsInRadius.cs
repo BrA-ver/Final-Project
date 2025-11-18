@@ -17,13 +17,11 @@ public class DisableMap2RiftsInRadius : MonoBehaviour
         float distance = Vector3.Distance(player.position, transform.position);
         bool isInside = distance <= radius;
 
-        // Track when player leaves zone
         if (!isInside && wasInside)
         {
             wasInside = false;
         }
 
-        // Detect entry into zone (only counts if player walked into zone, not teleported into it)
         if (isInside && !wasInside)
         {
             wasInside = true;
@@ -45,7 +43,6 @@ public class DisableMap2RiftsInRadius : MonoBehaviour
                 rift.SetActive(false);
             }
         }
-        Debug.Log("✅ Player walked back into zone — Map 2 rifts disabled.");
     }
 
     private void OnDrawGizmosSelected()

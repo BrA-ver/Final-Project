@@ -48,7 +48,6 @@ public class PoliceNavMesh : MonoBehaviour
             }
             else
             {
-                // ---- Patrol complete ----
                 finishedPatrol = true;
                 navMeshAgent.isStopped = true;
                 navMeshAgent.ResetPath();
@@ -90,7 +89,6 @@ public class PoliceNavMesh : MonoBehaviour
         navMeshAgent.isStopped = false;
         navMeshAgent.SetDestination(movePoints[currentPointIndex].position);
 
-        // Remove NPC interaction script permanently
         if (npcScriptToRemove != null)
         {
             Destroy(npcScriptToRemove);
@@ -115,7 +113,6 @@ public class PoliceNavMesh : MonoBehaviour
 
         transform.rotation = target;
 
-        // Trigger PoliceSwap after rotation
         TriggerPoliceSwap();
     }
 

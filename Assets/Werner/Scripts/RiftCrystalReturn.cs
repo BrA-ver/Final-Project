@@ -89,7 +89,6 @@ public class RiftCrystalReturn : MonoBehaviour
 
             if (dist > maxDistance && !isTeleportingBack)
             {
-                Debug.Log($"Player left rift bubble! Distance = {dist}");
                 StartCoroutine(ReturnToMap1());
             }
         }
@@ -101,14 +100,12 @@ public class RiftCrystalReturn : MonoBehaviour
         isTeleportingBack = true;
         if (movement != null) movement.enabled = false;
 
-        // Instead of particles, play video
         if (videoPlayer != null && returnRiftVideo != null)
         {
             yield return StartCoroutine(PlayVideoFullDuration(returnRiftVideo));
         }
         else
         {
-            // fallback if no video
             yield return new WaitForSeconds(delayBeforeReturn);
         }
 
@@ -131,14 +128,11 @@ public class RiftCrystalReturn : MonoBehaviour
         if (cameraHolder != null)
             cameraHolder.localPosition = camOriginalLocalPos;
 
-        Debug.Log("Player teleported back to Map 1!");
-
         playerInRift = false;
         isReturning = false;
         isTeleportingBack = false;
     }
 
-    // --- NEW: suppress auto-return after manual teleport ---
     public void SuppressReturn(float duration = 2f)
     {
         StartCoroutine(SuppressReturnRoutine(duration));
@@ -158,7 +152,6 @@ public class RiftCrystalReturn : MonoBehaviour
         isTeleportingBack = false;
     }
 
-    // ---------------- VIDEO HELPERS ----------------
     void InitializeVideoSystem()
     {
         if (videoCanvas != null)
@@ -200,10 +193,6 @@ public class RiftCrystalReturn : MonoBehaviour
             videoDisplay.texture = renderTexture;
 
             videoPlayer.audioOutputMode = VideoAudioOutputMode.Direct;
-        }
-        else
-        {
-            Debug.LogError("VideoDisplay RawImage is not assigned!");
         }
     }
 

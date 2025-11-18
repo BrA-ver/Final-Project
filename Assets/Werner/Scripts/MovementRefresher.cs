@@ -22,9 +22,8 @@ public class MovementRefresher : MonoBehaviour
 
             if (movementScript != null)
             {
-                // Disable and re-enable the script to force Unity to reinitialize it
                 movementScript.enabled = false;
-                yield return null; // wait 1 frame
+                yield return null;
                 movementScript.enabled = true;
             }
         }

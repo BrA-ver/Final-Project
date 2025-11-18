@@ -63,9 +63,7 @@ public class WernerMovement : MonoBehaviour
             animator = GetComponentInChildren<Animator>();
 
         playerCam = Camera.main ?? GetComponentInChildren<Camera>();
-        if (playerCam == null)
-            Debug.LogWarning("WernerMovement: No camera found on player!");
-
+ 
         if (cameraTarget != null)
         {
             cameraTarget.localPosition = standCameraOffset;
@@ -174,7 +172,6 @@ public class WernerMovement : MonoBehaviour
         float moveInput = Mathf.Abs(Input.GetAxisRaw("Horizontal")) + Mathf.Abs(Input.GetAxisRaw("Vertical"));
         bool isMoving = moveInput > 0.1f;
 
-        // ✅ If we just teleported, reset bob only when player walks again
         if (needsBobReset)
         {
             if (isMoving)
@@ -186,7 +183,7 @@ public class WernerMovement : MonoBehaviour
             }
             else
             {
-                return; // Don't bob until movement starts again
+                return;
             }
         }
 
@@ -232,10 +229,8 @@ public class WernerMovement : MonoBehaviour
 
     private IEnumerator TeleportFixRoutine()
     {
-        // ✅ Wait 1 frame so CharacterController + position update properly
         yield return null;
 
-        // ✅ Reset controller and re-ground
         if (controller != null)
         {
             controller.enabled = false;
@@ -244,7 +239,6 @@ public class WernerMovement : MonoBehaviour
             controller.Move(Vector3.down * 0.2f);
         }
 
-        // ✅ Reset camera target but don’t start bobbing yet
         if (cameraTarget != null)
         {
             cameraTarget.localPosition = standCameraOffset;
@@ -252,7 +246,6 @@ public class WernerMovement : MonoBehaviour
             bobTimer = 0f;
         }
 
-        // ✅ Wait for player to move before bob returns
         needsBobReset = true;
     }
 
@@ -265,18 +258,15 @@ public class WernerMovement : MonoBehaviour
         transform.position = position;
         transform.rotation = rotation;
 
-        // Reset gravity / jump velocity so teleport doesn't cause weird floating
         yVelocity = Vector3.zero;
 
         if (controller != null)
             controller.enabled = true;
 
-        // Ensure head bob is reset
         needsBobReset = true;
         bobTimer = 0;
     }
 
-    // ✅ Keeps compatibility with RiftTravel scripts that still call RefreshCamera()
     public void RefreshCamera()
     {
         if (cameraTarget != null)
@@ -289,7 +279,6 @@ public class WernerMovement : MonoBehaviour
     
     public void ForceHeadBobReset()
     {
-        // Kept for backward compatibility
         needsBobReset = true;
         bobTimer = 0f;
 

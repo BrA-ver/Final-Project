@@ -3,16 +3,16 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class PortalAudioFade : MonoBehaviour
 {
-    [SerializeField] private Transform player;       // Assign your player (or camera) in Inspector
-    [SerializeField] private float maxDistance = 10; // Distance where sound is fully silent
-    [SerializeField] private float fadeStart = 6;    // Distance where volume begins to drop
+    [SerializeField] private Transform player; 
+    [SerializeField] private float maxDistance = 10;
+    [SerializeField] private float fadeStart = 6;
 
     private AudioSource portalAudio;
 
     void Start()
     {
         portalAudio = GetComponent<AudioSource>();
-        portalAudio.spatialBlend = 1f; // make sure it stays 3D
+        portalAudio.spatialBlend = 1f;
         portalAudio.loop = true;
         if (!portalAudio.isPlaying) portalAudio.Play();
     }
@@ -23,7 +23,6 @@ public class PortalAudioFade : MonoBehaviour
 
         float distance = Vector3.Distance(transform.position, player.position);
 
-        // Custom fade: full volume nearby, fade linearly, hard mute beyond maxDistance
         if (distance > maxDistance)
         {
             portalAudio.volume = 0f;

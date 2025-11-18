@@ -11,7 +11,7 @@ public class SlidingGameManager : MonoBehaviour
     [SerializeField] private float interactDistance = 5f;
 
     [Header("Auto Complete Settings")]
-    [SerializeField] private int movesBeforeAutoComplete = 10;   // ⭐ NEW (Editable in Inspector)
+    [SerializeField] private int movesBeforeAutoComplete = 10;
 
     [Header("Audio")]
     [SerializeField] private AudioSource audioSource;
@@ -32,8 +32,6 @@ public class SlidingGameManager : MonoBehaviour
     private void Awake()
     {
         mainCam = Camera.main;
-        if (mainCam == null)
-            Debug.LogError("No MainCamera found! Tag your Cinemachine camera 'MainCamera'.");
     }
 
     private void Start()
@@ -74,7 +72,7 @@ public class SlidingGameManager : MonoBehaviour
                         {
                             moveCount++;
 
-                            if (moveCount >= movesBeforeAutoComplete)   // ⭐ NEW
+                            if (moveCount >= movesBeforeAutoComplete)
                             {
                                 AutoCompletePuzzle();
                             }
@@ -85,8 +83,6 @@ public class SlidingGameManager : MonoBehaviour
             }
         }
     }
-
-    // ---------- core logic ----------
 
     private bool TryMovePiece(int index)
     {
@@ -123,11 +119,8 @@ public class SlidingGameManager : MonoBehaviour
         return true;
     }
 
-    // ⭐ NEW: Auto complete puzzle fully (correct UVs + correct positions)
     private void AutoCompletePuzzle()
     {
-        Debug.Log("⏩ Auto-completing puzzle after move limit!");
-
         float tileWidth = 1f / width;
         float tileHeight = 1f / height;
 
@@ -136,7 +129,6 @@ public class SlidingGameManager : MonoBehaviour
             int row = i / width;
             int col = i % width;
 
-            // Snap positions
             pieces[i].localPosition = new Vector3(
                 -1 + (2f * tileWidth * col) + tileWidth,
                 +1 - (2f * tileHeight * row) - tileHeight,
@@ -145,7 +137,6 @@ public class SlidingGameManager : MonoBehaviour
 
             pieces[i].name = "" + i;
 
-            // ⭐ NEW — Recalculate correct UV coordinates
             if (pieces[i].gameObject.activeSelf)
             {
                 Mesh mesh = pieces[i].GetComponent<MeshFilter>().mesh;
@@ -166,7 +157,6 @@ public class SlidingGameManager : MonoBehaviour
         CompletePuzzle();
     }
 
-    // Shared completion logic
     private void CompletePuzzle()
     {
         if (puzzleCompleted) return;
@@ -177,8 +167,6 @@ public class SlidingGameManager : MonoBehaviour
         if (audioSource != null && puzzleCompleteSFX != null)
             audioSource.PlayOneShot(puzzleCompleteSFX);
     }
-
-    // ---------- generation & shuffle ----------
 
     private void CreateGamePieces(float gapThickness)
     {

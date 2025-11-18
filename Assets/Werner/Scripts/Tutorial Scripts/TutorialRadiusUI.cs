@@ -17,7 +17,6 @@ public class TutorialRadiusUI : MonoBehaviour
 
         float distance = Vector3.Distance(player.position, transform.position);
 
-        // Player IN radius
         if (distance <= showRadius)
         {
             if (!uiIsActive)
@@ -26,7 +25,6 @@ public class TutorialRadiusUI : MonoBehaviour
                 uiIsActive = true;
             }
         }
-        // Player OUT of radius
         else
         {
             if (uiIsActive)

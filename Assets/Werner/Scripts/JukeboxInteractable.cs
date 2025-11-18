@@ -11,7 +11,7 @@ public class JukeboxInteractable : Interactable
     [SerializeField] private Button song4Button;
     [SerializeField] private Button song5Button;
     [SerializeField] private Button song6Button;
-    [SerializeField] private Button song7Button; // ✅ new button
+    [SerializeField] private Button song7Button;
     [SerializeField] private Button stopButton;
     [SerializeField] private Button closeButton;
 
@@ -22,7 +22,7 @@ public class JukeboxInteractable : Interactable
     [SerializeField] private AudioSource song4;
     [SerializeField] private AudioSource song5;
     [SerializeField] private AudioSource song6;
-    [SerializeField] private AudioSource song7; // ✅ new song
+    [SerializeField] private AudioSource song7;
 
     [Header("Highlighting")]
     [SerializeField] private HighlightTarget highlightTarget;
@@ -33,21 +33,18 @@ public class JukeboxInteractable : Interactable
 
     private void Start()
     {
-        // Hide UI on start
         if (jukeboxUI != null)
             jukeboxUI.SetActive(false);
 
-        // Find background music manager
         bgm = FindObjectOfType<BackgroundMusicManager>();
 
-        // Hook up button listeners
         if (song1Button != null) song1Button.onClick.AddListener(() => PlaySong(song1));
         if (song2Button != null) song2Button.onClick.AddListener(() => PlaySong(song2));
         if (song3Button != null) song3Button.onClick.AddListener(() => PlaySong(song3));
         if (song4Button != null) song4Button.onClick.AddListener(() => PlaySong(song4));
         if (song5Button != null) song5Button.onClick.AddListener(() => PlaySong(song5));
         if (song6Button != null) song6Button.onClick.AddListener(() => PlaySong(song6));
-        if (song7Button != null) song7Button.onClick.AddListener(() => PlaySong(song7)); // ✅ new
+        if (song7Button != null) song7Button.onClick.AddListener(() => PlaySong(song7));
         if (stopButton != null) stopButton.onClick.AddListener(StopAllSongs);
         if (closeButton != null) closeButton.onClick.AddListener(CloseUI);
     }
@@ -59,7 +56,6 @@ public class JukeboxInteractable : Interactable
             Interact();
         }
 
-        // Automatically resume background music when jukebox song ends
         if (currentSong != null && !currentSong.isPlaying)
         {
             currentSong = null;
@@ -80,7 +76,7 @@ public class JukeboxInteractable : Interactable
         if (song != null)
         {
             currentSong = song;
-            MuteBackgroundMusic(); // fade out background
+            MuteBackgroundMusic();
             song.Play();
         }
     }
@@ -93,10 +89,10 @@ public class JukeboxInteractable : Interactable
         if (song4 != null) song4.Stop();
         if (song5 != null) song5.Stop();
         if (song6 != null) song6.Stop();
-        if (song7 != null) song7.Stop(); // ✅ new
+        if (song7 != null) song7.Stop();
 
         currentSong = null;
-        ResumeBackgroundMusic(); // fade back in
+        ResumeBackgroundMusic();
     }
 
     private void OpenUI()
@@ -122,13 +118,13 @@ public class JukeboxInteractable : Interactable
     private void MuteBackgroundMusic()
     {
         if (bgm != null)
-            bgm.MuteMusic(true); // fade volume to 0
+            bgm.MuteMusic(true);
     }
 
     private void ResumeBackgroundMusic()
     {
         if (bgm != null)
-            bgm.MuteMusic(false); // fade volume back in
+            bgm.MuteMusic(false);
     }
 
     private void OnTriggerEnter(Collider other)

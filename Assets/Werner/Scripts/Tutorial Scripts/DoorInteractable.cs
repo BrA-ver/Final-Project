@@ -3,7 +3,7 @@ using UnityEngine;
 public class DoorInteractable : Interactable
 {
     [Header("Teleport Settings")]
-    [SerializeField] private Transform teleportTarget; // assign in Inspector
+    [SerializeField] private Transform teleportTarget;
     [SerializeField] private HighlightTarget highlightTarget;
 
     private bool isPlayerNearby = false;
@@ -13,7 +13,6 @@ public class DoorInteractable : Interactable
     {
         base.Interact();
 
-        // ✅ Find player if not cached
         if (playerTransform == null)
         {
             GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -23,7 +22,6 @@ public class DoorInteractable : Interactable
 
         if (playerTransform != null && teleportTarget != null)
         {
-            // ✅ Find WernerMovement anywhere on the player hierarchy
             WernerMovement movement = playerTransform.GetComponentInChildren<WernerMovement>();
             if (movement == null)
                 movement = playerTransform.GetComponentInParent<WernerMovement>();
@@ -31,16 +29,7 @@ public class DoorInteractable : Interactable
             if (movement != null)
             {
                 movement.TeleportTo(teleportTarget.position, teleportTarget.rotation);
-                Debug.Log($"✅ Player teleported to {teleportTarget.name} at {teleportTarget.position}");
             }
-            else
-            {
-                Debug.LogWarning("WernerMovement not found on player or its children!");
-            }
-        }
-        else
-        {
-            Debug.LogWarning("Teleport failed — missing playerTransform or teleportTarget");
         }
     }
 

@@ -14,8 +14,8 @@ public class RiftTravel : MonoBehaviour
     [SerializeField] private KeyCode teleportKey = KeyCode.Q;
 
     [Header("Portal Unlock System")]
-    [SerializeField] private bool unlockedAtStart = false; // for testing in editor
-    public bool PortalsUnlocked { get; private set; } = false; // runtime state
+    [SerializeField] private bool unlockedAtStart = false;
+    public bool PortalsUnlocked { get; private set; } = false;
 
     [Header("Video Settings")]
     [SerializeField] private VideoClip enterRiftVideo;
@@ -83,7 +83,6 @@ public class RiftTravel : MonoBehaviour
 
         InitializeVideoSystem();
 
-        // ✅ Initialize portal lock state
         if (unlockedAtStart) UnlockPortals();
         else LockPortals();
     }
@@ -134,15 +133,10 @@ public class RiftTravel : MonoBehaviour
             videoPlayer.errorReceived += OnVideoError;
             videoPlayer.prepareCompleted += OnVideoPrepared;
         }
-        else
-        {
-            Debug.LogError("VideoDisplay RawImage is not assigned!");
-        }
     }
 
     void Update()
     {
-        // ✅ Hard gate: when locked, no UI, no highlight, no teleport logic
         if (!PortalsUnlocked)
         {
             if (activeCrystal != null) ClearHighlight();
@@ -182,13 +176,10 @@ public class RiftTravel : MonoBehaviour
         }
     }
 
-    // ✅ Public API to control portal availability
     public void UnlockPortals()
     {
         PortalsUnlocked = true;
-        // ensure UI is clean then will be shown next Update when in range
         if (interactLabel != null) interactLabel.gameObject.SetActive(false);
-        Debug.Log("✅ Portals unlocked.");
     }
 
     public void LockPortals()
@@ -198,7 +189,6 @@ public class RiftTravel : MonoBehaviour
         if (interactLabel != null) interactLabel.gameObject.SetActive(false);
         popupActive = false;
         if (teleportPopup != null) teleportPopup.SetActive(false);
-        Debug.Log("🔒 Portals locked.");
     }
 
     MeshRenderer GetNearestCrystal()
@@ -206,11 +196,10 @@ public class RiftTravel : MonoBehaviour
         MeshRenderer nearest = null;
         float minDist = Mathf.Infinity;
 
-        // ✅ Check crystals in Map 1 and ignore disabled ones
         foreach (var c in map1Crystals)
         {
             if (c == null) continue;
-            if (!c.gameObject.activeInHierarchy) continue; // ✅ ignore disabled portal
+            if (!c.gameObject.activeInHierarchy) continue;
 
             float dist = Vector3.Distance(transform.position, c.transform.position);
             if (dist < triggerDistance && dist < minDist)
@@ -220,11 +209,10 @@ public class RiftTravel : MonoBehaviour
             }
         }
 
-        // ✅ Check crystals in Map 2 and ignore disabled ones
         foreach (var c in map2Crystals)
         {
             if (c == null) continue;
-            if (!c.gameObject.activeInHierarchy) continue; // ✅ ignore disabled portal
+            if (!c.gameObject.activeInHierarchy) continue;
 
             float dist = Vector3.Distance(transform.position, c.transform.position);
             if (dist < triggerDistance && dist < minDist)
@@ -241,7 +229,6 @@ public class RiftTravel : MonoBehaviour
     {
         if (interactLabel != null)
         {
-            // extra safety: never show when locked
             if (!PortalsUnlocked) state = false;
             interactLabel.text = "Press Q";
             interactLabel.gameObject.SetActive(state);
@@ -292,14 +279,11 @@ public class RiftTravel : MonoBehaviour
     {
         isTeleporting = true;
 
-        // Disable movement & camera look during teleport
         if (cachedMovement != null) cachedMovement.enabled = false;
         if (cameraLook != null) cameraLook.enabled = false;
 
-        // Select video (enter or exit)
         VideoClip targetClip = fromMap1 ? enterRiftVideo : exitRiftVideo;
 
-        // --- Play animations / suction / videos ---
         if (videoPlayer != null && targetClip != null)
         {
             if (fromMap1 && playSuctionOnEnter)
@@ -317,7 +301,6 @@ public class RiftTravel : MonoBehaviour
             yield return new WaitForSeconds(delayBeforeTeleport);
         }
 
-        // --- Apply position change (actual teleport) ---
         Vector3 pos = transform.position;
         pos = fromMap1
             ? new Vector3(pos.x, pos.y, pos.z + mapOffsetZ)
@@ -334,13 +317,12 @@ public class RiftTravel : MonoBehaviour
             transform.position = pos;
         }
 
-        // IMPORTANT: wait a frame, then snap-recover movement/camera
         yield return null;
 
         var move = GetComponent<WernerMovement>();
         if (move != null)
         {
-            move.OnTeleportedSnap();   // resets grounded, bobbing state, animator flags
+            move.OnTeleportedSnap();
         }
 
         if (cachedMovement != null) cachedMovement.enabled = true;
@@ -352,15 +334,13 @@ public class RiftTravel : MonoBehaviour
             if (!fromMap1) returnScript.ForceExitRift();
         }
 
-        // Arm the Map-2 rift disabler only after we’re back on Map 1
         if (!fromMap1)
         {
             var disabler = FindObjectOfType<DisableMap2RiftsInRadius>();
             if (disabler != null)
             {
                 disabler.cameFromRiftZone = true;
-                StartCoroutine(WaitAndAllowDisable(disabler)); // keep this if you already had it
-                Debug.Log("✅ Player returned to Map 1 — rifts can now be disabled when entering zone.");
+                StartCoroutine(WaitAndAllowDisable(disabler));
             }
         }
 
@@ -376,13 +356,12 @@ public class RiftTravel : MonoBehaviour
 
     private IEnumerator WaitAndAllowDisable(DisableMap2RiftsInRadius disabler)
     {
-        yield return new WaitForSeconds(0.5f); // adjust if needed
+        yield return new WaitForSeconds(0.5f);
         disabler.cameFromRiftZone = true;
     }   
 
     IEnumerator PlaySuctionAndVideoTogether(VideoClip clip)
     {
-        // Start both suction and video at the same time
         StartCoroutine(PlayPortalSuctionEffect());
         yield return StartCoroutine(PlayVideoFullDuration(clip, true));
     }
@@ -493,7 +472,6 @@ public class RiftTravel : MonoBehaviour
     void OnVideoPrepared(VideoPlayer vp) { }
     void OnVideoError(VideoPlayer vp, string message)
     {
-        Debug.LogError($"Video Player Error: {message}");
         if (isTeleporting) StartCoroutine(VideoFallback());
     }
 

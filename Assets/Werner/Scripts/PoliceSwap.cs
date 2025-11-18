@@ -14,13 +14,12 @@ public class PoliceSwap : MonoBehaviour
 
     private void OnEnable()
     {
-        // Trigger the swap when this script activates
         StartCoroutine(SwapAfterDelay());
     }
 
     private IEnumerator SwapAfterDelay()
     {
-        if (hasSwapped) yield break; // Prevent double triggers
+        if (hasSwapped) yield break;
 
         hasSwapped = true;
         yield return new WaitForSeconds(delay);
