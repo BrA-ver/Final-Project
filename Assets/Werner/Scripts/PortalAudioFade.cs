@@ -35,7 +35,7 @@ public class PortalAudioFade : MonoBehaviour
         }
         else
         {
-            portalAudio.volume = 1f;
+            portalAudio.volume = 0.3f;
         }
     }
 }
