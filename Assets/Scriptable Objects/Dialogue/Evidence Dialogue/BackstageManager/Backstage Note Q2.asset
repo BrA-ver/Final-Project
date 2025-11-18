@@ -10,17 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7b59aca2b9aa96b4694ef68a6119afa9, type: 3}
-  m_Name: Janitor Problem
+  m_Name: Backstage Note Q2
   m_EditorClassIdentifier: 
-  _name: Janitor Problem
-  Speaker: Janitor
+  _name: 
+  Speaker: 
   lines:
-  - 'Detective: Do you know of anyone who might have had a problem with James?'
-  - 'Antonio: I know of a lot of people that didn''t like him, but none of them would
-    have attempted something like this.'
-  voiceLines:
-  - {fileID: 8300000, guid: 46caa5faa7a826b4eaf3f18d85ecb562, type: 3}
-  - {fileID: 8300000, guid: d60cf9cba13c6504995ac5394b835164, type: 3}
+  - 'Detective: I found this note do you know anything about these instructions?'
+  - 'Samantha: Yse those were mine but I was planning to use them on some one else.
+    I did not kill the preformer whit poison.'
+  voiceLines: []
   choices: []
   isExit: 0
   evidence: {fileID: 0}

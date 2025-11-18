@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b59aca2b9aa96b4694ef68a6119afa9, type: 3}
+  m_Name: Backstage Checklist Q
+  m_EditorClassIdentifier: 
+  _name: 
+  Speaker: 
+  lines:
+  - 'Detective: You said that you were busy checking through your list and making
+    sure that everything was ready for the show. I found your list and saw that everything
+    was already checked and working an hour before 13:00. So, what were you really
+    doing.'
+  - "Samantha: Fine yes, I was not going through the list I was on the phone with
+    some of the suppliers get new supply\u2019s in."
+  voiceLines: []
+  choices: []
+  isExit: 0
+  evidence: {fileID: 0}
