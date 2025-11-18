@@ -55882,6 +55882,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UiManager
       objectReference: {fileID: 0}
+    - target: {fileID: 1101329281458319573, guid: 9667ab6f51b431e4891d43be67853dda, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1712301101657075130, guid: 9667ab6f51b431e4891d43be67853dda, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -56070,6 +56074,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 3.524
       objectReference: {fileID: 0}
+    - target: {fileID: 8478443956499898894, guid: 9667ab6f51b431e4891d43be67853dda, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 9514e55400c690a4297f2649eb00b63b, type: 3}
     - target: {fileID: 8535156699615990308, guid: 9667ab6f51b431e4891d43be67853dda, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -56698,6 +56706,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1264521579}
     - target: {fileID: 7095503202170662954, guid: 56b1dce185b53dc46b335a31c22cbfa3, type: 3}
+      propertyPath: exitRiftVideo
+      value: 
+      objectReference: {fileID: 32900000, guid: ab0c7a5a35d80cc4e9a513e7fb3adadc, type: 3}
+    - target: {fileID: 7095503202170662954, guid: 56b1dce185b53dc46b335a31c22cbfa3, type: 3}
       propertyPath: interactLabel
       value: 
       objectReference: {fileID: 556396260}
@@ -56705,6 +56717,10 @@ PrefabInstance:
       propertyPath: teleportPopup
       value: 
       objectReference: {fileID: 2038056209}
+    - target: {fileID: 7095503202170662954, guid: 56b1dce185b53dc46b335a31c22cbfa3, type: 3}
+      propertyPath: enterRiftVideo
+      value: 
+      objectReference: {fileID: 32900000, guid: 80831fc4c580de44c8fcfcd66696b52b, type: 3}
     - target: {fileID: 7095503202170662954, guid: 56b1dce185b53dc46b335a31c22cbfa3, type: 3}
       propertyPath: map1Crystals.Array.size
       value: 2
@@ -56967,6 +56983,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 886475138581045783, guid: c02d3e40e5bf08d428f54b6a4d5786ce, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 886475138581045783, guid: c02d3e40e5bf08d428f54b6a4d5786ce, type: 3}
       propertyPath: detailImage
       value: 
       objectReference: {fileID: 1459195830}
@@ -56989,6 +57009,10 @@ PrefabInstance:
     - target: {fileID: 1568437504916985252, guid: c02d3e40e5bf08d428f54b6a4d5786ce, type: 3}
       propertyPath: m_Name
       value: GameManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 1623716949836163510, guid: c02d3e40e5bf08d428f54b6a4d5786ce, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4626003822921390280, guid: c02d3e40e5bf08d428f54b6a4d5786ce, type: 3}
       propertyPath: m_LocalPosition.x
@@ -57032,7 +57056,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6685664549742838133, guid: c02d3e40e5bf08d428f54b6a4d5786ce, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6685664549742838133, guid: c02d3e40e5bf08d428f54b6a4d5786ce, type: 3}
       propertyPath: backButton
