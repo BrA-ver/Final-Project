@@ -20,12 +20,11 @@ MonoBehaviour:
     later be used as evidence to help solve the case.
   - Click on the Interrogate button on the left to question me about evidence you've
     found.
+  - After interrogating me, continue to the next room.
   voiceLines:
   - {fileID: 8300000, guid: 911e4020da6dc344095885d8f544cddf, type: 3}
   - {fileID: 8300000, guid: c588f58fc993d1e4b8e8108c0771773a, type: 3}
   - {fileID: 8300000, guid: 9253320166e0e89459708a92dd9f3047, type: 3}
-  choices:
-  - text: Where is the Interogate button?
-    targetDialogue: {fileID: 11400000, guid: 541f4db93462fb145a0c0b05cab2f2cb, type: 2}
+  choices: []
   isExit: 1
   evidence: {fileID: 0}

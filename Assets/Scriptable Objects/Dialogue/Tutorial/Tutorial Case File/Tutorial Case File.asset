@@ -15,10 +15,13 @@ MonoBehaviour:
   _name: Tutorial
   Speaker: Tutorial
   lines:
-  - You are almost there
-  - Now you can accuse me of drinking
-  - Open the Case File by pressing R
-  - 'Here you can motive '
+  - With all of the information you now have, help the police by closing the case.
+  - Pressing R will open the case file, here you can accuse me of drinking.
+  - With the case file open, select my profile and click on motive, means, and opportunity
+  - In the motive, means, and opportunity selection, use the bottle evidence you
+    found.
+  - Then finally, accuse me of being guilty.
+  voiceLines: []
   choices: []
   isExit: 1
   evidence: {fileID: 0}
