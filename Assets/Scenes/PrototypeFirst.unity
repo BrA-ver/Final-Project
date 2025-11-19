@@ -14821,7 +14821,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 16.000017, y: 483}
+  m_AnchoredPosition: {x: -550, y: 483}
   m_SizeDelta: {x: 345.723, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &474842151
@@ -69583,6 +69583,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: ae1ef0cd98a07064c9a2a73409c20ca4, type: 3}
     - target: {fileID: 1098457709524907801, guid: 9667ab6f51b431e4891d43be67853dda, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 449.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 1098457709524907801, guid: 9667ab6f51b431e4891d43be67853dda, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -567
       objectReference: {fileID: 0}
@@ -69805,6 +69809,30 @@ PrefabInstance:
     - target: {fileID: 7053845177478471198, guid: 9667ab6f51b431e4891d43be67853dda, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -0.40000153
+      objectReference: {fileID: 0}
+    - target: {fileID: 7267415024166241608, guid: 9667ab6f51b431e4891d43be67853dda, type: 3}
+      propertyPath: m_Text
+      value: 'WASD = Movement
+
+
+        Shift = Sprint
+
+
+        Spacebar = Jump
+
+
+        Left
+        Click = Interact
+
+
+        Q = Trave through Rift
+
+
+        Tab = Evidence
+        board
+
+
+        R = Case File'
       objectReference: {fileID: 0}
     - target: {fileID: 7912786693818097311, guid: 9667ab6f51b431e4891d43be67853dda, type: 3}
       propertyPath: m_SizeDelta.y
