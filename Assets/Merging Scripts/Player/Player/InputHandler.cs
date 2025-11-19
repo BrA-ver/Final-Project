@@ -27,8 +27,19 @@ public class InputHandler : MonoBehaviour
 
     private void Start()
     {
+        LockCursor();
+    }
+
+    public void LockCursor()
+    {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    public void UnlockCursor()
+    {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -50,18 +61,13 @@ public class InputHandler : MonoBehaviour
     public void OnSubmit(InputAction.CallbackContext context)
     {
         if (context.started)
-        {
-            //Debug.Log("Submit Sent");
             onSumbit?.Invoke();
-        }
     }
 
     public void OnPresentEvidence(InputAction.CallbackContext context)
     {
         if (context.started)
-        {
             onPresentEvidence?.Invoke();
-        }
     }
 
     public void OnInteract(InputAction.CallbackContext context)
@@ -73,8 +79,6 @@ public class InputHandler : MonoBehaviour
     public void OnCaseBoard(InputAction.CallbackContext context)
     {
         if (context.performed)
-        {
             onCaseBoard?.Invoke();
-        }
     }
 }

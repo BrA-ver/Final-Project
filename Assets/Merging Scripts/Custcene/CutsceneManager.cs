@@ -40,7 +40,9 @@ public class CutsceneManager : MonoBehaviour
 
     public void StartCutscene(Cutscene targetCutScene)
     {
-        Debug.Log("Cutscene Started");
+
+        if (InputHandler.instance != null)
+            InputHandler.instance.UnlockCursor();
 
         BG.SetActive(true);
         panel.gameObject.SetActive(true);
@@ -65,6 +67,9 @@ public class CutsceneManager : MonoBehaviour
                 BackgroundMusicManager.Instance.StopMusic();
 
             panel.gameObject.SetActive(false);
+
+            if (InputHandler.instance != null)
+                InputHandler.instance.LockCursor();
 
             SceneManager.LoadScene(0);
             return;
