@@ -82,8 +82,11 @@ public class CutsceneManager : MonoBehaviour
 
         if (index >= currentCutscene.images.Length)
         {
-            if (BackgroundMusicManager.Instance != null)
-                BackgroundMusicManager.Instance.StopMusic();
+            if (currentCutscene.Name != "Intro")
+            {
+                if (BackgroundMusicManager.Instance != null)
+                    BackgroundMusicManager.Instance.StopMusic();
+            }
 
             panel.gameObject.SetActive(false);
             BG.SetActive(false);
