@@ -29,12 +29,10 @@ public class DialogueManager : MonoBehaviour
 
     public static event Action<Dialogue> OnDialogueStarted;
 
-    // ⭐ NEW EVENT: Fired for EVERY line displayed (includes dialogue + index)
     public static event Action<Dialogue, int> OnDialogueLineDisplayed;
 
     Dialogue lastChoice;
 
-    // 🔊 AUDIO
     [Header("Voice Acting")]
     public AudioSource voiceSource;
     public bool autoAdvanceWhenVoiceEnds = false;
@@ -59,7 +57,6 @@ public class DialogueManager : MonoBehaviour
 
     void Update()
     {
-        // 👄 Auto-advance when voice clip finishes
         if (autoAdvanceWhenVoiceEnds && waitingForVoiceToFinish)
         {
             if (!voiceSource.isPlaying)
@@ -70,10 +67,6 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-
-    // -----------------------------
-    // MAIN DIALOGUE ENTRY
-    // -----------------------------
     public void EnterDialogue(Dialogue dialogue, NPC npc = null)
     {
         if (dialogueStarted) return;
@@ -96,10 +89,6 @@ public class DialogueManager : MonoBehaviour
         GameManager.instance.ShowMouse();
     }
 
-
-    // -----------------------------
-    // MAIN DIALOGUE LOGIC
-    // -----------------------------
     private void ContinueOrExitDialogue()
     {
         if (!makingChoice)
@@ -109,22 +98,17 @@ public class DialogueManager : MonoBehaviour
                 string dialogueLine = dialogue.lines[index];
                 Debug.Log(dialogueLine);
 
-                // Display text on UI
                 onDisplayDialogue?.Invoke(dialogueLine);
 
-                // 🔊 Play audio for this line
                 PlayVoiceLine(dialogue, index);
 
-                // ⭐ NEW: Fire line-displayed event
                 OnDialogueLineDisplayed?.Invoke(dialogue, index);
 
-                // evidence unlock
                 if (dialogue.evidence != null)
                 {
                     EvidenceManager.Instance.AddEvidence(dialogue.evidence);
                 }
 
-                // Check if last text line AND choices exist
                 if (index == dialogue.lines.Length - 1 && dialogue.choices.Length > 0)
                 {
                     makingChoice = true;
@@ -156,10 +140,6 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-
-    // -----------------------------
-    // AUDIO PLAYBACK
-    // -----------------------------
     private void PlayVoiceLine(Dialogue dialogue, int lineIndex)
     {
         if (voiceSource == null) return;
@@ -181,10 +161,6 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-
-    // -----------------------------
-    // RETURN TO MAIN QUESTIONS
-    // -----------------------------
     public void ReturnToMainQuestions()
     {
         GameManager.instance.SwitchState(InteractionState.Dialogue);
@@ -219,10 +195,6 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-
-    // -----------------------------
-    // EXIT DIALOGUE
-    // -----------------------------
     void ExitDialogue()
     {
         dialogueStarted = false;
@@ -237,10 +209,6 @@ public class DialogueManager : MonoBehaviour
         GameManager.instance.HideMouse();
     }
 
-
-    // -----------------------------
-    // CHOICE SELECTION
-    // -----------------------------
     public void SelectChoice(DialogueChoice choice)
     {
         if (choice.targetDialogue != null)
@@ -255,12 +223,7 @@ public class DialogueManager : MonoBehaviour
 
             ContinueOrExitDialogue();
         }
-        else
-        {
-            Debug.LogWarning("WARNING: There is no dialogue following this choice");
-        }
     }
-
 
     public void ResponceDialogue(Dialogue dialogue)
     {
@@ -275,10 +238,6 @@ public class DialogueManager : MonoBehaviour
         ContinueOrExitDialogue();
     }
 
-
-    // -----------------------------
-    // USER INPUT
-    // -----------------------------
     void OnSubmit()
     {
         if (ignoreClick)
@@ -290,7 +249,6 @@ public class DialogueManager : MonoBehaviour
         if (!dialogueStarted || GameManager.instance.IgnoreMouseInput) return;
         if (GameManager.instance.CurrentState != InteractionState.Dialogue) return;
 
-        // ⏩ Skip voice if it's playing
         if (voiceSource != null && voiceSource.isPlaying)
         {
             voiceSource.Stop();
@@ -299,7 +257,6 @@ public class DialogueManager : MonoBehaviour
         waitingForVoiceToFinish = false;
         ContinueOrExitDialogue();
     }
-
 
     public void ShowActionsAfterDialogue()
     {
