@@ -42,7 +42,10 @@ public class CaseFile : MonoBehaviour
     [SerializeField] Color guiltyColour = Color.red;
     [SerializeField] Color notGuiltyColour = Color.green;
     [SerializeField] Button guiltyButton, notGuiltyButton;
-    public event Action onVerdictMade;
+
+
+    public event Action<string> onVerdictMade;
+    private int verdictsMade = 0;
 
     public AnswerText[] AnswerTexts => answerTexts;
 
@@ -165,7 +168,13 @@ public class CaseFile : MonoBehaviour
             verdictCircle.color = notGuiltyColour;
         }
         StartCoroutine(FillCircleRoutine(fillTime));
-        onVerdictMade?.Invoke();
+
+        verdictsMade++;
+        if (verdictsMade >= activeProfiles.Count)
+        {
+            onVerdictMade?.Invoke("Intro");
+            Debug.Log("Playing Cutscene Of Guilty Character");
+        }
     }
 
     IEnumerator FillCircleRoutine(float fillTIme)
