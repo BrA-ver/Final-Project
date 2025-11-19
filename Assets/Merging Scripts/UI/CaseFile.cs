@@ -4,6 +4,7 @@ using TMPro;
 using System;
 using System.Collections.Generic;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class CaseFile : MonoBehaviour
 {
@@ -116,7 +117,7 @@ public class CaseFile : MonoBehaviour
     public void CloseCaseFile()
     {
         GameManager.instance.SwitchState(InteractionState.None);
-        GameManager.instance.HideMouse();
+        //GameManager.instance.HideMouse();
         IsOpen = false;
 
         bg.SetActive(false);
@@ -174,6 +175,9 @@ public class CaseFile : MonoBehaviour
         {
             CharacterProfile guiltyprofile = activeProfiles.Find(i => i.IsGuity);
 
+            string currentScene = SceneManager.GetActiveScene().name;
+            if (currentScene == "Tutorial")
+                return;
             onVerdictMade?.Invoke(guiltyprofile.ProfileSO.guiltyCutscene);
             Debug.Log("Playing Cutscene" + guiltyprofile.ProfileSO.guiltyCutscene.name);
         }

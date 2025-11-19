@@ -7,6 +7,7 @@ public class CutsceneManager : MonoBehaviour
     public static CutsceneManager instance;
 
     [SerializeField] Button nextButton;
+    [SerializeField] Cutscene introCutscene;
 
     Cutscene currentCutscene;
     int index;
@@ -36,6 +37,10 @@ public class CutsceneManager : MonoBehaviour
         CaseFile.instance.onVerdictMade += StartCutscene;
 
         BG.SetActive(false);
+
+        string currentScene = SceneManager.GetActiveScene().name;
+        if (currentScene == "PrototypeFirst")
+            StartCutscene(introCutscene);
     }
 
     public void StartCutscene(Cutscene targetCutScene)
@@ -67,11 +72,16 @@ public class CutsceneManager : MonoBehaviour
                 BackgroundMusicManager.Instance.StopMusic();
 
             panel.gameObject.SetActive(false);
+            BG.SetActive(false);
 
             if (InputHandler.instance != null)
                 InputHandler.instance.LockCursor();
 
-            SceneManager.LoadScene(0);
+            if (currentCutscene.Name != "Intro")
+            {
+                SceneManager.LoadScene(0);
+                
+            }
             return;
         }
 

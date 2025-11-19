@@ -27,7 +27,7 @@ public class InputHandler : MonoBehaviour
 
     private void Start()
     {
-        LockCursor();
+        //LockCursor();
     }
 
     public void LockCursor()
