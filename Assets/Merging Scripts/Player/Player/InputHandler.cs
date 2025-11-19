@@ -27,11 +27,21 @@ public class InputHandler : MonoBehaviour
 
     private void Start()
     {
-        //LockCursor();
+        // ⭐ If cutscene active, do NOT lock cursor
+        if (CutsceneManager.IsCutsceneActive)
+        {
+            UnlockCursor();
+            return;
+        }
+
+        LockCursor();
     }
 
     public void LockCursor()
     {
+        if (CutsceneManager.IsCutsceneActive)
+            return;
+
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -44,16 +54,29 @@ public class InputHandler : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
+        if (CutsceneManager.IsCutsceneActive)
+        {
+            moveInput = Vector2.zero;
+            return;
+        }
+
         moveInput = context.ReadValue<Vector2>();
     }
 
     public void OnLook(InputAction.CallbackContext context)
     {
+        if (CutsceneManager.IsCutsceneActive)
+        {
+            lookInput = Vector2.zero;
+            return;
+        }
+
         lookInput = context.ReadValue<Vector2>();
     }
 
     public void OnJump(InputAction.CallbackContext context)
     {
+        if (CutsceneManager.IsCutsceneActive) return;
         if (context.started)
             onJump?.Invoke();
     }
@@ -72,12 +95,14 @@ public class InputHandler : MonoBehaviour
 
     public void OnInteract(InputAction.CallbackContext context)
     {
+        if (CutsceneManager.IsCutsceneActive) return;
         if (context.started)
             onInteract?.Invoke();
     }
 
     public void OnCaseBoard(InputAction.CallbackContext context)
     {
+        if (CutsceneManager.IsCutsceneActive) return;
         if (context.performed)
             onCaseBoard?.Invoke();
     }

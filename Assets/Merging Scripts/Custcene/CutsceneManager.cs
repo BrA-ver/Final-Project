@@ -6,6 +6,9 @@ public class CutsceneManager : MonoBehaviour
 {
     public static CutsceneManager instance;
 
+    // ⭐ Global flag for input + cursor control
+    public static bool IsCutsceneActive { get; set; }
+
     [SerializeField] Button nextButton;
     [SerializeField] Cutscene introCutscene;
 
@@ -19,6 +22,16 @@ public class CutsceneManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+
+        string sceneName = SceneManager.GetActiveScene().name;
+
+        // ⭐ PrototypeFirst ALWAYS begins with a cutscene
+        if (sceneName == "PrototypeFirst")
+            IsCutsceneActive = true;
+
+        // ⭐ Force cursor unlocked BEFORE ANY Start() runs
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     private void OnEnable()
@@ -29,31 +42,36 @@ public class CutsceneManager : MonoBehaviour
     private void OnDisable()
     {
         nextButton.onClick.RemoveListener(NextPage);
-        CaseFile.instance.onVerdictMade -= StartCutscene;
+
+        if (CaseFile.instance != null)
+            CaseFile.instance.onVerdictMade -= StartCutscene;
     }
 
     private void Start()
     {
-        CaseFile.instance.onVerdictMade += StartCutscene;
+        if (CaseFile.instance != null)
+            CaseFile.instance.onVerdictMade += StartCutscene;
 
         BG.SetActive(false);
 
-        string currentScene = SceneManager.GetActiveScene().name;
-        if (currentScene == "PrototypeFirst")
+        // ⭐ Auto-start intro cutscene
+        if (SceneManager.GetActiveScene().name == "PrototypeFirst")
             StartCutscene(introCutscene);
     }
 
     public void StartCutscene(Cutscene targetCutScene)
     {
+        IsCutsceneActive = true;
 
-        if (InputHandler.instance != null)
-            InputHandler.instance.UnlockCursor();
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
 
         BG.SetActive(true);
         panel.gameObject.SetActive(true);
-        index = 0;
 
+        index = 0;
         currentCutscene = targetCutScene;
+
         ShowCutscenePage();
     }
 
@@ -68,20 +86,29 @@ public class CutsceneManager : MonoBehaviour
 
         if (index >= currentCutscene.images.Length)
         {
+            // Stop music
             if (BackgroundMusicManager.Instance != null)
                 BackgroundMusicManager.Instance.StopMusic();
 
             panel.gameObject.SetActive(false);
             BG.SetActive(false);
 
+            // ⭐ End cutscene
+            IsCutsceneActive = false;
+
+            // ⭐ Relock cursor for gameplay
             if (InputHandler.instance != null)
                 InputHandler.instance.LockCursor();
-
-            if (currentCutscene.Name != "Intro")
+            else
             {
-                SceneManager.LoadScene(0);
-                
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
             }
+
+            // Load menu if it’s not the intro
+            if (currentCutscene.Name != "Intro")
+                SceneManager.LoadScene(0);
+
             return;
         }
 

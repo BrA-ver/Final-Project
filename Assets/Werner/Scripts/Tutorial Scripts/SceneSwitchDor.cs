@@ -15,6 +15,17 @@ public class SceneSwitchDoor : Interactable
 
         if (!string.IsNullOrEmpty(sceneToLoad))
         {
+            // ⭐ Next scene starts with a cutscene
+            CutsceneManager.IsCutsceneActive = true;
+
+            // ⭐ Disable input so it cannot lock the cursor mid-load
+            if (InputHandler.instance != null)
+                InputHandler.instance.enabled = false;
+
+            // ⭐ Ensure cursor visible BEFORE transition
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
             SceneManager.LoadScene(sceneToLoad);
         }
     }
@@ -24,7 +35,6 @@ public class SceneSwitchDoor : Interactable
         if (other.CompareTag("Player"))
         {
             isPlayerNearby = true;
-
             if (highlightTarget != null)
                 highlightTarget.HighlightObject();
         }
@@ -35,7 +45,6 @@ public class SceneSwitchDoor : Interactable
         if (other.CompareTag("Player"))
         {
             isPlayerNearby = false;
-
             if (highlightTarget != null)
                 highlightTarget.ClearHighlight();
         }
