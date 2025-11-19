@@ -11,7 +11,6 @@ public class CutsceneManager : MonoBehaviour
     Cutscene currentCutscene;
     int index;
 
-
     [Header("UI")]
     [SerializeField] GameObject BG;
     [SerializeField] Image panel;
@@ -24,7 +23,6 @@ public class CutsceneManager : MonoBehaviour
     private void OnEnable()
     {
         nextButton.onClick.AddListener(NextPage);
-        
     }
 
     private void OnDisable()
@@ -38,20 +36,15 @@ public class CutsceneManager : MonoBehaviour
         CaseFile.instance.onVerdictMade += StartCutscene;
 
         BG.SetActive(false);
-        //StartCutscene("Intro");
-    }
-
-    private void LateUpdate()
-    {
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
     }
 
     public void StartCutscene(Cutscene targetCutScene)
     {
-        Debug.Log("Cutsene Started");
-        BG.SetActive(true);
+        Debug.Log("Cutscene Started");
 
+        BG.SetActive(true);
+        panel.gameObject.SetActive(true);
+        index = 0;
 
         currentCutscene = targetCutScene;
         ShowCutscenePage();
@@ -65,11 +58,13 @@ public class CutsceneManager : MonoBehaviour
     void NextPage()
     {
         index++;
+
         if (index >= currentCutscene.images.Length)
         {
-            // Reset Index And End The Cutscene
-            panel.gameObject.SetActive(false);
+            if (BackgroundMusicManager.Instance != null)
+                BackgroundMusicManager.Instance.StopMusic();
 
+            panel.gameObject.SetActive(false);
 
             SceneManager.LoadScene(0);
             return;
