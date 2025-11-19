@@ -2214,7 +2214,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: e5ad9c5ab33c1f64abb7c7ab6b5d1955, type: 3}
   m_Resource: {fileID: 8300000, guid: e5ad9c5ab33c1f64abb7c7ab6b5d1955, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -11178,6 +11178,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6421278851821302886, guid: 003defd67b3a06e45892b078432c981f, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 589c78ddc44adf749b51a0217f104112, type: 2}
     - target: {fileID: 8177200675700879549, guid: 003defd67b3a06e45892b078432c981f, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -47639,7 +47643,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: e5ad9c5ab33c1f64abb7c7ab6b5d1955, type: 3}
   m_Resource: {fileID: 8300000, guid: e5ad9c5ab33c1f64abb7c7ab6b5d1955, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -51219,6 +51223,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4446255089388767111, guid: 99bae74f2b5133e4897ce12faa5401d0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8178413716648582532, guid: 99bae74f2b5133e4897ce12faa5401d0, type: 3}
       propertyPath: m_Name
       value: Canvas
@@ -51366,6 +51374,10 @@ PrefabInstance:
       propertyPath: shakeStartDistance
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3582575072741177913, guid: 0de479de3b6fe7440bc96265a5ee5e2d, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: bf96c1730757bdb4abbbe610d49bd795, type: 2}
     - target: {fileID: 4755336550175577711, guid: 0de479de3b6fe7440bc96265a5ee5e2d, type: 3}
       propertyPath: m_Name
       value: Tutorial Rift 2
