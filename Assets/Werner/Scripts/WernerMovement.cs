@@ -51,6 +51,9 @@ public class WernerMovement : MonoBehaviour
 
     private CollisionFlags collisionFlags;
 
+    private bool printedMoveAfterTeleport = false;
+    private bool printedBobFailure = false;
+
     public bool OnGround => groundedPlayer;
     public Transform CameraTarget => cameraTarget;
 
@@ -63,7 +66,7 @@ public class WernerMovement : MonoBehaviour
             animator = GetComponentInChildren<Animator>();
 
         playerCam = Camera.main ?? GetComponentInChildren<Camera>();
- 
+
         if (cameraTarget != null)
         {
             cameraTarget.localPosition = standCameraOffset;
@@ -73,7 +76,18 @@ public class WernerMovement : MonoBehaviour
 
     private void Update()
     {
-        groundedPlayer = controller.isGrounded || (groundCheck != null && groundCheck.OnGround());
+        if (controller == null)
+            return;
+
+        if (controller.enabled)
+        {
+            groundedPlayer = controller.isGrounded || (groundCheck != null && groundCheck.OnGround());
+        }
+        else
+        {
+            groundedPlayer = true;
+            return;
+        }
 
         if (GameManager.instance != null && GameManager.instance.CurrentState != InteractionState.None)
         {
@@ -89,6 +103,9 @@ public class WernerMovement : MonoBehaviour
 
     private void ApplyGravityOnly()
     {
+        if (controller == null || !controller.enabled)
+            return;
+
         if (groundedPlayer && yVelocity.y < 0f)
         {
             yVelocity.y = -2f;
@@ -108,8 +125,17 @@ public class WernerMovement : MonoBehaviour
 
     private void HandleMovementAndGravity()
     {
+        if (controller == null || !controller.enabled)
+            return;
+
         float inputX = Input.GetAxisRaw("Horizontal");
         float inputZ = Input.GetAxisRaw("Vertical");
+
+        if (needsBobReset && !printedMoveAfterTeleport && (inputX != 0 || inputZ != 0))
+        {
+            printedMoveAfterTeleport = true;
+        }
+
         float currentSpeed = Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : moveSpeed;
 
         if (playerCam == null)
@@ -141,7 +167,8 @@ public class WernerMovement : MonoBehaviour
             if (isJumping)
             {
                 isJumping = false;
-                animator.SetBool("IsJumping", false);
+                if (animator != null)
+                    animator.SetBool("IsJumping", false);
             }
         }
 
@@ -149,7 +176,8 @@ public class WernerMovement : MonoBehaviour
         {
             yVelocity.y = Mathf.Sqrt(-2f * jumpHeight * gravityValue);
             isJumping = true;
-            animator.SetBool("IsJumping", true);
+            if (animator != null)
+                animator.SetBool("IsJumping", true);
         }
 
         yVelocity.y += gravityValue * Time.deltaTime;
@@ -167,24 +195,44 @@ public class WernerMovement : MonoBehaviour
 
     private void HandleHeadBobAndSway()
     {
-        if (cameraTarget == null || !groundedPlayer) return;
+        if (cameraTarget == null)
+        {
+            if (!printedBobFailure)
+            {
+                printedBobFailure = true;
+            }
+            return;
+        }
+
+        if (!groundedPlayer)
+        {
+            if (!printedBobFailure)
+            {
+                printedBobFailure = true;
+            }
+            return;
+        }
 
         float moveInput = Mathf.Abs(Input.GetAxisRaw("Horizontal")) + Mathf.Abs(Input.GetAxisRaw("Vertical"));
         bool isMoving = moveInput > 0.1f;
 
         if (needsBobReset)
         {
-            if (isMoving)
+            if (!isMoving)
             {
-                needsBobReset = false;
-                bobTimer = 0f;
-                cameraTarget.localPosition = standCameraOffset;
-                baseCamPos = standCameraOffset;
-            }
-            else
-            {
+                if (!printedBobFailure)
+                {
+                    printedBobFailure = true;
+                }
                 return;
             }
+
+            needsBobReset = false;
+            bobTimer = 0f;
+            cameraTarget.localPosition = standCameraOffset;
+            baseCamPos = standCameraOffset;
+
+            printedBobFailure = false;
         }
 
         if (!isMoving)
@@ -204,7 +252,7 @@ public class WernerMovement : MonoBehaviour
 
         cameraTarget.localPosition = baseCamPos + new Vector3(offsetX, offsetY, 0);
     }
-    
+
     private void HandleAnimations()
     {
         if (animator == null) return;
@@ -224,7 +272,11 @@ public class WernerMovement : MonoBehaviour
 
     public void OnTeleportedSnap()
     {
+        printedBobFailure = false;
+        printedMoveAfterTeleport = false;
+
         StartCoroutine(TeleportFixRoutine());
+        StartCoroutine(RestoreBaseCameraAfterTeleport());
     }
 
     private IEnumerator TeleportFixRoutine()
@@ -249,6 +301,17 @@ public class WernerMovement : MonoBehaviour
         needsBobReset = true;
     }
 
+    private IEnumerator RestoreBaseCameraAfterTeleport()  
+    {
+        yield return null;
+
+        if (cameraTarget != null)
+        {
+            cameraTarget.localPosition = standCameraOffset;
+            baseCamPos = standCameraOffset;
+            bobTimer = 0f;
+        }
+    }
 
     public void TeleportTo(Vector3 position, Quaternion rotation)
     {
@@ -276,7 +339,7 @@ public class WernerMovement : MonoBehaviour
             bobTimer = 0f;
         }
     }
-    
+
     public void ForceHeadBobReset()
     {
         needsBobReset = true;
@@ -286,6 +349,27 @@ public class WernerMovement : MonoBehaviour
         {
             cameraTarget.localPosition = standCameraOffset;
             baseCamPos = standCameraOffset;
+        }
+    }
+
+    public void StopAllMovementImmediately()
+    {
+        yVelocity = Vector3.zero;
+        moveDirection = Vector3.zero;
+
+        bobTimer = 0f;
+        needsBobReset = true;
+
+        if (cameraTarget != null)
+        {
+            cameraTarget.localPosition = standCameraOffset;
+            baseCamPos = standCameraOffset;
+        }
+
+        if (animator != null)
+        {
+            animator.SetFloat("Speed", 0f);
+            animator.SetBool("IsJumping", false);
         }
     }
 }

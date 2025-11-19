@@ -7,7 +7,7 @@ public class GroundCheck : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
 
     [Header("Debug Info (Read Only)")]
-    [SerializeField] private bool isGroundedInspector = false; // <-- shows in inspector
+    [SerializeField] private bool isGroundedInspector = false;
 
     public bool OnGround() => isGroundedInspector;
 

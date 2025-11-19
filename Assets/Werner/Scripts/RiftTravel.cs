@@ -59,8 +59,11 @@ public class RiftTravel : MonoBehaviour
     private bool isTeleporting = false;
     private bool popupActive = false;
     private bool pendingFromMap1;
+
     private Vector3 originalCameraPosition;
     private Quaternion originalCameraRotation;
+
+    private bool wasControllerEnabled = true;
 
     void Awake()
     {
@@ -147,9 +150,7 @@ public class RiftTravel : MonoBehaviour
         if (popupActive)
         {
             if (Input.GetKeyDown(KeyCode.Escape))
-            {
                 OnNoClicked();
-            }
             return;
         }
 
@@ -198,8 +199,7 @@ public class RiftTravel : MonoBehaviour
 
         foreach (var c in map1Crystals)
         {
-            if (c == null) continue;
-            if (!c.gameObject.activeInHierarchy) continue;
+            if (c == null || !c.gameObject.activeInHierarchy) continue;
 
             float dist = Vector3.Distance(transform.position, c.transform.position);
             if (dist < triggerDistance && dist < minDist)
@@ -211,8 +211,7 @@ public class RiftTravel : MonoBehaviour
 
         foreach (var c in map2Crystals)
         {
-            if (c == null) continue;
-            if (!c.gameObject.activeInHierarchy) continue;
+            if (c == null || !c.gameObject.activeInHierarchy) continue;
 
             float dist = Vector3.Distance(transform.position, c.transform.position);
             if (dist < triggerDistance && dist < minDist)
@@ -240,8 +239,7 @@ public class RiftTravel : MonoBehaviour
         popupActive = true;
         if (teleportPopup != null) teleportPopup.SetActive(true);
 
-        if (cachedMovement != null) cachedMovement.enabled = false;
-        if (cameraLook != null) cameraLook.enabled = false;
+        FreezePlayer();
 
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
@@ -257,8 +255,7 @@ public class RiftTravel : MonoBehaviour
         popupActive = false;
         if (teleportPopup != null) teleportPopup.SetActive(false);
 
-        if (cachedMovement != null) cachedMovement.enabled = true;
-        if (cameraLook != null) cameraLook.enabled = true;
+        UnfreezePlayer();
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -275,12 +272,44 @@ public class RiftTravel : MonoBehaviour
         HidePopup();
     }
 
+    void FreezePlayer()
+    {
+        if (cachedMovement != null) cachedMovement.enabled = false;
+
+        if (controller != null)
+        {
+            wasControllerEnabled = controller.enabled;
+            controller.enabled = false;
+        }
+
+        if (cameraLook != null)
+            cameraLook.enabled = false;
+
+        if (cachedMovement != null)
+            cachedMovement.StopAllMovementImmediately();
+    }
+
+    void UnfreezePlayer()
+    {
+        if (cachedMovement != null)
+            cachedMovement.enabled = true;
+
+        if (controller != null)
+            controller.enabled = wasControllerEnabled;
+
+        if (cameraLook != null)
+        {
+            cameraLook.transform.localPosition = Vector3.zero;
+            cameraLook.transform.localRotation = Quaternion.identity;
+            cameraLook.enabled = true;
+        }
+    }
+
     IEnumerator TeleportSequence(bool fromMap1)
     {
         isTeleporting = true;
 
-        if (cachedMovement != null) cachedMovement.enabled = false;
-        if (cameraLook != null) cameraLook.enabled = false;
+        FreezePlayer();
 
         VideoClip targetClip = fromMap1 ? enterRiftVideo : exitRiftVideo;
 
@@ -306,59 +335,33 @@ public class RiftTravel : MonoBehaviour
             ? new Vector3(pos.x, pos.y, pos.z + mapOffsetZ)
             : new Vector3(pos.x, pos.y, pos.z - mapOffsetZ);
 
-        if (controller != null)
-        {
-            controller.enabled = false;
-            transform.position = pos;
-            controller.enabled = true;
-        }
-        else
-        {
-            transform.position = pos;
-        }
+        transform.position = pos;
 
         yield return null;
 
-        var move = GetComponent<WernerMovement>();
-        if (move != null)
+        if (cachedMovement != null)
         {
-            move.OnTeleportedSnap();
+            cachedMovement.OnTeleportedSnap();
+            cachedMovement.RefreshCamera();
+            cachedMovement.ForceHeadBobReset();
         }
 
-        if (cachedMovement != null) cachedMovement.enabled = true;
-        if (cameraLook != null)      cameraLook.enabled = true;
-
-        if (returnScript != null)
+        if (cameraLook != null)
         {
-            returnScript.SuppressReturn(2f);
-            if (!fromMap1) returnScript.ForceExitRift();
+            cameraLook.transform.localPosition = originalCameraPosition;
+            cameraLook.transform.localRotation = originalCameraRotation;
         }
 
-        if (!fromMap1)
-        {
-            var disabler = FindObjectOfType<DisableMap2RiftsInRadius>();
-            if (disabler != null)
-            {
-                disabler.cameFromRiftZone = true;
-                StartCoroutine(WaitAndAllowDisable(disabler));
-            }
-        }
+        UnfreezePlayer();
 
         isTeleporting = false;
     }
-
-    private IEnumerator EnableRiftDisableAfterDelay(DisableMap2RiftsInRadius disabler, float waitTime)
-    {
-        yield return new WaitForSeconds(waitTime);
-        disabler.cameFromRiftZone = true;
-    }
-
 
     private IEnumerator WaitAndAllowDisable(DisableMap2RiftsInRadius disabler)
     {
         yield return new WaitForSeconds(0.5f);
         disabler.cameFromRiftZone = true;
-    }   
+    }
 
     IEnumerator PlaySuctionAndVideoTogether(VideoClip clip)
     {
@@ -383,7 +386,6 @@ public class RiftTravel : MonoBehaviour
 
             if (cameraLook != null)
             {
-                
                 float zoomFactor = suctionCurve.Evaluate(progress) * 0.5f;
 
                 Vector3 shake = new Vector3(
@@ -399,11 +401,24 @@ public class RiftTravel : MonoBehaviour
                     Random.Range(-intensity * 20f, intensity * 20f),
                     Random.Range(-intensity * 10f, intensity * 10f)
                 );
-                cameraLook.transform.localRotation = Quaternion.Euler(rotationShake) * originalCameraRotation;
+                cameraLook.transform.localRotation =
+                    Quaternion.Euler(rotationShake) * originalCameraRotation;
             }
 
             elapsed += Time.deltaTime;
             yield return null;
+        }
+
+        if (cameraLook != null)
+        {
+            cameraLook.transform.localPosition = originalCameraPosition;
+            cameraLook.transform.localRotation = originalCameraRotation;
+        }
+
+        if (cachedMovement != null)
+        {
+            cachedMovement.RefreshCamera();
+            cachedMovement.ForceHeadBobReset();
         }
     }
 
@@ -417,7 +432,6 @@ public class RiftTravel : MonoBehaviour
 
         videoPlayer.clip = clip;
 
-        
         yield return StartCoroutine(FadeVideoIn());
 
         Cursor.visible = true;
@@ -426,6 +440,18 @@ public class RiftTravel : MonoBehaviour
         videoPlayer.Play();
         float videoLength = (float)clip.length;
         yield return new WaitForSeconds(videoLength);
+
+        if (cameraLook != null)
+        {
+            cameraLook.transform.localPosition = originalCameraPosition;
+            cameraLook.transform.localRotation = originalCameraRotation;
+        }
+
+        if (cachedMovement != null)
+        {
+            cachedMovement.RefreshCamera();
+            cachedMovement.ForceHeadBobReset();
+        }
 
         yield return StartCoroutine(FadeVideoOut());
 
