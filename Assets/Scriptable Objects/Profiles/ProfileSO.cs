@@ -25,7 +25,28 @@ public class ProfileSO : ScriptableObject
     [SerializeField] [TextArea(2, 5)] string _means;
     [SerializeField] [TextArea(2, 5)] string _opportunity;
 
+    [Header("Cutscenes")]
+    [SerializeField] int num;
+    [field: SerializeField] public Cutscene guiltyCutscene { get; private set; }
+
     public string Motive => _motive;
     public string Means => _means;
     public string Opportunity => _opportunity;
 }
+
+/*
+ * Janitorr:
+ * Motive: Mob Letter
+ * Means: Strychnine
+ * Opportunity: Cleaning Cart
+ * 
+ * Manager:
+ * Motive: Phone
+ * Means: Secret Note
+ * Opportunity: Checklist
+ * 
+ * Bartender:
+ * Motive: Prescription From
+ * Means: Arsenic
+ * Opportunity: Dirty Glasses
+ */

@@ -44,7 +44,7 @@ public class CaseFile : MonoBehaviour
     [SerializeField] Button guiltyButton, notGuiltyButton;
 
 
-    public event Action<string> onVerdictMade;
+    public event Action<Cutscene> onVerdictMade;
     private int verdictsMade = 0;
 
     public AnswerText[] AnswerTexts => answerTexts;
@@ -172,8 +172,10 @@ public class CaseFile : MonoBehaviour
         verdictsMade++;
         if (verdictsMade >= activeProfiles.Count)
         {
-            onVerdictMade?.Invoke("Intro");
-            Debug.Log("Playing Cutscene Of Guilty Character");
+            CharacterProfile guiltyprofile = activeProfiles.Find(i => i.IsGuity);
+
+            onVerdictMade?.Invoke(guiltyprofile.ProfileSO.guiltyCutscene);
+            Debug.Log("Playing Cutscene" + guiltyprofile.ProfileSO.guiltyCutscene.name);
         }
     }
 

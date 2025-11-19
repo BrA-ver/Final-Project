@@ -6,8 +6,6 @@ public class CutsceneManager : MonoBehaviour
 {
     public static CutsceneManager instance;
 
-    [SerializeField] Cutscene[] cutscenes;
-
     [SerializeField] Button nextButton;
 
     Cutscene currentCutscene;
@@ -49,19 +47,14 @@ public class CutsceneManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
     }
 
-    public void StartCutscene(string cutscenName)
+    public void StartCutscene(Cutscene targetCutScene)
     {
         Debug.Log("Cutsene Started");
         BG.SetActive(true);
 
-        foreach (Cutscene cutscene in cutscenes)
-        {
-            if (cutscene.Name == cutscenName)
-            {
-                currentCutscene = cutscenes[0];
-                ShowCutscenePage();
-            }
-        }
+
+        currentCutscene = targetCutScene;
+        ShowCutscenePage();
     }
 
     void ShowCutscenePage()
