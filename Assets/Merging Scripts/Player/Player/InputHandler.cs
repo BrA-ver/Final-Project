@@ -27,7 +27,6 @@ public class InputHandler : MonoBehaviour
 
     private void Start()
     {
-        // ⭐ If cutscene active, do NOT lock cursor
         if (CutsceneManager.IsCutsceneActive)
         {
             UnlockCursor();

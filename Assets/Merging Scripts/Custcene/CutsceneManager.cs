@@ -6,7 +6,6 @@ public class CutsceneManager : MonoBehaviour
 {
     public static CutsceneManager instance;
 
-    // ⭐ Global flag for input + cursor control
     public static bool IsCutsceneActive { get; set; }
 
     [SerializeField] Button nextButton;
@@ -25,11 +24,9 @@ public class CutsceneManager : MonoBehaviour
 
         string sceneName = SceneManager.GetActiveScene().name;
 
-        // ⭐ PrototypeFirst ALWAYS begins with a cutscene
         if (sceneName == "PrototypeFirst")
             IsCutsceneActive = true;
 
-        // ⭐ Force cursor unlocked BEFORE ANY Start() runs
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
@@ -54,7 +51,6 @@ public class CutsceneManager : MonoBehaviour
 
         BG.SetActive(false);
 
-        // ⭐ Auto-start intro cutscene
         if (SceneManager.GetActiveScene().name == "PrototypeFirst")
             StartCutscene(introCutscene);
     }
@@ -86,17 +82,14 @@ public class CutsceneManager : MonoBehaviour
 
         if (index >= currentCutscene.images.Length)
         {
-            // Stop music
             if (BackgroundMusicManager.Instance != null)
                 BackgroundMusicManager.Instance.StopMusic();
 
             panel.gameObject.SetActive(false);
             BG.SetActive(false);
 
-            // ⭐ End cutscene
             IsCutsceneActive = false;
 
-            // ⭐ Relock cursor for gameplay
             if (InputHandler.instance != null)
                 InputHandler.instance.LockCursor();
             else
@@ -105,7 +98,6 @@ public class CutsceneManager : MonoBehaviour
                 Cursor.visible = false;
             }
 
-            // Load menu if it’s not the intro
             if (currentCutscene.Name != "Intro")
                 SceneManager.LoadScene(0);
 
